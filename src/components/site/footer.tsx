@@ -17,12 +17,12 @@ export function Footer() {
             <p className="mb-5 font-mono text-sm text-muted-foreground">
               /Quick links
             </p>
-            <ul className="flex flex-wrap gap-2">
+            <ul className="flex flex-wrap gap-2.5">
               {footer.quickLinks.map((link) => (
                 <li key={link.label}>
                   <a
                     href={link.href}
-                    className="inline-block rounded-lg border border-white/10 px-3.5 py-1.5 text-sm transition-colors hover:bg-white/[0.05]"
+                    className="inline-block rounded-xl bg-foreground px-4 py-2 text-sm font-medium text-background transition-opacity hover:opacity-85"
                   >
                     {link.label}
                   </a>
@@ -62,8 +62,8 @@ export function Footer() {
         aria-hidden
         className="pointer-events-none absolute inset-x-0 bottom-[-0.12em] flex justify-center"
       >
-        <span className="select-none whitespace-nowrap text-[22vw] font-black uppercase leading-none tracking-tighter text-white/[0.035]">
-          {site.lastName}
+        <span className="select-none whitespace-nowrap text-[24vw] font-black uppercase leading-none tracking-tighter text-white/[0.05]">
+          {site.firstName}
         </span>
       </div>
     </footer>
