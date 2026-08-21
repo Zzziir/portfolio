@@ -9,9 +9,13 @@ Guidance for every session in this repo. These instructions are binding.
 - **Target role (Rule 01 niche):** **Solutions Designer / Product Engineer.**
   The hero names this one role. Every case study points at this same problem
   space — solving business problems by designing *and* shipping the product.
-- **Stack:** Next.js (App Router) + shadcn/ui + Tailwind, deployed on Vercel.
-- **Design reference:** a sample will be provided by the user — match its
-  direction before generating original layouts.
+- **Stack:** Next.js 16 (App Router) + Tailwind v4 + shadcn/ui + `motion`
+  (Framer Motion), self-hosted Geist font, deployed on Vercel.
+- **Repo:** https://github.com/Zzziir/portfolio.git (`origin`).
+- **Design reference:** the Framer "Majd" template
+  (warm editorial brutalist grotesk) — **adapted to dark mode**. Match its
+  layout and its animations (scroll-linked word fill, portrait mask reveal,
+  floating 3D objects, hover states); invert the palette to warm near-black.
 
 ---
 
