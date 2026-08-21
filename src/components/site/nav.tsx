@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "motion/react";
 import { nav, site } from "@/lib/content";
 import { EASE_OUT } from "@/lib/motion";
@@ -8,6 +9,10 @@ import { ArrowUpRight } from "@/components/icons";
 
 export function NavPill() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+  // On subpages, prefix section anchors with "/" so they navigate home first.
+  const to = (hash: string) => (isHome ? hash : `/${hash}`);
 
   return (
     <div className="pointer-events-none fixed inset-x-0 top-4 z-50 flex justify-center px-4">
@@ -20,7 +25,7 @@ export function NavPill() {
         <div className="rounded-2xl border border-white/10 bg-card/80 p-1.5 shadow-[0_8px_30px_rgba(0,0,0,0.45)] backdrop-blur-xl">
           <div className="flex items-center justify-between gap-2">
             <a
-              href="#top"
+              href={isHome ? "#top" : "/"}
               onClick={() => setOpen(false)}
               className="pl-3 text-[15px] font-semibold tracking-tight"
             >
@@ -56,7 +61,7 @@ export function NavPill() {
                       transition={{ delay: 0.05 + i * 0.05, ease: EASE_OUT }}
                     >
                       <a
-                        href={item.href}
+                        href={to(item.href)}
                         onClick={() => setOpen(false)}
                         className="group flex items-center justify-between rounded-xl px-3 py-2.5 text-[15px] text-muted-foreground transition-colors hover:bg-white/[0.04] hover:text-foreground"
                       >
@@ -67,7 +72,7 @@ export function NavPill() {
                   ))}
                 </ul>
                 <a
-                  href="#contact"
+                  href={to("#contact")}
                   onClick={() => setOpen(false)}
                   className="m-1.5 flex items-center justify-center gap-1.5 rounded-xl bg-foreground py-3 text-[15px] font-medium text-background transition-opacity hover:opacity-90"
                 >

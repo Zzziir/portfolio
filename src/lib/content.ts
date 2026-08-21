@@ -77,6 +77,8 @@ export const services = [
   },
 ];
 
+export type ProjectSection = { heading: string; body: string[] };
+
 export type Project = {
   slug: string;
   name: string;
@@ -89,8 +91,15 @@ export type Project = {
   year: string;
   /** accent used for the placeholder thumbnail gradient */
   accent: string;
-  href: string;
+  // ── detail page (/work/[slug]) ──
+  category: string;
+  liveLink?: string;
+  summary: string;
+  sections: ProjectSection[];
 };
+
+/** Route to a project's detail page. */
+export const projectHref = (slug: string) => `/work/${slug}`;
 
 /**
  * PLACEHOLDER projects — real names/metrics/decisions/links to come.
@@ -108,7 +117,24 @@ export const projects: Project[] = [
     tags: ["Flutter", "Computer Vision", "ML"],
     year: "2025", // TODO
     accent: "#ea3a28",
-    href: "#", // TODO: case study link
+    category: "Mobile app",
+    liveLink: "#", // TODO
+    summary:
+      "A Flutter mobile app that analyzes a photo, decides whether it has been edited, and highlights the tampered regions — and confirms when an image is genuinely unaltered.", // TODO
+    sections: [
+      {
+        heading: "The problem",
+        body: [
+          "Edited images spread fast and are hard to verify by eye. The goal was a tool anyone could use from their phone to check whether an image had been manipulated — and see exactly where.", // TODO
+        ],
+      },
+      {
+        heading: "What it does",
+        body: [
+          "Point the app at an image and it returns a verdict — edited or authentic — plus an overlay marking the regions most likely to have been altered.", // TODO
+        ],
+      },
+    ],
   },
   {
     slug: "stratty-chatbot",
@@ -120,7 +146,24 @@ export const projects: Project[] = [
     tags: ["Chatbot", "LLM", "Lead Gen"],
     year: "2025", // TODO
     accent: "#14b8a6",
-    href: "#", // TODO
+    category: "Conversational AI",
+    liveLink: "#", // TODO: stratpoint.com
+    summary:
+      "Stratty is a chatbot on the Stratpoint website that engages visitors, answers questions, and accelerates marketing-qualified leads into sales-qualified ones.", // TODO
+    sections: [
+      {
+        heading: "The goal",
+        body: [
+          "Turn passive website traffic into qualified pipeline by meeting visitors where they are and guiding them toward a conversation with sales.", // TODO
+        ],
+      },
+      {
+        heading: "How it works",
+        body: [
+          "Stratty qualifies intent through conversation, surfaces the right information, and hands warm, sales-ready leads to the team.", // TODO
+        ],
+      },
+    ],
   },
   {
     slug: "seat-reservation-app",
@@ -132,7 +175,24 @@ export const projects: Project[] = [
     tags: ["Flutter", "Dart", "Realtime"],
     year: "2024", // TODO
     accent: "#5b6cff",
-    href: "#", // TODO
+    category: "Mobile app",
+    liveLink: "#", // TODO
+    summary:
+      "A cross-platform mobile app for reserving seats in real time, built with Flutter so a single codebase ships to both iOS and Android.", // TODO
+    sections: [
+      {
+        heading: "The idea",
+        body: [
+          "Make picking and holding a seat feel instant and reliable, without double-bookings, across any device.", // TODO
+        ],
+      },
+      {
+        heading: "The build",
+        body: [
+          "Flutter for one codebase across platforms, with real-time updates so availability always reflects the latest state.", // TODO
+        ],
+      },
+    ],
   },
   {
     slug: "aws-saa-reviewer",
@@ -144,7 +204,24 @@ export const projects: Project[] = [
     tags: ["AWS", "Quiz Engine", "Web"],
     year: "2024", // TODO
     accent: "#f59e0b",
-    href: "#", // TODO
+    category: "Study tool",
+    liveLink: "#", // TODO
+    summary:
+      "A practice and review tool for the AWS Solutions Architect Associate (SAA-C03) exam — question sets, explanations, and progress tracking.", // TODO
+    sections: [
+      {
+        heading: "Why",
+        body: [
+          "The SAA-C03 covers a wide surface area. The tool focuses study on weak spots instead of re-reading everything.", // TODO
+        ],
+      },
+      {
+        heading: "What's inside",
+        body: [
+          "Curated question sets with explanations and progress tracking so preparation stays targeted and measurable.", // TODO
+        ],
+      },
+    ],
   },
 ];
 

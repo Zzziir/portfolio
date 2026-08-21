@@ -1,4 +1,3 @@
-import { NavPill } from "@/components/site/nav";
 import { HeroAbout } from "@/components/site/hero-about";
 import { Proof } from "@/components/site/proof";
 import { Statement } from "@/components/site/statement";
@@ -13,7 +12,6 @@ import { FloatingCta } from "@/components/site/floating-cta";
 export default function Home() {
   return (
     <>
-      <NavPill />
       <FloatingCta />
       <main>
         <HeroAbout />
