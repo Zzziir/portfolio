@@ -2,9 +2,9 @@ import { footer, site } from "@/lib/content";
 
 export function Footer() {
   return (
-    <footer className="relative mt-10 overflow-hidden rounded-t-[2rem] bg-[#080807] px-5 pt-20 sm:px-8">
+    <footer className="relative mt-10 overflow-hidden rounded-t-[2rem] bg-[#080807] px-5 pb-[26vw] pt-20 sm:px-8">
       <div className="relative z-10 mx-auto max-w-6xl">
-        <div className="grid gap-12 pb-24 md:grid-cols-12">
+        <div className="grid gap-12 md:grid-cols-12">
           {/* Statement */}
           <div className="md:col-span-5">
             <h2 className="whitespace-pre-line text-4xl font-black leading-[0.95] tracking-tight sm:text-5xl">
@@ -48,8 +48,9 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Bottom bar */}
-        <div className="flex flex-col gap-2 border-t border-white/10 py-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+        {/* Meta row — moved up into the content block so it never sits on the
+            watermark. No divider line. */}
+        <div className="mt-16 flex flex-col gap-2 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
           <span>
             © {new Date().getFullYear()} {site.name}. All rights reserved.
           </span>
@@ -57,12 +58,12 @@ export function Footer() {
         </div>
       </div>
 
-      {/* Watermark */}
+      {/* Watermark — anchored to the very bottom, cut off by the screen edge */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-[-0.12em] flex justify-center"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-0 flex justify-center"
       >
-        <span className="select-none whitespace-nowrap text-[24vw] font-black uppercase leading-none tracking-tighter text-white/[0.05]">
+        <span className="translate-y-[26%] select-none whitespace-nowrap text-[26vw] font-black uppercase leading-none tracking-tighter text-white/[0.05]">
           {site.firstName}
         </span>
       </div>
