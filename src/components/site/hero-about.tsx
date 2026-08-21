@@ -35,10 +35,11 @@ export function HeroAbout() {
     mass: 0.4,
   });
 
-  const rotateY = useTransform(p, [0.06, 0.5], [0, 180]);
+  // End at 170° (not 180°) so the card rests with a slight 3D tilt in "Hey!".
+  const rotateY = useTransform(p, [0.06, 0.5], [0, 170]);
   // Hero: small card, low, clear of the headline. About: rises to centre + grows.
   const cardY = useTransform(p, [0, 0.5], ["34vh", "0vh"]);
-  const cardScale = useTransform(p, [0, 0.5], [0.42, 1.1]);
+  const cardScale = useTransform(p, [0, 0.5], [0.42, 1.18]);
 
   return (
     <div ref={wrap} id="top" className="relative">
@@ -49,7 +50,7 @@ export function HeroAbout() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, ease: EASE_OUT, delay: 0.35 }}
-            className="w-[min(80vw,380px)]"
+            className="w-[min(80vw,380px)] [perspective:1400px]"
           >
             <motion.div
               className="relative aspect-[4/5] w-full"
