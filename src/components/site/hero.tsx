@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { proof, site } from "@/lib/content";
 import { EASE_OUT } from "@/lib/motion";
 import { FloatingObjects } from "@/components/site/floating-objects";
-import { ImagePlaceholder } from "@/components/site/placeholder";
+import { FlipPortrait } from "@/components/site/flip-portrait";
 
 export function Hero() {
   const reduce = useReducedMotion();
@@ -64,15 +64,14 @@ export function Hero() {
       {/* Portrait + proof strip */}
       <div className="relative z-10 mt-6 flex flex-col items-center gap-8">
         <motion.div
-          initial={reduce ? { opacity: 0 } : { clipPath: "inset(100% 0 0 0)" }}
-          animate={reduce ? { opacity: 1 } : { clipPath: "inset(0% 0 0 0)" }}
-          transition={{ duration: 1, ease: EASE_OUT, delay: 0.7 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, ease: EASE_OUT, delay: 0.7 }}
           className="w-full max-w-[220px]"
         >
-          <ImagePlaceholder
-            className="aspect-[4/5] w-full shadow-[0_20px_60px_-20px_rgba(234,58,40,0.5)] ring-1 ring-white/10"
+          <FlipPortrait
             monogram={`${site.firstName[0]}${site.lastName[0]}`}
-            label="portrait"
+            className="w-full"
           />
         </motion.div>
 
