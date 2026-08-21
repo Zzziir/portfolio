@@ -63,7 +63,7 @@ export function Footer() {
         aria-hidden
         className="pointer-events-none absolute inset-x-0 bottom-0 z-0 flex justify-center"
       >
-        <span className="translate-y-[26%] select-none whitespace-nowrap text-[26vw] font-black uppercase leading-none tracking-tighter text-white/[0.05]">
+        <span className="translate-y-[14%] select-none whitespace-nowrap text-[26vw] font-black uppercase leading-none tracking-tighter text-white/[0.05]">
           {site.firstName}
         </span>
       </div>
