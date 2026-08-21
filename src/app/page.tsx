@@ -1,6 +1,5 @@
 import { NavPill } from "@/components/site/nav";
-import { Hero } from "@/components/site/hero";
-import { About } from "@/components/site/about";
+import { HeroAbout } from "@/components/site/hero-about";
 import { Statement } from "@/components/site/statement";
 import { Services } from "@/components/site/services";
 import { Work } from "@/components/site/work";
@@ -16,8 +15,7 @@ export default function Home() {
       <NavPill />
       <FloatingCta />
       <main>
-        <Hero />
-        <About />
+        <HeroAbout />
         <Statement />
         <Services />
         <Work />
