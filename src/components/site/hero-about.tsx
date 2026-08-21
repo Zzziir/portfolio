@@ -11,6 +11,7 @@ import {
 import { about, site } from "@/lib/content";
 import { EASE_OUT } from "@/lib/motion";
 import { FloatingObjects } from "@/components/site/floating-objects";
+import { HeroGrid } from "@/components/site/hero-grid";
 import { ImagePlaceholder } from "@/components/site/placeholder";
 import { ArrowUpRight } from "@/components/icons";
 
@@ -93,6 +94,7 @@ export function HeroAbout() {
 
       {/* ── Hero copy ───────────────────────────────────────────── */}
       <section className="relative flex min-h-[100svh] flex-col overflow-hidden px-5 pb-8 pt-28 sm:px-8">
+        <HeroGrid />
         <FloatingObjects />
 
         <div className="pointer-events-none absolute inset-x-5 bottom-6 z-20 flex items-end justify-between font-mono text-xs text-muted-foreground sm:inset-x-8">
@@ -100,8 +102,9 @@ export function HeroAbout() {
           <span className="hidden sm:block">/ SHIPPING SINCE {site.since}</span>
         </div>
 
-        {/* Just the headline — like the reference. Card sits below it. */}
-        <div className="relative z-20 flex flex-1 flex-col items-center justify-center text-center">
+        {/* Just the headline — like the reference. Card sits below it.
+            pointer-events-none lets the interactive grid behind receive hover. */}
+        <div className="pointer-events-none relative z-20 flex flex-1 flex-col items-center justify-center text-center">
           <h1 className="font-black uppercase leading-[0.82] tracking-[-0.045em] text-[clamp(3.25rem,14vw,12.5rem)]">
             {site.heroWords.map((word, i) => (
               <span key={word} className="block overflow-hidden py-[0.02em]">
