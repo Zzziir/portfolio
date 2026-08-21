@@ -4,8 +4,6 @@ import { ImagePlaceholder } from "@/components/site/placeholder";
 import { ArrowUpRight } from "@/components/icons";
 
 export function Work() {
-  const [lead, ...rest] = projects;
-
   return (
     <section id="work" className="px-5 py-24 sm:px-8 sm:py-28">
       <div className="mx-auto max-w-6xl">
@@ -28,24 +26,19 @@ export function Work() {
           </Reveal>
         </div>
 
-        <div className="mt-14 grid gap-x-6 gap-y-12">
-          <Reveal>
-            <ProjectCard project={lead} large />
-          </Reveal>
-          <div className="grid gap-x-6 gap-y-12 sm:grid-cols-2">
-            {rest.map((project, i) => (
-              <Reveal key={project.slug} delay={i * 0.08}>
-                <ProjectCard project={project} />
-              </Reveal>
-            ))}
-          </div>
+        <div className="mt-14 grid gap-x-6 gap-y-12 sm:grid-cols-2">
+          {projects.map((project, i) => (
+            <Reveal key={project.slug} delay={(i % 2) * 0.08}>
+              <ProjectCard project={project} />
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>
   );
 }
 
-function ProjectCard({ project, large }: { project: Project; large?: boolean }) {
+function ProjectCard({ project }: { project: Project }) {
   return (
     <a
       href={project.href}
@@ -57,18 +50,14 @@ function ProjectCard({ project, large }: { project: Project; large?: boolean }) 
             accent={project.accent}
             rounded="rounded-none"
             label={project.name}
-            className={large ? "aspect-[16/9]" : "aspect-[4/3]"}
+            className="aspect-[4/3]"
           />
         </div>
       </div>
 
       <div className="mt-5">
         <div className="flex items-start justify-between gap-4">
-          <h3
-            className={`font-semibold tracking-tight ${
-              large ? "text-3xl sm:text-4xl" : "text-2xl"
-            }`}
-          >
+          <h3 className="text-2xl font-semibold tracking-tight">
             {project.result}
           </h3>
           <span className="mt-1 shrink-0 font-mono text-xs text-muted-foreground">

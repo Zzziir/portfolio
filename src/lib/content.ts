@@ -92,42 +92,58 @@ export type Project = {
   href: string;
 };
 
-/** Rule 07 — three case studies, max. Strongest first. */
+/**
+ * PLACEHOLDER projects — real names/metrics/decisions/links to come.
+ * These reflect the actual builds; the `result` headlines and `decision` lines
+ * are stand-ins until the real numbers/details are added. Search "TODO".
+ */
 export const projects: Project[] = [
   {
-    slug: "ledgerly",
-    name: "Ledgerly",
-    result: "Cut checkout drop-off 34%",
-    context: "Fintech · Solutions design + full build",
+    slug: "image-forgery-detection",
+    name: "Forgery Detector",
+    result: "Detects & localizes edited regions in images", // TODO: add accuracy metric
+    context: "Mobile app · Flutter + computer vision",
     decision:
-      "We chose a single-screen checkout over a 4-step wizard because the drop-off data showed people quit at step 2 — not at payment.", // TODO
-    tags: ["Product Design", "Next.js", "Stripe"],
-    year: "2025",
+      "Flags whether an image is edited and points to the tampered regions — and confirms genuinely unedited images.", // TODO: real design decision
+    tags: ["Flutter", "Computer Vision", "ML"],
+    year: "2025", // TODO
     accent: "#ea3a28",
     href: "#", // TODO: case study link
   },
   {
-    slug: "runway",
-    name: "Runway",
-    result: "0 → 12k users in 5 months",
-    context: "B2B SaaS · Product engineering",
+    slug: "stratty-chatbot",
+    name: "Stratty",
+    result: "Chatbot that turns MQLs into SQLs", // TODO: add conversion metric
+    context: "Conversational AI · Stratpoint website",
     decision:
-      "We shipped the ugly, hand-built onboarding first and instrumented it — the data told us which 3 screens to actually polish.", // TODO
-    tags: ["Full-Stack", "Design System", "Analytics"],
-    year: "2024",
+      "A website chatbot that qualifies visitors and accelerates marketing-qualified leads into sales-qualified ones.", // TODO
+    tags: ["Chatbot", "LLM", "Lead Gen"],
+    year: "2025", // TODO
+    accent: "#14b8a6",
+    href: "#", // TODO
+  },
+  {
+    slug: "seat-reservation-app",
+    name: "Seat Reservation",
+    result: "Real-time seat booking on mobile", // TODO: add outcome metric
+    context: "Mobile app · Flutter",
+    decision:
+      "A cross-platform mobile app for reserving seats, built with Flutter for one codebase across iOS and Android.", // TODO
+    tags: ["Flutter", "Dart", "Realtime"],
+    year: "2024", // TODO
     accent: "#5b6cff",
     href: "#", // TODO
   },
   {
-    slug: "meridian",
-    name: "Meridian",
-    result: "3.1s → 0.9s median load",
-    context: "Marketplace · Frontend performance",
+    slug: "aws-saa-reviewer",
+    name: "SAA-C03 Reviewer",
+    result: "Exam reviewer for AWS SAA-C03", // TODO: add usage/pass metric
+    context: "Study tool · AWS Solutions Architect Associate",
     decision:
-      "We chose to server-render the catalog and defer everything below the fold because the LCP element was a hero image, not JS.", // TODO
-    tags: ["Web Performance", "Next.js", "Edge"],
-    year: "2024",
-    accent: "#18a558",
+      "A practice + review tool for the AWS Solutions Architect Associate (SAA-C03) certification exam.", // TODO
+    tags: ["AWS", "Quiz Engine", "Web"],
+    year: "2024", // TODO
+    accent: "#f59e0b",
     href: "#", // TODO
   },
 ];
