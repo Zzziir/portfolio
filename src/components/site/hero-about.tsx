@@ -35,9 +35,10 @@ export function HeroAbout() {
     mass: 0.4,
   });
 
-  const rotateY = useTransform(p, [0.05, 0.5], [0, 180]);
-  const cardY = useTransform(p, [0, 0.5], ["14vh", "0vh"]);
-  const cardScale = useTransform(p, [0, 0.5], [0.82, 1]);
+  const rotateY = useTransform(p, [0.06, 0.5], [0, 180]);
+  // Hero: card sits low (below the headline). About: rises to centre + grows.
+  const cardY = useTransform(p, [0, 0.5], ["27vh", "0vh"]);
+  const cardScale = useTransform(p, [0, 0.5], [0.64, 1.05]);
 
   return (
     <div ref={wrap} id="top" className="relative">
@@ -48,15 +49,15 @@ export function HeroAbout() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, ease: EASE_OUT, delay: 0.7 }}
-            className="w-[min(74vw,300px)]"
+            className="w-[min(78vw,330px)]"
           >
             <motion.div
               className="relative aspect-[4/5] w-full"
               style={{
                 transformStyle: "preserve-3d",
                 rotateY: reduce ? 0 : rotateY,
-                y: reduce ? "8vh" : cardY,
-                scale: reduce ? 0.9 : cardScale,
+                y: reduce ? "24vh" : cardY,
+                scale: reduce ? 0.7 : cardScale,
               }}
             >
               <div
@@ -135,26 +136,27 @@ export function HeroAbout() {
           >
             {site.heroLine}
           </motion.p>
-        </div>
 
-        {/* Proof strip — sits below the card in the initial view */}
-        <motion.ul
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: EASE_OUT, delay: 0.85 }}
-          className="relative z-20 grid w-full max-w-3xl grid-cols-2 gap-px self-center overflow-hidden rounded-2xl border border-white/10 bg-white/5 sm:grid-cols-4"
-        >
-          {proof.map((item) => (
-            <li key={item.label} className="bg-background/60 px-4 py-4 text-center">
-              <div className="text-xl font-semibold tracking-tight sm:text-2xl">
-                {item.value}
-              </div>
-              <div className="mt-1 text-[11px] leading-tight text-muted-foreground">
-                {item.label}
-              </div>
-            </li>
-          ))}
-        </motion.ul>
+          {/* Compact proof — numbers above the fold, out of the card's path */}
+          <motion.ul
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: EASE_OUT, delay: 0.85 }}
+            className="mt-7 flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 font-mono text-[11px] text-muted-foreground"
+          >
+            {proof.map((item, i) => (
+              <li key={item.label} className="flex items-center gap-3">
+                {i > 0 && <span className="text-white/20">·</span>}
+                <span>
+                  <span className="font-semibold text-foreground">
+                    {item.value}
+                  </span>{" "}
+                  {item.label}
+                </span>
+              </li>
+            ))}
+          </motion.ul>
+        </div>
       </section>
 
       {/* ── About copy (card lands in the empty centre column) ──── */}
