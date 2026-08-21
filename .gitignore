@@ -47,3 +47,7 @@ next-env.d.ts
 /skills-lock.json
 /.claude/skills/
 /.claude/settings.local.json
+
+# local design reference recording (large)
+/Template_Sample_recording.mov
+*.mov

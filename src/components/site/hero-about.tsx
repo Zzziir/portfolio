@@ -8,7 +8,7 @@ import {
   useSpring,
   useTransform,
 } from "motion/react";
-import { about, proof, site } from "@/lib/content";
+import { about, site } from "@/lib/content";
 import { EASE_OUT } from "@/lib/motion";
 import { FloatingObjects } from "@/components/site/floating-objects";
 import { ImagePlaceholder } from "@/components/site/placeholder";
@@ -36,9 +36,9 @@ export function HeroAbout() {
   });
 
   const rotateY = useTransform(p, [0.06, 0.5], [0, 180]);
-  // Hero: card sits low (below the headline). About: rises to centre + grows.
-  const cardY = useTransform(p, [0, 0.5], ["27vh", "0vh"]);
-  const cardScale = useTransform(p, [0, 0.5], [0.64, 1.05]);
+  // Hero: small card, low, clear of the headline. About: rises to centre + grows.
+  const cardY = useTransform(p, [0, 0.5], ["34vh", "0vh"]);
+  const cardScale = useTransform(p, [0, 0.5], [0.42, 1.1]);
 
   return (
     <div ref={wrap} id="top" className="relative">
@@ -46,18 +46,18 @@ export function HeroAbout() {
       <div className="pointer-events-none absolute inset-0 z-10">
         <div className="sticky top-0 flex h-[100svh] items-center justify-center">
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: EASE_OUT, delay: 0.7 }}
-            className="w-[min(78vw,330px)]"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, ease: EASE_OUT, delay: 0.35 }}
+            className="w-[min(80vw,380px)]"
           >
             <motion.div
               className="relative aspect-[4/5] w-full"
               style={{
                 transformStyle: "preserve-3d",
                 rotateY: reduce ? 0 : rotateY,
-                y: reduce ? "24vh" : cardY,
-                scale: reduce ? 0.7 : cardScale,
+                y: reduce ? "34vh" : cardY,
+                scale: reduce ? 0.42 : cardScale,
               }}
             >
               <div
@@ -65,8 +65,8 @@ export function HeroAbout() {
                 style={{ backfaceVisibility: "hidden" }}
               >
                 <ImagePlaceholder
-                  className="h-full w-full shadow-[0_24px_70px_-24px_rgba(0,0,0,0.7)] ring-1 ring-white/10"
-                  accent="#3a3630"
+                  className="h-full w-full shadow-[0_24px_70px_-24px_rgba(0,0,0,0.7)] ring-1 ring-white/15"
+                  accent="#6a6157"
                   monogram={monogram}
                   label="portrait"
                 />
@@ -99,16 +99,8 @@ export function HeroAbout() {
           <span className="hidden sm:block">/ SHIPPING SINCE {site.since}</span>
         </div>
 
+        {/* Just the headline — like the reference. Card sits below it. */}
         <div className="relative z-20 flex flex-1 flex-col items-center justify-center text-center">
-          <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: EASE_OUT, delay: 0.15 }}
-            className="mb-5 font-mono text-[11px] uppercase tracking-[0.28em] text-muted-foreground sm:text-xs"
-          >
-            {site.heroKicker}
-          </motion.p>
-
           <h1 className="font-black uppercase leading-[0.82] tracking-[-0.045em] text-[clamp(3.25rem,14vw,12.5rem)]">
             {site.heroWords.map((word, i) => (
               <span key={word} className="block overflow-hidden py-[0.02em]">
@@ -119,7 +111,7 @@ export function HeroAbout() {
                   transition={{
                     duration: 0.9,
                     ease: EASE_OUT,
-                    delay: 0.25 + i * 0.12,
+                    delay: 0.2 + i * 0.12,
                   }}
                 >
                   {word}
@@ -127,35 +119,6 @@ export function HeroAbout() {
               </span>
             ))}
           </h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: EASE_OUT, delay: 0.55 }}
-            className="mt-7 max-w-xl text-balance text-[15px] leading-relaxed text-muted-foreground sm:text-base"
-          >
-            {site.heroLine}
-          </motion.p>
-
-          {/* Compact proof — numbers above the fold, out of the card's path */}
-          <motion.ul
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: EASE_OUT, delay: 0.85 }}
-            className="mt-7 flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 font-mono text-[11px] text-muted-foreground"
-          >
-            {proof.map((item, i) => (
-              <li key={item.label} className="flex items-center gap-3">
-                {i > 0 && <span className="text-white/20">·</span>}
-                <span>
-                  <span className="font-semibold text-foreground">
-                    {item.value}
-                  </span>{" "}
-                  {item.label}
-                </span>
-              </li>
-            ))}
-          </motion.ul>
         </div>
       </section>
 
@@ -178,8 +141,12 @@ export function HeroAbout() {
           <div className="min-h-[52vh] md:col-span-4 md:min-h-0" aria-hidden />
 
           <div className="relative z-20 md:col-span-4">
-            <p className="text-pretty text-base leading-relaxed text-muted-foreground">
-              {site.metaDescription.split("—")[0].trim()}. {about.body}
+            {/* the hero result line lives here now */}
+            <p className="text-pretty text-base font-medium leading-relaxed">
+              {site.heroLine}
+            </p>
+            <p className="mt-4 text-pretty text-base leading-relaxed text-muted-foreground">
+              {about.body}
             </p>
             <a
               href={about.cta.href}
