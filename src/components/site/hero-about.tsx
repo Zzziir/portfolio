@@ -35,11 +35,11 @@ export function HeroAbout() {
     mass: 0.4,
   });
 
-  // End at 170° (not 180°) so the card rests with a slight 3D tilt in "Hey!".
-  const rotateY = useTransform(p, [0.06, 0.5], [0, 170]);
-  // Hero: small card, low, clear of the headline. About: rises to centre + grows.
-  const cardY = useTransform(p, [0, 0.5], ["34vh", "0vh"]);
-  const cardScale = useTransform(p, [0, 0.5], [0.42, 1.18]);
+  // Track the whole hero→about scroll so the card stays low + edge-on while
+  // the headline leaves, and only lands flat/red/centred once "Hey!" is in view.
+  const rotateY = useTransform(p, [0.2, 0.85], [0, 180]);
+  const cardY = useTransform(p, [0, 1], ["37vh", "0vh"]);
+  const cardScale = useTransform(p, [0, 1], [0.32, 0.85]);
 
   return (
     <div ref={wrap} id="top" className="relative">
@@ -57,8 +57,8 @@ export function HeroAbout() {
               style={{
                 transformStyle: "preserve-3d",
                 rotateY: reduce ? 0 : rotateY,
-                y: reduce ? "34vh" : cardY,
-                scale: reduce ? 0.42 : cardScale,
+                y: reduce ? "37vh" : cardY,
+                scale: reduce ? 0.32 : cardScale,
               }}
             >
               <div
