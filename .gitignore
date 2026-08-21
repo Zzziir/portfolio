@@ -45,3 +45,5 @@ next-env.d.ts
 /.codex/
 /.impeccable/
 /skills-lock.json
+/.claude/skills/
+/.claude/settings.local.json
