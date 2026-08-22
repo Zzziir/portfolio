@@ -1,5 +1,6 @@
 import { proof } from "@/lib/content";
 import { Reveal } from "@/components/reveal";
+import { NumberTicker } from "@/components/magicui/number-ticker";
 
 /** Slim proof band — the numbers, out of the hero, still early on the page. */
 export function Proof() {
@@ -13,8 +14,15 @@ export function Proof() {
             delay={i * 0.08}
             className="px-4 text-center sm:border-l sm:border-white/10 sm:first:border-l-0"
           >
-            <div className="text-4xl font-semibold tracking-tight sm:text-5xl">
-              {item.value}
+            <div className="flex items-baseline justify-center text-4xl font-semibold tracking-tight sm:text-5xl">
+              {item.prefix && <span>{item.prefix}</span>}
+              <NumberTicker
+                value={item.value}
+                decimalPlaces={item.decimals ?? 0}
+                delay={0.15 + i * 0.08}
+                className="text-foreground"
+              />
+              {item.suffix && <span>{item.suffix}</span>}
             </div>
             <div className="mt-2 text-sm text-muted-foreground">{item.label}</div>
           </Reveal>

@@ -38,12 +38,21 @@ export const site = {
   ],
 };
 
-/** Rule 04 — a proof strip near the top: numbers, no scrolling to find impact. */
-export const proof = [
-  { value: "0→12k", label: "users on the last launch" }, // TODO
-  { value: "3", label: "SaaS products shipped" }, // TODO
-  { value: "<1.0s", label: "median load, every build" }, // TODO
-  { value: "6 yrs", label: "designing + shipping" }, // TODO
+/** Rule 04 — a proof strip near the top: numbers, no scrolling to find impact.
+ * Structured so the numeric part can animate with <NumberTicker>. */
+export type ProofStat = {
+  value: number;
+  prefix?: string;
+  suffix?: string;
+  decimals?: number;
+  label: string;
+};
+
+export const proof: ProofStat[] = [
+  { prefix: "0→", value: 12, suffix: "k", label: "users on the last launch" }, // TODO
+  { value: 3, label: "SaaS products shipped" }, // TODO
+  { prefix: "<", value: 1.0, decimals: 1, suffix: "s", label: "median load, every build" }, // TODO
+  { value: 6, suffix: " yrs", label: "designing + shipping" }, // TODO
 ];
 
 export const about = {
