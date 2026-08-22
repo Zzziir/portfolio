@@ -25,7 +25,7 @@ export const site = {
   location: "Manila, PH — working remote",
   since: 2019, // "designing & shipping since"
   email: "lancecandelaria2@gmail.com",
-  url: "https://lanceamiel.site",
+  url: "https://portfolio.lanceamiel.site",
   metaDescription:
     "Lance Candelaria — Solutions Designer & Product Engineer. I design and ship products end to end. 3 SaaS products shipped, one from 0 → 12k users in 5 months.", // TODO
   availability: "Available for 1 project — Q3 2026", // TODO
