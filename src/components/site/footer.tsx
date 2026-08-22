@@ -48,17 +48,17 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Meta row — moved up into the content block so it never sits on the
+        {/* Meta row - moved up into the content block so it never sits on the
             watermark. No divider line. */}
         <div className="mt-16 flex flex-col gap-2 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
           <span>
             © {new Date().getFullYear()} {site.name}. All rights reserved.
           </span>
-          <span className="font-mono">Built with Next.js — deployed on Vercel</span>
+          <span className="font-mono">Built with Next.js - deployed on Vercel</span>
         </div>
       </div>
 
-      {/* Watermark — anchored to the very bottom, cut off by the screen edge */}
+      {/* Watermark - anchored to the very bottom, cut off by the screen edge */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-0 bottom-0 z-0 flex justify-center"

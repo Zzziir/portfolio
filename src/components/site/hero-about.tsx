@@ -19,7 +19,7 @@ import { ArrowUpRight } from "@/components/icons";
  * Hero + About as one region sharing a SINGLE portrait card.
  * The card is pinned to viewport-centre for the region and, as you scroll,
  * flips on its Y-axis (0 → 180°) while sliding from the hero's lower-centre
- * up to centre — landing, red-face-out, beside the "Hey!" copy.
+ * up to centre - landing, red-face-out, beside the "Hey!" copy.
  */
 export function HeroAbout() {
   const wrap = useRef<HTMLDivElement>(null);
@@ -102,7 +102,7 @@ export function HeroAbout() {
           <span className="hidden sm:block">/ SHIPPING SINCE {site.since}</span>
         </div>
 
-        {/* Just the headline — like the reference. Card sits below it.
+        {/* Just the headline - like the reference. Card sits below it.
             pointer-events-none lets the interactive grid behind receive hover. */}
         <div className="pointer-events-none relative z-20 flex flex-1 flex-col items-center justify-center text-center">
           <h1 className="font-black uppercase leading-[0.82] tracking-[-0.045em] text-[clamp(3.25rem,14vw,12.5rem)]">

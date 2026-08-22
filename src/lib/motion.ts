@@ -1,6 +1,6 @@
 import type { Variants } from "motion/react";
 
-/** Expo-out — long, soft settle. The default for entrances. */
+/** Expo-out - long, soft settle. The default for entrances. */
 export const EASE_OUT = [0.16, 1, 0.3, 1] as const;
 /** Symmetric ease for looping / reversible motion. */
 export const EASE_IN_OUT = [0.65, 0, 0.35, 1] as const;
@@ -23,7 +23,7 @@ export const staggerContainer = (stagger = 0.06, delay = 0): Variants => ({
   },
 });
 
-/** Clip-reveal for big display type — wipes up from the baseline. */
+/** Clip-reveal for big display type - wipes up from the baseline. */
 export const clipUp: Variants = {
   hidden: { y: "110%" },
   show: {

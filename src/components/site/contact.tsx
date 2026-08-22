@@ -14,7 +14,7 @@ export function Contact() {
       `Project inquiry from ${values.name || "a visitor"}`,
     );
     const body = encodeURIComponent(
-      `${values.project}\n\n— ${values.name}\n${values.email}`,
+      `${values.project}\n\n- ${values.name}\n${values.email}`,
     );
     window.location.href = `mailto:${site.email}?subject=${subject}&body=${body}`;
   }
@@ -36,7 +36,7 @@ export function Contact() {
             </Reveal>
             <Reveal delay={0.1}>
               <p className="mt-6 max-w-md text-pretty text-base leading-relaxed text-muted-foreground">
-                Have a role or a problem worth solving? Tell me about it — I reply
+                Have a role or a problem worth solving? Tell me about it - I reply
                 within 24 hours.
               </p>
             </Reveal>

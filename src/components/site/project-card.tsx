@@ -32,7 +32,7 @@ export function ProjectCard({ project }: { project: Project }) {
 
         <p className="mt-1.5 text-sm text-muted-foreground">{project.context}</p>
 
-        {/* Rule 05 — lead with the decision */}
+        {/* Rule 05 - lead with the decision */}
         <p className="mt-3 max-w-xl text-pretty text-sm leading-relaxed text-muted-foreground/80">
           {project.decision}
         </p>

@@ -1,6 +1,6 @@
 # portfolio
 
-Personal portfolio for **Lance Candelaria** — Solutions Designer / Product Engineer.
+Personal portfolio for **Lance Candelaria** - Solutions Designer / Product Engineer.
 
 A dark, editorial single-page site with a scroll-driven shared portrait that
 flips from the hero into the About section, a scroll-fill statement line, and
@@ -25,9 +25,9 @@ npm run start    # serve the production build
 
 ## Structure
 
-- `src/app` — App Router entry, layout, global styles/design tokens
-- `src/components/site` — page sections (hero/about, services, work, …)
-- `src/lib/content.ts` — all copy and data in one place (swap in real numbers)
+- `src/app` - App Router entry, layout, global styles/design tokens
+- `src/components/site` - page sections (hero/about, services, work, …)
+- `src/lib/content.ts` - all copy and data in one place (swap in real numbers)
 
 See `CLAUDE.md` for the design system, commit conventions, and copy rules this
 project follows.

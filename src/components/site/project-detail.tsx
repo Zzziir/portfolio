@@ -22,7 +22,7 @@ export function ProjectDetail({ project }: { project: Project }) {
           Back to work
         </Link>
 
-        {/* Title — blur in */}
+        {/* Title - blur in */}
         <motion.h1
           initial={{ opacity: 0, filter: "blur(16px)", y: 10 }}
           animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}

@@ -45,7 +45,7 @@ export function Thoughts() {
           <Reveal delay={posts.length * 0.07} className="h-full">
             <div className="flex min-h-[420px] flex-col justify-between rounded-2xl bg-card p-6 ring-1 ring-white/10">
               <p className="text-pretty text-3xl font-semibold leading-tight tracking-tight">
-                Notes on shipping products with clarity and craft — read the blog.
+                Notes on shipping products with clarity and craft - read the blog.
               </p>
               <a
                 href="#"

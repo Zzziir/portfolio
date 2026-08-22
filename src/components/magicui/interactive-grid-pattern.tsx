@@ -4,7 +4,7 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 
 /**
- * Magic UI — Interactive Grid Pattern.
+ * Magic UI - Interactive Grid Pattern.
  * A grid of SVG squares that softly highlight on hover. Strokes are kept faint
  * for use as a subtle background layer.
  */

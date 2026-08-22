@@ -2,7 +2,7 @@ import { proof } from "@/lib/content";
 import { Reveal } from "@/components/reveal";
 import { NumberTicker } from "@/components/magicui/number-ticker";
 
-/** Slim proof band — the numbers, out of the hero, still early on the page. */
+/** Slim proof band - the numbers, out of the hero, still early on the page. */
 export function Proof() {
   return (
     <section className="border-y border-white/10 px-5 py-14 sm:px-8 sm:py-16">

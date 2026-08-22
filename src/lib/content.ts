@@ -6,7 +6,7 @@
  *  - every headline carries a number or outcome
  *  - proof above the fold, decisions over process, 3 case studies max
  *
- * Numbers below are realistic PLACEHOLDERS — swap in your real metrics.
+ * Numbers below are realistic PLACEHOLDERS - swap in your real metrics.
  * Search "TODO" to find every value that should become true.
  */
 
@@ -14,21 +14,21 @@ export const site = {
   name: "Lance Candelaria",
   firstName: "Lance",
   lastName: "Candelaria",
-  // Rule 01 — one specific role, named in the hero.
+  // Rule 01 - one specific role, named in the hero.
   role: "Solutions Designer / Product Engineer",
   // The giant hero words (kept to two lines like the reference).
   heroWords: ["SOLUTIONS", "ENGINEER"] as const,
   heroKicker: "solutions designer · product engineer",
-  // Rule 02 — hero line includes a business result, not a personality trait.
+  // Rule 02 - hero line includes a business result, not a personality trait.
   heroLine:
-    "I design and ship the whole product — from the fuzzy problem to the running software. Last build went 0 → 12,000 users in 5 months.", // TODO: real result
-  location: "Manila, PH — working remote",
+    "I design and ship the whole product - from the fuzzy problem to the running software. Last build went 0 → 12,000 users in 5 months.", // TODO: real result
+  location: "Manila, PH - working remote",
   since: 2019, // "designing & shipping since"
   email: "lancecandelaria2@gmail.com",
   url: "https://portfolio.lanceamiel.site",
   metaDescription:
-    "Lance Candelaria — Solutions Designer & Product Engineer. I design and ship products end to end. 3 SaaS products shipped, one from 0 → 12k users in 5 months.", // TODO
-  availability: "Available for 1 project — Q3 2026", // TODO
+    "Lance Candelaria - Solutions Designer & Product Engineer. I design and ship products end to end. 3 SaaS products shipped, one from 0 → 12k users in 5 months.", // TODO
+  availability: "Available for 1 project - Q3 2026", // TODO
   resumeUrl: "/lance-candelaria-resume.pdf", // TODO: drop the real file in /public
   socials: [
     { label: "GitHub", handle: "Zzziir", href: "https://github.com/Zzziir" },
@@ -38,7 +38,7 @@ export const site = {
   ],
 };
 
-/** Rule 04 — a proof strip near the top: numbers, no scrolling to find impact.
+/** Rule 04 - a proof strip near the top: numbers, no scrolling to find impact.
  * Structured so the numeric part can animate with <NumberTicker>. */
 export type ProofStat = {
   value: number;
@@ -58,14 +58,14 @@ export const proof: ProofStat[] = [
 export const about = {
   greeting: "Hey!",
   // short, decision-forward bio (Rule 05: judgment, not process)
-  lead: `I'm ${site.firstName} — a solutions designer and product engineer based in the Philippines. I take the messy middle between "we have a problem" and "it's live," and own all of it.`,
-  body: "Design, build, ship. I've shipped three SaaS products used by teams across four time zones — writing the interface and the API behind it. I optimize for the decision that moves the number, not the deck that explains it.", // TODO
+  lead: `I'm ${site.firstName} - a solutions designer and product engineer based in the Philippines. I take the messy middle between "we have a problem" and "it's live," and own all of it.`,
+  body: "Design, build, ship. I've shipped three SaaS products used by teams across four time zones - writing the interface and the API behind it. I optimize for the decision that moves the number, not the deck that explains it.", // TODO
   cta: { label: "Read the work", href: "#work" },
 };
 
-/** Rule 05 — the scroll-fill statement. One line, fills as you read. */
+/** Rule 05 - the scroll-fill statement. One line, fills as you read. */
 export const statement =
-  "From problem to launch. I design and ship digital products built to move fast, stay simple, and perform in the real world — driven by clarity, structured systems, and decisions that hold up.";
+  "From problem to launch. I design and ship digital products built to move fast, stay simple, and perform in the real world - driven by clarity, structured systems, and decisions that hold up.";
 
 export const services = [
   {
@@ -91,10 +91,10 @@ export type ProjectSection = { heading: string; body: string[] };
 export type Project = {
   slug: string;
   name: string;
-  /** Rule 02 — the title IS a result. */
+  /** Rule 02 - the title IS a result. */
   result: string;
   context: string;
-  /** Rule 05 — lead with the decision. */
+  /** Rule 05 - lead with the decision. */
   decision: string;
   tags: string[];
   year: string;
@@ -111,7 +111,7 @@ export type Project = {
 export const projectHref = (slug: string) => `/work/${slug}`;
 
 /**
- * PLACEHOLDER projects — real names/metrics/decisions/links to come.
+ * PLACEHOLDER projects - real names/metrics/decisions/links to come.
  * These reflect the actual builds; the `result` headlines and `decision` lines
  * are stand-ins until the real numbers/details are added. Search "TODO".
  */
@@ -122,25 +122,25 @@ export const projects: Project[] = [
     result: "Detects & localizes edited regions in images", // TODO: add accuracy metric
     context: "Mobile app · Flutter + computer vision",
     decision:
-      "Flags whether an image is edited and points to the tampered regions — and confirms genuinely unedited images.", // TODO: real design decision
+      "Flags whether an image is edited and points to the tampered regions - and confirms genuinely unedited images.", // TODO: real design decision
     tags: ["Flutter", "Computer Vision", "ML"],
     year: "2025", // TODO
     accent: "#ea3a28",
     category: "Mobile app",
     liveLink: "#", // TODO
     summary:
-      "A Flutter mobile app that analyzes a photo, decides whether it has been edited, and highlights the tampered regions — and confirms when an image is genuinely unaltered.", // TODO
+      "A Flutter mobile app that analyzes a photo, decides whether it has been edited, and highlights the tampered regions - and confirms when an image is genuinely unaltered.", // TODO
     sections: [
       {
         heading: "The problem",
         body: [
-          "Edited images spread fast and are hard to verify by eye. The goal was a tool anyone could use from their phone to check whether an image had been manipulated — and see exactly where.", // TODO
+          "Edited images spread fast and are hard to verify by eye. The goal was a tool anyone could use from their phone to check whether an image had been manipulated - and see exactly where.", // TODO
         ],
       },
       {
         heading: "What it does",
         body: [
-          "Point the app at an image and it returns a verdict — edited or authentic — plus an overlay marking the regions most likely to have been altered.", // TODO
+          "Point the app at an image and it returns a verdict - edited or authentic - plus an overlay marking the regions most likely to have been altered.", // TODO
         ],
       },
     ],
@@ -216,7 +216,7 @@ export const projects: Project[] = [
     category: "Study tool",
     liveLink: "#", // TODO
     summary:
-      "A practice and review tool for the AWS Solutions Architect Associate (SAA-C03) exam — question sets, explanations, and progress tracking.", // TODO
+      "A practice and review tool for the AWS Solutions Architect Associate (SAA-C03) exam - question sets, explanations, and progress tracking.", // TODO
     sections: [
       {
         heading: "Why",
@@ -255,7 +255,7 @@ export const testimonials: Testimonial[] = [
   },
   {
     quote:
-      "He deleted half our roadmap and we shipped faster. The judgment is the value — clean structure, real decisions.", // TODO
+      "He deleted half our roadmap and we shipped faster. The judgment is the value - clean structure, real decisions.", // TODO
     name: "Mark M.",
     title: "CTO, Meridian",
   },
@@ -289,7 +289,7 @@ export const posts: Post[] = [
     date: "Jun 16, 2026",
     title: "Design systems that survive a rewrite",
     excerpt:
-      "Tokens over components, decisions over documentation — what actually outlives the next framework.",
+      "Tokens over components, decisions over documentation - what actually outlives the next framework.",
     accent: "#5b6cff",
   },
 ];

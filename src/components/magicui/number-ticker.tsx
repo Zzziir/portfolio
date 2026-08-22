@@ -4,7 +4,7 @@ import { useEffect, useRef, type ComponentPropsWithoutRef } from "react";
 import { useInView, useMotionValue, useSpring } from "motion/react";
 import { cn } from "@/lib/utils";
 
-/** Magic UI — NumberTicker. Springs a number from startValue to value in view. */
+/** Magic UI - NumberTicker. Springs a number from startValue to value in view. */
 interface NumberTickerProps extends ComponentPropsWithoutRef<"span"> {
   value: number;
   startValue?: number;
