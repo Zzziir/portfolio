@@ -24,9 +24,11 @@ export function NumberTicker({
 }: NumberTickerProps) {
   const ref = useRef<HTMLSpanElement>(null);
   const motionValue = useMotionValue(direction === "down" ? value : startValue);
+  // Snappier than the Magic UI default (damping 60 / stiffness 100). Kept
+  // just above critical damping so integer counters don't overshoot.
   const springValue = useSpring(motionValue, {
-    damping: 60,
-    stiffness: 100,
+    damping: 32,
+    stiffness: 220,
   });
   const isInView = useInView(ref, { once: true, margin: "0px" });
 

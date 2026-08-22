@@ -52,7 +52,7 @@ export const proof: ProofStat[] = [
   { prefix: "0→", value: 12, suffix: "k", label: "users on the last launch" }, // TODO
   { value: 3, label: "SaaS products shipped" }, // TODO
   { prefix: "<", value: 1.0, decimals: 1, suffix: "s", label: "median load, every build" }, // TODO
-  { value: 6, suffix: " yrs", label: "designing + shipping" }, // TODO
+  { value: 6, suffix: " yrs", label: "designing + shipping" }, // TODO
 ];
 
 export const about = {

@@ -22,7 +22,9 @@ export function Proof() {
                 delay={0.15 + i * 0.08}
                 className="text-foreground"
               />
-              {item.suffix && <span>{item.suffix}</span>}
+              {item.suffix && (
+                <span className="whitespace-pre">{item.suffix}</span>
+              )}
             </div>
             <div className="mt-2 text-sm text-muted-foreground">{item.label}</div>
           </Reveal>
