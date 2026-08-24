@@ -51,3 +51,7 @@ next-env.d.ts
 # local design reference recording (large)
 /Template_Sample_recording.mov
 *.mov
+
+# source repos + raw screenshot drops (reference only, not part of the site)
+/ProjectRepos/
+/ProjectScreenshots/
