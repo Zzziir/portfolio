@@ -5,7 +5,7 @@ import { motion } from "motion/react";
 import type { Project } from "@/lib/content";
 import { EASE_OUT } from "@/lib/motion";
 import { Reveal } from "@/components/reveal";
-import { ImagePlaceholder } from "@/components/site/placeholder";
+import { ProjectMedia } from "@/components/site/project-media";
 import { ArrowUpRight } from "@/components/icons";
 
 export function ProjectDetail({ project }: { project: Project }) {
@@ -70,10 +70,13 @@ export function ProjectDetail({ project }: { project: Project }) {
 
         {/* Hero image */}
         <Reveal className="mt-12" delay={0.1}>
-          <ImagePlaceholder
-            accent={project.accent}
-            label={project.name}
-            className="aspect-[16/10] w-full ring-1 ring-white/10"
+          <ProjectMedia
+            project={project}
+            src={project.image}
+            aspect="aspect-[16/10]"
+            rounded="rounded-2xl"
+            className="w-full ring-1 ring-white/10"
+            priority
           />
         </Reveal>
 
@@ -85,10 +88,12 @@ export function ProjectDetail({ project }: { project: Project }) {
         {/* Second image */}
         {rest.length > 0 && (
           <Reveal className="mt-16" delay={0.05}>
-            <ImagePlaceholder
-              accent={project.accent}
-              label={project.name}
-              className="aspect-[16/9] w-full ring-1 ring-white/10"
+            <ProjectMedia
+              project={project}
+              src={project.image2}
+              aspect="aspect-[16/9]"
+              rounded="rounded-2xl"
+              className="w-full ring-1 ring-white/10"
             />
           </Reveal>
         )}
