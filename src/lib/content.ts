@@ -100,6 +100,14 @@ export type Project = {
   year: string;
   /** accent used for the placeholder thumbnail gradient */
   accent: string;
+  /** Rule 07 - the three strongest are featured; the rest are secondary. */
+  featured: boolean;
+  /** how imagery is framed: "mobile" gets an iPhone mock, "web" fills the frame */
+  platform: "mobile" | "web";
+  /** primary screenshot (card + detail hero). Drop the file in /public/assets/projects/<slug>/ */
+  image?: string;
+  /** optional second screenshot for the detail page */
+  image2?: string;
   // ── detail page (/work/[slug]) ──
   category: string;
   liveLink?: string;
@@ -110,95 +118,160 @@ export type Project = {
 /** Route to a project's detail page. */
 export const projectHref = (slug: string) => `/work/${slug}`;
 
+/** The three headline case studies (Rule 07 - strongest first). */
+export const featuredProjects = () => projects.filter((p) => p.featured);
+/** Smaller secondary builds shown under the featured work. */
+export const secondaryProjects = () => projects.filter((p) => !p.featured);
+
 /**
- * PLACEHOLDER projects - real names/metrics/decisions/links to come.
- * These reflect the actual builds; the `result` headlines and `decision` lines
- * are stand-ins until the real numbers/details are added. Search "TODO".
+ * Real projects. Copy reflects the actual builds; images are wired to
+ * /public/assets/projects/<slug>/ and fall back to a gradient until dropped in.
  */
 export const projects: Project[] = [
   {
-    slug: "image-forgery-detection",
-    name: "Forgery Detector",
-    result: "Detects & localizes edited regions in images", // TODO: add accuracy metric
-    context: "Mobile app · Flutter + computer vision",
+    slug: "stratty-chatbot",
+    name: "Stratty",
+    result: "Scores site visitors into sales-ready leads, live in production",
+    context: "Pre-sales AI chatbot · Stratpoint Technologies",
     decision:
-      "Flags whether an image is edited and points to the tampered regions - and confirms genuinely unedited images.", // TODO: real design decision
-    tags: ["Flutter", "Computer Vision", "ML"],
-    year: "2025", // TODO
-    accent: "#ea3a28",
-    category: "Mobile app",
-    liveLink: "#", // TODO
+      "Handed booking to a Google Calendar link and deleted the whole scheduling engine, so the bot does one job well: qualify leads through conversation and score them on a weighted 100-point rubric.",
+    tags: ["Node.js", "Supabase", "Claude / Gemini", "Next.js"],
+    year: "2026",
+    accent: "#14b8a6",
+    featured: true,
+    platform: "web",
+    image: "/assets/projects/stratty-chatbot/dashboard.png",
+    image2: "/assets/projects/stratty-chatbot/chat.png",
+    category: "Conversational AI",
+    // liveLink: "https://www.stratpoint.com", // TODO: confirm exact live URL
     summary:
-      "A Flutter mobile app that analyzes a photo, decides whether it has been edited, and highlights the tampered regions - and confirms when an image is genuinely unaltered.", // TODO
+      "A pre-sales chatbot on the Stratpoint site that qualifies visitors through conversation, scores each one into a sales-ready lead, and hands Sales a scored record with a downloadable transcript. Live in production since August 2026.",
     sections: [
       {
-        heading: "The problem",
+        heading: "The decision",
         body: [
-          "Edited images spread fast and are hard to verify by eye. The goal was a tool anyone could use from their phone to check whether an image had been manipulated - and see exactly where.", // TODO
+          "Stratpoint needed pre-sales qualification to run without a human on every chat. The build separates two concerns hard: one engine decides what is still missing about a lead (budget, authority, need, timeline, company), a second decides when to ask for it, so the conversation stays natural instead of interrogating.",
+          "Booking was handed entirely to a Google Calendar appointment link, which removed a whole scheduling engine, its OAuth, and its failure modes in one sprint.",
         ],
       },
       {
-        heading: "What it does",
+        heading: "How it qualifies",
         body: [
-          "Point the app at an image and it returns a verdict - edited or authentic - plus an overlay marking the regions most likely to have been altered.", // TODO
+          "Every visitor is scored on a weighted 100-point rubric across eight dimensions, with budgets normalized to one currency (a daily edge function looks up any exchange rate it does not already have). When a visitor states a need, the bot surfaces matching Stratpoint case studies as tappable cards, then hands Sales a scored, ready-to-read lead.",
+        ],
+      },
+      {
+        heading: "Shipped",
+        body: [
+          "Live in production since August 2026 on Vercel serverless and Supabase, with a pluggable LLM layer (Claude by default, Gemini selectable). A companion Next.js dashboard gives Sales the lead table, assignment, capacity alerts, and downloadable chat transcripts.",
         ],
       },
     ],
   },
   {
-    slug: "stratty-chatbot",
-    name: "Stratty",
-    result: "Chatbot that turns MQLs into SQLs", // TODO: add conversion metric
-    context: "Conversational AI · Stratpoint website",
+    slug: "wookie-workspace",
+    name: "Wookie",
+    result: "Runs seat booking and return-to-office for an entire company",
+    context: "Workspace + RTO platform · Stratpoint Technologies",
     decision:
-      "A website chatbot that qualifies visitors and accelerates marketing-qualified leads into sales-qualified ones.", // TODO
-    tags: ["Chatbot", "LLM", "Lead Gen"],
-    year: "2025", // TODO
-    accent: "#14b8a6",
-    category: "Conversational AI",
-    liveLink: "#", // TODO: stratpoint.com
+      "Split the product in two: a Flutter app employees book from and a Refine admin panel HR runs on, both over one Supabase Postgres, so mobile booking and compliance dashboards never drift.",
+    tags: ["Flutter", "Refine", "Supabase", "Next.js"],
+    year: "2023 - now",
+    accent: "#5b6cff",
+    featured: true,
+    platform: "mobile",
+    image: "/assets/projects/wookie-workspace/home.png",
+    image2: "/assets/projects/wookie-workspace/book-a-visit.png",
+    category: "Product platform",
     summary:
-      "Stratty is a chatbot on the Stratpoint website that engages visitors, answers questions, and accelerates marketing-qualified leads into sales-qualified ones.", // TODO
+      "The workspace platform Stratpoint runs its return-to-office on: a Flutter app for booking a desk and seeing who is in, plus a Refine admin panel for HR's compliance dashboards, on one shared Supabase backend. Shipped to iOS, Android, and web.",
     sections: [
       {
-        heading: "The goal",
+        heading: "The decision",
         body: [
-          "Turn passive website traffic into qualified pipeline by meeting visitors where they are and guiding them toward a conversation with sales.", // TODO
+          "The return-to-office policy needed both a way for employees to book a desk and a way for HR to prove compliance. Rather than one compromised app, it is two: a Flutter app for employees and a Refine + Ant Design admin panel for HR, sharing one Supabase Postgres so the numbers on both sides always agree.",
+        ],
+      },
+      {
+        heading: "What employees get",
+        body: [
+          "Book a visit, pick a seat, see who is already in the office, RSVP to events, check in by QR, and get business-continuity alerts when a site is affected. It ships from one codebase to iOS, Android, and web, across development, staging, UAT, and production flavors.",
+        ],
+      },
+      {
+        heading: "What HR gets",
+        body: [
+          "Office distribution charts by day, week, and month, an RTO compliance module, user administration, and CSV import/export, all behind Google sign-in locked to the company domain.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "craffe-order-ahead",
+    name: "Craffé",
+    result: "Order-ahead coffee app live across 2 branches",
+    context: "Order-ahead app · Craffé Coffee",
+    decision:
+      "Kept one shared menu with per-branch rules in a single config, so scanning the QR at either branch drops the order straight onto that branch's live queue and never the other's.",
+    tags: ["Next.js 16", "Supabase Realtime", "Gemini", "Tailwind v4"],
+    year: "2026",
+    accent: "#d97706",
+    featured: true,
+    platform: "web",
+    image: "/assets/projects/craffe-order-ahead/hero.png",
+    image2: "/assets/projects/craffe-order-ahead/menu.png",
+    category: "Order-ahead app",
+    summary:
+      "A mobile-first order-ahead app for Craffé Coffee across two branches: scan the table QR, build a drink, pay ahead, and track a live pickup status that chimes when it is ready. Baristas work a real-time queue scoped to their own branch. Built for a live owner pitch.",
+    sections: [
+      {
+        heading: "The decision",
+        body: [
+          "Two branches, one menu, one set of prices, but different hours, payment methods, and pickup codes. Every per-branch rule lives in a single config file, and a QR scan carries the branch in its URL, so an order placed at the Marilao branch lands on that queue and never East Rembo's.",
+        ],
+      },
+      {
+        heading: "The customer flow",
+        body: [
+          "Scan the table QR, build a drink and watch the price update as you add oat milk or an extra shot, pay ahead (simulated for the pitch), and land on a live pickup screen that chimes the moment your order is marked ready.",
+        ],
+      },
+      {
+        heading: "Behind the counter",
+        body: [
+          "Baristas work a real-time order board scoped to their branch by row-level security. There is a Gemini barista chatbot that knows the whole menu in warm Taglish, a buy-9-get-1 loyalty card, and printable QR table tents per branch. Built on Next.js 16 on foundations that can go live after sign-off with no rewrite.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "image-forgery-detection",
+    name: "Forgery Detector",
+    result: "Flags and localizes tampered regions in a photo",
+    context: "Undergraduate thesis · Flutter + computer vision",
+    decision:
+      "Ran Error Level Analysis through a trained classifier so the app returns a heat overlay of the edited regions, not just a yes/no verdict.",
+    tags: ["Flutter", "Computer Vision", "ELA", "Firebase"],
+    year: "2024",
+    accent: "#ea3a28",
+    featured: false,
+    platform: "web",
+    image: "/assets/projects/image-forgery-detection/detect.png",
+    image2: "/assets/projects/image-forgery-detection/home.png",
+    category: "Mobile app",
+    summary:
+      "A Flutter thesis app that checks a photo from your phone, decides whether it has been edited, and highlights the tampered regions with an Error Level Analysis overlay, or confirms the image is authentic.",
+    sections: [
+      {
+        heading: "The problem",
+        body: [
+          "Edited images spread faster than anyone can fact-check them, and the tampering is often invisible to the eye. This undergraduate thesis app lets anyone check a photo from their phone and see where it was altered.",
         ],
       },
       {
         heading: "How it works",
         body: [
-          "Stratty qualifies intent through conversation, surfaces the right information, and hands warm, sales-ready leads to the team.", // TODO
-        ],
-      },
-    ],
-  },
-  {
-    slug: "seat-reservation-app",
-    name: "Seat Reservation",
-    result: "Real-time seat booking on mobile", // TODO: add outcome metric
-    context: "Mobile app · Flutter",
-    decision:
-      "A cross-platform mobile app for reserving seats, built with Flutter for one codebase across iOS and Android.", // TODO
-    tags: ["Flutter", "Dart", "Realtime"],
-    year: "2024", // TODO
-    accent: "#5b6cff",
-    category: "Mobile app",
-    liveLink: "#", // TODO
-    summary:
-      "A cross-platform mobile app for reserving seats in real time, built with Flutter so a single codebase ships to both iOS and Android.", // TODO
-    sections: [
-      {
-        heading: "The idea",
-        body: [
-          "Make picking and holding a seat feel instant and reliable, without double-bookings, across any device.", // TODO
-        ],
-      },
-      {
-        heading: "The build",
-        body: [
-          "Flutter for one codebase across platforms, with real-time updates so availability always reflects the latest state.", // TODO
+          "The photo is sent to a classifier that runs Error Level Analysis, and the app returns a verdict plus an ELA overlay marking the regions most likely edited, or confirms the image is authentic. Built in Flutter with Firebase auth and storage.",
         ],
       },
     ],
@@ -206,28 +279,32 @@ export const projects: Project[] = [
   {
     slug: "aws-saa-reviewer",
     name: "SAA-C03 Reviewer",
-    result: "Exam reviewer for AWS SAA-C03", // TODO: add usage/pass metric
-    context: "Study tool · AWS Solutions Architect Associate",
+    result: "571-question trainer for the AWS SAA-C03 exam",
+    context: "Personal study tool · Next.js + Supabase",
     decision:
-      "A practice + review tool for the AWS Solutions Architect Associate (SAA-C03) certification exam.", // TODO
-    tags: ["AWS", "Quiz Engine", "Web"],
-    year: "2024", // TODO
+      "Scored weak topics from answer history and auto-built a weighted practice set (~65% weak, 20% developing, 15% maintain) instead of serving random questions.",
+    tags: ["Next.js 16", "Supabase", "Zustand", "Recharts"],
+    year: "2026",
     accent: "#f59e0b",
+    featured: false,
+    platform: "web",
+    image: "/assets/projects/aws-saa-reviewer/home.png",
+    image2: "/assets/projects/aws-saa-reviewer/insights.png",
     category: "Study tool",
-    liveLink: "#", // TODO
+    liveLink: "https://aws-saa-c03-reviewer.vercel.app",
     summary:
-      "A practice and review tool for the AWS Solutions Architect Associate (SAA-C03) exam - question sets, explanations, and progress tracking.", // TODO
+      "A practice and review tool for the AWS Solutions Architect Associate (SAA-C03) exam: 571 questions across the four domains, topic-level strengths and weaknesses, and a weighted set that targets your weak spots. Deployed on Vercel.",
     sections: [
       {
-        heading: "Why",
+        heading: "The decision",
         body: [
-          "The SAA-C03 covers a wide surface area. The tool focuses study on weak spots instead of re-reading everything.", // TODO
+          "Random practice questions waste time on topics you already know. The reviewer scores your history per topic and builds a weighted set that spends about 65% on weak areas, 20% on developing ones, and 15% keeping strengths warm.",
         ],
       },
       {
         heading: "What's inside",
         body: [
-          "Curated question sets with explanations and progress tracking so preparation stays targeted and measurable.", // TODO
+          "571 questions across the four SAA-C03 domains, a reviewer mode with instant feedback and an exam mode that scores only at the end, topic-level strengths and weaknesses, a bionic reading aid, and a cross-user streak leaderboard. Progress persists per user through Supabase auth.",
         ],
       },
     ],
