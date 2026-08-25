@@ -23,7 +23,8 @@ export function ProjectCard({
           <ProjectMedia
             project={project}
             src={project.image}
-            aspect={compact ? "aspect-[16/10]" : "aspect-[4/3]"}
+            src2={project.platform === "mobile" ? project.image2 : undefined}
+            aspect="aspect-[16/9]"
           />
         </div>
       </div>
