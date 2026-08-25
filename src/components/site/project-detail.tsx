@@ -73,7 +73,8 @@ export function ProjectDetail({ project }: { project: Project }) {
           <ProjectMedia
             project={project}
             src={project.image}
-            aspect="aspect-[16/10]"
+            src2={project.platform === "mobile" ? project.image2 : undefined}
+            aspect={project.platform === "web" ? "aspect-[16/9]" : "aspect-[16/10]"}
             rounded="rounded-2xl"
             className="w-full ring-1 ring-white/10"
             priority
@@ -85,8 +86,8 @@ export function ProjectDetail({ project }: { project: Project }) {
           <Section section={first} />
         </div>
 
-        {/* Second image */}
-        {rest.length > 0 && (
+        {/* Second image - web only; mobile shows both phones in the hero */}
+        {rest.length > 0 && project.platform === "web" && project.image2 && (
           <Reveal className="mt-16" delay={0.05}>
             <ProjectMedia
               project={project}
