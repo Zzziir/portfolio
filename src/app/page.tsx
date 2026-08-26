@@ -3,6 +3,7 @@ import { Proof } from "@/components/site/proof";
 import { Statement } from "@/components/site/statement";
 import { Services } from "@/components/site/services";
 import { Work } from "@/components/site/work";
+import { Stack } from "@/components/site/stack";
 import { Testimonials } from "@/components/site/testimonials";
 import { Thoughts } from "@/components/site/thoughts";
 import { Contact } from "@/components/site/contact";
@@ -19,6 +20,7 @@ export default function Home() {
         <Statement />
         <Services />
         <Work />
+        <Stack />
         <Testimonials />
         <Thoughts />
         <Contact />
