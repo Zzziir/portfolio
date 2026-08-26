@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import {
   motion,
   useReducedMotion,
@@ -12,8 +13,38 @@ import { about, site } from "@/lib/content";
 import { EASE_OUT } from "@/lib/motion";
 import { FloatingObjects } from "@/components/site/floating-objects";
 import { HeroGrid } from "@/components/site/hero-grid";
-import { ImagePlaceholder } from "@/components/site/placeholder";
 import { ArrowUpRight } from "@/components/icons";
+
+/** One side of the flip card: a full-bleed 3D portrait with an editorial tag. */
+function PortraitFace({
+  src,
+  alt,
+  priority,
+  className,
+}: {
+  src: string;
+  alt: string;
+  priority?: boolean;
+  className?: string;
+}) {
+  return (
+    <div
+      className={`relative overflow-hidden rounded-2xl bg-[#0b0a08] ${className ?? ""}`}
+    >
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        priority={priority}
+        sizes="(max-width: 640px) 80vw, 380px"
+        className="object-cover"
+      />
+      <span className="pointer-events-none absolute bottom-3 left-3 font-mono text-[10px] uppercase tracking-[0.2em] text-white/55">
+        portrait
+      </span>
+    </div>
+  );
+}
 
 /**
  * Hero + About as one region sharing a SINGLE portrait card.
@@ -24,7 +55,6 @@ import { ArrowUpRight } from "@/components/icons";
 export function HeroAbout() {
   const wrap = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
-  const monogram = `${site.firstName[0]}${site.lastName[0]}`;
 
   const { scrollYProgress } = useScroll({
     target: wrap,
@@ -66,11 +96,11 @@ export function HeroAbout() {
                 className="absolute inset-0"
                 style={{ backfaceVisibility: "hidden" }}
               >
-                <ImagePlaceholder
+                <PortraitFace
+                  src="/assets/profile/portrait-dark.png"
+                  alt={`${site.firstName} ${site.lastName}, 3D avatar portrait`}
+                  priority
                   className="h-full w-full shadow-[0_24px_70px_-24px_rgba(0,0,0,0.7)] ring-1 ring-white/15"
-                  accent="#6a6157"
-                  monogram={monogram}
-                  label="portrait"
                 />
               </div>
               <div
@@ -80,11 +110,10 @@ export function HeroAbout() {
                   transform: "rotateY(180deg)",
                 }}
               >
-                <ImagePlaceholder
+                <PortraitFace
+                  src="/assets/profile/portrait-red.png"
+                  alt=""
                   className="h-full w-full shadow-[0_24px_70px_-24px_rgba(234,58,40,0.55)] ring-1 ring-white/10"
-                  accent="#ea3a28"
-                  monogram={monogram}
-                  label="portrait"
                 />
               </div>
             </motion.div>
