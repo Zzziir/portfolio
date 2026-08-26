@@ -39,9 +39,6 @@ function PortraitFace({
         sizes="(max-width: 640px) 80vw, 380px"
         className="object-cover"
       />
-      <span className="pointer-events-none absolute bottom-3 left-3 font-mono text-[10px] uppercase tracking-[0.2em] text-white/55">
-        portrait
-      </span>
     </div>
   );
 }
@@ -100,7 +97,7 @@ export function HeroAbout() {
                   src="/assets/profile/portrait-dark.png"
                   alt={`${site.firstName} ${site.lastName}, 3D avatar portrait`}
                   priority
-                  className="h-full w-full shadow-[0_24px_70px_-24px_rgba(0,0,0,0.7)] ring-1 ring-white/15"
+                  className="h-full w-full shadow-[0_28px_60px_-26px_rgba(255,255,255,0.28),0_10px_28px_-18px_rgba(255,255,255,0.16)] ring-1 ring-white/15"
                 />
               </div>
               <div
