@@ -109,11 +109,13 @@ export type Project = {
   /** optional second screenshot for the detail page */
   image2?: string;
   /**
-   * Card thumbnail override, shown contained on the accent tile instead of the
-   * cover screenshot: "logo" gets generous padding, "contain" (a centered UI)
-   * gets a tight one. The detail hero still uses `image`.
+   * Card thumbnail override, shown contained on the tile instead of the cover
+   * screenshot: "logo" gets generous padding, "contain" (a centered UI) gets a
+   * tight one. `bg` fills the tile with a flat colour matching a logo's own
+   * background so it reads edge-to-edge; omit it to keep the accent glow (for
+   * transparent marks). The detail hero still uses `image`.
    */
-  card?: { src: string; fit: "logo" | "contain" };
+  card?: { src: string; fit: "logo" | "contain"; bg?: string };
   // ── detail page (/work/[slug]) ──
   category: string;
   liveLink?: string;
@@ -228,7 +230,11 @@ export const projects: Project[] = [
     platform: "web",
     image: "/assets/projects/craffe-order-ahead/hero.png",
     image2: "/assets/projects/craffe-order-ahead/menu.png",
-    card: { src: "/assets/projects/craffe-order-ahead/logo.png", fit: "logo" },
+    card: {
+      src: "/assets/projects/craffe-order-ahead/logo.png",
+      fit: "logo",
+      bg: "#2b2a28",
+    },
     category: "Order-ahead app",
     summary:
       "A mobile-first order-ahead app for Craffé Coffee across two branches: scan the table QR, build a drink, pay ahead, and track a live pickup status that chimes when it is ready. Baristas work a real-time queue scoped to their own branch. Built for a live owner pitch.",
@@ -303,7 +309,11 @@ export const projects: Project[] = [
     platform: "web",
     image: "/assets/projects/aws-saa-reviewer/home.png",
     image2: "/assets/projects/aws-saa-reviewer/insights.png",
-    card: { src: "/assets/projects/aws-saa-reviewer/logo.png", fit: "logo" },
+    card: {
+      src: "/assets/projects/aws-saa-reviewer/logo.png",
+      fit: "logo",
+      bg: "#131922",
+    },
     category: "Study tool",
     liveLink: "https://aws-saa-c03-reviewer.vercel.app",
     summary:
