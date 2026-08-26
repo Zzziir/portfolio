@@ -108,6 +108,12 @@ export type Project = {
   image?: string;
   /** optional second screenshot for the detail page */
   image2?: string;
+  /**
+   * Card thumbnail override, shown contained on the accent tile instead of the
+   * cover screenshot: "logo" gets generous padding, "contain" (a centered UI)
+   * gets a tight one. The detail hero still uses `image`.
+   */
+  card?: { src: string; fit: "logo" | "contain" };
   // ── detail page (/work/[slug]) ──
   category: string;
   liveLink?: string;
@@ -142,6 +148,7 @@ export const projects: Project[] = [
     platform: "web",
     image: "/assets/projects/stratty-chatbot/dashboard.png",
     image2: "/assets/projects/stratty-chatbot/chat.png",
+    card: { src: "/assets/projects/stratty-chatbot/logo.png", fit: "logo" },
     category: "Conversational AI",
     // liveLink: "https://www.stratpoint.com", // TODO: confirm exact live URL
     summary:
@@ -182,6 +189,7 @@ export const projects: Project[] = [
     platform: "mobile",
     image: "/assets/projects/wookie-workspace/home.png",
     image2: "/assets/projects/wookie-workspace/book-a-visit.png",
+    card: { src: "/assets/projects/wookie-workspace/logo.webp", fit: "logo" },
     category: "Product platform",
     summary:
       "The workspace platform Stratpoint runs its return-to-office on: a Flutter app for booking a desk and seeing who is in, plus a Refine admin panel for HR's compliance dashboards, on one shared Supabase backend. Shipped to iOS, Android, and web.",
@@ -220,6 +228,7 @@ export const projects: Project[] = [
     platform: "web",
     image: "/assets/projects/craffe-order-ahead/hero.png",
     image2: "/assets/projects/craffe-order-ahead/menu.png",
+    card: { src: "/assets/projects/craffe-order-ahead/logo.png", fit: "logo" },
     category: "Order-ahead app",
     summary:
       "A mobile-first order-ahead app for Craffé Coffee across two branches: scan the table QR, build a drink, pay ahead, and track a live pickup status that chimes when it is ready. Baristas work a real-time queue scoped to their own branch. Built for a live owner pitch.",
@@ -258,6 +267,10 @@ export const projects: Project[] = [
     platform: "web",
     image: "/assets/projects/image-forgery-detection/detect.png",
     image2: "/assets/projects/image-forgery-detection/home.png",
+    card: {
+      src: "/assets/projects/image-forgery-detection/predicted.png",
+      fit: "contain",
+    },
     category: "Mobile app",
     summary:
       "A Flutter thesis app that checks a photo from your phone, decides whether it has been edited, and highlights the tampered regions with an Error Level Analysis overlay, or confirms the image is authentic.",
@@ -279,7 +292,7 @@ export const projects: Project[] = [
   {
     slug: "aws-saa-reviewer",
     name: "SAA-C03 Reviewer",
-    result: "571-question trainer for the AWS SAA-C03 exam",
+    result: "AWS SAA-C03 Exam Reviewer",
     context: "Personal study tool · Next.js + Supabase",
     decision:
       "Scored weak topics from answer history and auto-built a weighted practice set (~65% weak, 20% developing, 15% maintain) instead of serving random questions.",
@@ -290,6 +303,7 @@ export const projects: Project[] = [
     platform: "web",
     image: "/assets/projects/aws-saa-reviewer/home.png",
     image2: "/assets/projects/aws-saa-reviewer/insights.png",
+    card: { src: "/assets/projects/aws-saa-reviewer/logo.png", fit: "logo" },
     category: "Study tool",
     liveLink: "https://aws-saa-c03-reviewer.vercel.app",
     summary:

@@ -20,12 +20,21 @@ export function ProjectCard({
     >
       <div className="overflow-hidden rounded-2xl ring-1 ring-white/10">
         <div className="transition-transform duration-700 ease-out group-hover:scale-[1.04]">
-          <ProjectMedia
-            project={project}
-            src={project.image}
-            src2={project.platform === "mobile" ? project.image2 : undefined}
-            aspect="aspect-[16/9]"
-          />
+          {project.card ? (
+            <ProjectMedia
+              project={project}
+              src={project.card.src}
+              aspect="aspect-[16/9]"
+              variant={project.card.fit}
+            />
+          ) : (
+            <ProjectMedia
+              project={project}
+              src={project.image}
+              src2={project.platform === "mobile" ? project.image2 : undefined}
+              aspect="aspect-[16/9]"
+            />
+          )}
         </div>
       </div>
 

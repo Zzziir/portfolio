@@ -19,6 +19,7 @@ export function ProjectMedia({
   className,
   label,
   priority,
+  variant,
 }: {
   project: Project;
   /** the image to show; falls back to the gradient placeholder when absent */
@@ -31,6 +32,8 @@ export function ProjectMedia({
   className?: string;
   label?: string;
   priority?: boolean;
+  /** show `src` contained on the accent tile instead of a cover screenshot */
+  variant?: "logo" | "contain";
 }) {
   const image = src;
 
@@ -42,6 +45,33 @@ export function ProjectMedia({
         label={label ?? project.name}
         className={`${aspect} ${className ?? ""}`}
       />
+    );
+  }
+
+  // Logo or centered UI: a soft accent wash behind an object-contain image, so
+  // dark wordmarks blend and transparent marks pop, without cover-cropping.
+  if (variant) {
+    const scene: CSSProperties = {
+      backgroundColor: "#0b0a08",
+      backgroundImage: `radial-gradient(120% 90% at 50% 15%, ${project.accent}33, transparent 55%), radial-gradient(90% 70% at 70% 115%, ${project.accent}1a, transparent 60%)`,
+    };
+    const pad = variant === "logo" ? "p-[12%] sm:p-[13%]" : "p-3 sm:p-5";
+    return (
+      <div
+        className={`relative grid ${aspect} place-items-center overflow-hidden ${rounded} ${pad} ${className ?? ""}`}
+        style={scene}
+      >
+        <div className="relative h-full w-full">
+          <Image
+            src={image}
+            alt={`${project.name} ${variant === "logo" ? "logo" : "screen"}`}
+            fill
+            sizes="(max-width: 640px) 100vw, 640px"
+            className="object-contain"
+            priority={priority}
+          />
+        </div>
+      </div>
     );
   }
 
