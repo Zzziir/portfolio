@@ -20,6 +20,7 @@ export function ProjectMedia({
   label,
   priority,
   variant,
+  bg,
 }: {
   project: Project;
   /** the image to show; falls back to the gradient placeholder when absent */
@@ -32,8 +33,10 @@ export function ProjectMedia({
   className?: string;
   label?: string;
   priority?: boolean;
-  /** show `src` contained on the accent tile instead of a cover screenshot */
+  /** show `src` contained on the tile instead of a cover screenshot */
   variant?: "logo" | "contain";
+  /** flat tile colour matching a logo's own background (edge-to-edge, no glow) */
+  bg?: string;
 }) {
   const image = src;
 
@@ -48,14 +51,18 @@ export function ProjectMedia({
     );
   }
 
-  // Logo or centered UI: a soft accent wash behind an object-contain image, so
-  // dark wordmarks blend and transparent marks pop, without cover-cropping.
+  // Logo or centered UI, object-contain so nothing is cover-cropped. With `bg`
+  // the tile is a flat colour matching the logo's own background (edge-to-edge,
+  // no glow that would betray the image's rectangle); otherwise a soft accent
+  // wash so transparent marks pop.
   if (variant) {
-    const scene: CSSProperties = {
-      backgroundColor: "#0b0a08",
-      backgroundImage: `radial-gradient(120% 90% at 50% 15%, ${project.accent}33, transparent 55%), radial-gradient(90% 70% at 70% 115%, ${project.accent}1a, transparent 60%)`,
-    };
-    const pad = variant === "logo" ? "p-[12%] sm:p-[13%]" : "p-3 sm:p-5";
+    const scene: CSSProperties = bg
+      ? { backgroundColor: bg }
+      : {
+          backgroundColor: "#0b0a08",
+          backgroundImage: `radial-gradient(120% 90% at 50% 15%, ${project.accent}33, transparent 55%), radial-gradient(90% 70% at 70% 115%, ${project.accent}1a, transparent 60%)`,
+        };
+    const pad = variant === "logo" ? "p-[9%] sm:p-[10%]" : "p-3 sm:p-5";
     return (
       <div
         className={`relative grid ${aspect} place-items-center overflow-hidden ${rounded} ${pad} ${className ?? ""}`}

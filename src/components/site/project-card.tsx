@@ -26,6 +26,7 @@ export function ProjectCard({
               src={project.card.src}
               aspect="aspect-[16/9]"
               variant={project.card.fit}
+              bg={project.card.bg}
             />
           ) : (
             <ProjectMedia
