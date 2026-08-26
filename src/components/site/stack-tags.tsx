@@ -4,10 +4,10 @@ import { iconFor } from "@/lib/tech-stack";
 const expand = (tags: string[]) => tags.flatMap((t) => t.split(/\s*\/\s*/));
 
 /**
- * A project's stack as chips: a monochrome brand mark plus its label. Marks
- * stay monochrome here so the colour-reveal stays unique to the "The stack"
- * section and the card grid never turns into a rainbow. Tags with no known
- * mark (Zustand, ELA) fall back to a label-only chip.
+ * A project's stack as chips: a brand mark in its real colour plus its label.
+ * The colour lives on the mark only (the label stays muted), so the cards get
+ * life without the layout turning loud. Tags with no known mark (Zustand, ELA)
+ * fall back to a label-only chip.
  */
 export function StackTags({
   tags,
@@ -35,7 +35,8 @@ export function StackTags({
               <svg
                 viewBox="0 0 24 24"
                 aria-hidden
-                className={`${icon} shrink-0 fill-current text-foreground/55`}
+                className={`${icon} shrink-0`}
+                style={{ fill: tech.color }}
               >
                 <path d={tech.path} />
               </svg>
