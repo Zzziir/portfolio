@@ -6,6 +6,7 @@ import type { Project } from "@/lib/content";
 import { EASE_OUT } from "@/lib/motion";
 import { Reveal } from "@/components/reveal";
 import { ProjectMedia } from "@/components/site/project-media";
+import { StackTags } from "@/components/site/stack-tags";
 import { ArrowUpRight } from "@/components/icons";
 
 export function ProjectDetail({ project }: { project: Project }) {
@@ -39,30 +40,39 @@ export function ProjectDetail({ project }: { project: Project }) {
           transition={{ duration: 0.7, ease: EASE_OUT, delay: 0.35 }}
           className="mt-12 grid gap-8 md:grid-cols-2 md:items-start"
         >
-          <dl className="flex flex-wrap items-start gap-x-4 gap-y-4 font-mono text-sm">
-            <Meta label="Category" value={project.category} />
-            <Divider />
-            <Meta label="Year" value={project.year} />
-            {project.liveLink && (
-              <>
-                <Divider />
-                <div className="flex flex-col gap-1.5">
-                  <dt className="text-xs text-muted-foreground">Live Link</dt>
-                  <dd>
-                    <a
-                      href={project.liveLink}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="group inline-flex items-center gap-1.5 text-foreground"
-                    >
-                      Visit
-                      <ArrowUpRight className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                    </a>
-                  </dd>
-                </div>
-              </>
-            )}
-          </dl>
+          <div className="flex flex-col gap-8">
+            <dl className="flex flex-wrap items-start gap-x-4 gap-y-4 font-mono text-sm">
+              <Meta label="Category" value={project.category} />
+              <Divider />
+              <Meta label="Year" value={project.year} />
+              {project.liveLink && (
+                <>
+                  <Divider />
+                  <div className="flex flex-col gap-1.5">
+                    <dt className="text-xs text-muted-foreground">Live Link</dt>
+                    <dd>
+                      <a
+                        href={project.liveLink}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="group inline-flex items-center gap-1.5 text-foreground"
+                      >
+                        Visit
+                        <ArrowUpRight className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                      </a>
+                    </dd>
+                  </div>
+                </>
+              )}
+            </dl>
+
+            <div className="flex flex-col gap-3">
+              <span className="font-mono text-xs text-muted-foreground">
+                Stack
+              </span>
+              <StackTags tags={project.tags} size="md" />
+            </div>
+          </div>
           <p className="text-pretty text-base leading-relaxed text-muted-foreground md:text-lg">
             {project.summary}
           </p>

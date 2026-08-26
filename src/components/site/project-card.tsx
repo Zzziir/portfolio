@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { projectHref, type Project } from "@/lib/content";
 import { ProjectMedia } from "@/components/site/project-media";
+import { StackTags } from "@/components/site/stack-tags";
 
 /**
  * A project card that links to its detail page. Shared by Work + MoreProjects.
@@ -64,16 +65,7 @@ export function ProjectCard({
           </p>
         )}
 
-        <div className="mt-4 flex flex-wrap gap-2">
-          {project.tags.map((tag) => (
-            <span
-              key={tag}
-              className="rounded-full border border-white/10 px-3 py-1 font-mono text-[11px] text-muted-foreground"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
+        <StackTags tags={project.tags} className="mt-4" />
       </div>
     </Link>
   );
