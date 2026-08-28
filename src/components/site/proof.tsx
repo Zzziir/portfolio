@@ -19,6 +19,7 @@ export function Proof() {
               <NumberTicker
                 value={item.value}
                 decimalPlaces={item.decimals ?? 0}
+                useGrouping={item.grouping ?? true}
                 delay={0.15 + i * 0.08}
                 className="text-foreground"
               />
