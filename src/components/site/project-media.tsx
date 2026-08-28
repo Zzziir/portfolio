@@ -72,6 +72,8 @@ export function ProjectMedia({
           src={image}
           alt={`${project.name} screen`}
           priority={priority}
+          fit="contain"
+          screenColor="#ffffff"
           className="h-[92%] w-auto"
         />
       </div>
