@@ -108,6 +108,8 @@ export type Project = {
   image?: string;
   /** optional second screenshot for the detail page */
   image2?: string;
+  /** frame the second detail image in an iPhone (for phone-shaped screenshots on a web project) */
+  image2Frame?: "phone";
   /**
    * Card thumbnail override, shown contained on the tile instead of the cover
    * screenshot: "logo" gets generous padding, "contain" (a centered UI) gets a
@@ -150,6 +152,7 @@ export const projects: Project[] = [
     platform: "web",
     image: "/assets/projects/stratty-chatbot/dashboard.png",
     image2: "/assets/projects/stratty-chatbot/chat.png",
+    image2Frame: "phone",
     card: { src: "/assets/projects/stratty-chatbot/logo.png", fit: "logo" },
     category: "Conversational AI",
     // liveLink: "https://www.stratpoint.com", // TODO: confirm exact live URL

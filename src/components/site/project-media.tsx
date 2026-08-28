@@ -33,8 +33,12 @@ export function ProjectMedia({
   className?: string;
   label?: string;
   priority?: boolean;
-  /** show `src` contained on the tile instead of a cover screenshot */
-  variant?: "logo" | "contain";
+  /**
+   * How `src` is framed on the tile instead of a cover screenshot: "logo" and
+   * "contain" sit the image on the scene; "phone" drops it into an iPhone mock
+   * (for a phone-shaped screenshot on an otherwise web project).
+   */
+  variant?: "logo" | "contain" | "phone";
   /** flat tile colour matching a logo's own background (edge-to-edge, no glow) */
   bg?: string;
 }) {
@@ -48,6 +52,29 @@ export function ProjectMedia({
         label={label ?? project.name}
         className={`${aspect} ${className ?? ""}`}
       />
+    );
+  }
+
+  // A phone-shaped screenshot (e.g. a chat UI) on a web project: drop it into an
+  // iPhone on the same accent-lit scene the mobile projects use, so the tall
+  // screen sits whole in a wide frame instead of being cover-cropped.
+  if (variant === "phone") {
+    const scene: CSSProperties = {
+      backgroundColor: "#0b0a08",
+      backgroundImage: `radial-gradient(120% 90% at 50% 12%, ${project.accent}, transparent 55%), radial-gradient(90% 70% at 70% 115%, ${project.accent}22, transparent 60%)`,
+    };
+    return (
+      <div
+        className={`relative grid ${aspect} place-items-center overflow-hidden ${rounded} px-6 py-8 ${className ?? ""}`}
+        style={scene}
+      >
+        <Iphone
+          src={image}
+          alt={`${project.name} screen`}
+          priority={priority}
+          className="h-[92%] w-auto"
+        />
+      </div>
     );
   }
 

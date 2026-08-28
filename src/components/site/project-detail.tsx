@@ -102,9 +102,10 @@ export function ProjectDetail({ project }: { project: Project }) {
             <ProjectMedia
               project={project}
               src={project.image2}
-              aspect="aspect-[16/9]"
+              aspect={project.image2Frame === "phone" ? "aspect-[16/10]" : "aspect-[16/9]"}
               rounded="rounded-2xl"
               className="w-full ring-1 ring-white/10"
+              variant={project.image2Frame}
             />
           </Reveal>
         )}
