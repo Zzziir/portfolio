@@ -18,6 +18,10 @@ export const TECH = {
   gemini: {"name":"Gemini","color":"#8E75B2","path":"M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81"},
   vercel: {"name":"Vercel","color":"#edeae1","path":"m12 1.608 12 20.784H0Z"},
   refine: {"name":"Refine","color":"#edeae1","path":"M13.789.422a4.001 4.001 0 0 0-3.578 0l-8 4A4.0011 4.0011 0 0 0 0 8v8c0 1.515.856 2.9 2.211 3.578l8 4a4.001 4.001 0 0 0 3.578 0l8-4A4.0011 4.0011 0 0 0 24 16V8c0-1.515-.856-2.9-2.211-3.578l-8-4ZM8 8c0-2.209 1.791-4 4-4s4 1.791 4 4v8c0 2.209-1.791 4-4 4s-4-1.791-4-4V8Zm6 0c0 1.105-.895 2-2 2s-2-.895-2-2 .895-2 2-2 2 .895 2 2Z"},
+  figma: {"name":"Figma","color":"#F24E1E","path":"M15.852 8.981h-4.588V0h4.588c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.491-4.49 4.491zM12.735 7.51h3.117c1.665 0 3.019-1.355 3.019-3.019s-1.355-3.019-3.019-3.019h-3.117V7.51zm0 1.471H8.148c-2.476 0-4.49-2.014-4.49-4.49S5.672 0 8.148 0h4.588v8.981zm-4.587-7.51c-1.665 0-3.019 1.355-3.019 3.019s1.354 3.02 3.019 3.02h3.117V1.471H8.148zm4.587 15.019H8.148c-2.476 0-4.49-2.014-4.49-4.49s2.014-4.49 4.49-4.49h4.588v8.98zM8.148 8.981c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.019 3.019 3.019h3.117V8.981H8.148zM8.172 24c-2.489 0-4.515-2.014-4.515-4.49s2.014-4.49 4.49-4.49h4.588v4.441c0 2.503-2.047 4.539-4.563 4.539zm-.024-7.51a3.023 3.023 0 0 0-3.019 3.019c0 1.665 1.365 3.019 3.044 3.019 1.705 0 3.093-1.376 3.093-3.068v-2.97H8.148zm7.704 0h-.098c-2.476 0-4.49-2.014-4.49-4.49s2.014-4.49 4.49-4.49h.098c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.49-4.49 4.49zm-.097-7.509c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.019 3.019 3.019h.098c1.665 0 3.019-1.355 3.019-3.019s-1.355-3.019-3.019-3.019h-.098z"},
+  drawio: {"name":"draw.io","color":"#F08705","path":"M19.69 13.419h-2.527l-2.667-4.555a1.292 1.292 0 001.035-1.28V4.16c0-.725-.576-1.312-1.302-1.312H9.771c-.726 0-1.312.576-1.312 1.301v3.435c0 .619.426 1.152 1.034 1.28l-2.666 4.555H4.309c-.725 0-1.312.576-1.312 1.301v3.435c0 .725.576 1.312 1.302 1.312h4.458c.726 0 1.312-.576 1.312-1.302v-3.434c0-.726-.576-1.312-1.301-1.312h-.437l2.645-4.523h2.059l2.656 4.523h-.438c-.725 0-1.312.576-1.312 1.301v3.435c0 .725.576 1.312 1.302 1.312H19.7c.726 0 1.312-.576 1.312-1.302v-3.434c0-.726-.576-1.312-1.301-1.312zM24 22.976c0 .565-.459 1.024-1.013 1.024H1.024A1.022 1.022 0 010 22.987V1.024C0 .459.459 0 1.013 0h21.963C23.541 0 24 .459 24 1.013z"},
+  mermaid: {"name":"Mermaid","color":"#FF3670","path":"M23.99 2.115A12.223 12.223 0 0 0 12 10.149 12.223 12.223 0 0 0 .01 2.115a12.23 12.23 0 0 0 5.32 10.604 6.562 6.562 0 0 1 2.845 5.423v3.754h7.65v-3.754a6.561 6.561 0 0 1 2.844-5.423 12.223 12.223 0 0 0 5.32-10.604Z"},
+  google: {"name":"Google Workspace","color":"#4285F4","path":"M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"},
   zustand: {"name":"Zustand","color":"#edeae1"},
   recharts: {"name":"Recharts","color":"#edeae1"},
   cv: {"name":"Computer Vision","color":"#edeae1"},
@@ -26,20 +30,16 @@ export const TECH = {
 
 export type TechKey = keyof typeof TECH;
 
-/** The twelve marks shown in the "The stack" section, in visual order. */
-export const techStack: Tech[] = [
-  TECH.nextjs,
-  TECH.react,
-  TECH.typescript,
-  TECH.tailwind,
-  TECH.motion,
-  TECH.supabase,
-  TECH.node,
-  TECH.flutter,
-  TECH.firebase,
-  TECH.claude,
-  TECH.gemini,
-  TECH.vercel,
+/** "The stack" section, grouped so it reads as a workflow, not a bag of logos. */
+export const stackGroups: { label: string; items: Tech[] }[] = [
+  {
+    label: "Build & ship",
+    items: [TECH.nextjs, TECH.react, TECH.typescript, TECH.tailwind, TECH.motion, TECH.supabase, TECH.node, TECH.flutter, TECH.firebase, TECH.claude, TECH.gemini, TECH.vercel],
+  },
+  {
+    label: "Design & plan",
+    items: [TECH.figma, TECH.drawio, TECH.mermaid, TECH.google],
+  },
 ];
 
 /**
@@ -50,7 +50,7 @@ export const techStack: Tech[] = [
 const MATCHERS: [RegExp, TechKey][] = [
   [/next/i, "nextjs"],
   [/react/i, "react"],
-  [/typescript|(^|\b)ts(\b|$)/i, "typescript"],
+  [/typescript/i, "typescript"],
   [/tailwind/i, "tailwind"],
   [/motion|framer/i, "motion"],
   [/supabase/i, "supabase"],
@@ -61,6 +61,10 @@ const MATCHERS: [RegExp, TechKey][] = [
   [/gemini/i, "gemini"],
   [/vercel/i, "vercel"],
   [/refine/i, "refine"],
+  [/figma/i, "figma"],
+  [/draw\.?io|diagrams/i, "drawio"],
+  [/mermaid/i, "mermaid"],
+  [/google|workspace/i, "google"],
   [/zustand/i, "zustand"],
   [/recharts/i, "recharts"],
   [/computer vision/i, "cv"],
