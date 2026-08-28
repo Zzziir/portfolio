@@ -68,14 +68,16 @@ export function ProjectMedia({
         className={`relative grid ${aspect} place-items-center overflow-hidden ${rounded} px-6 py-8 ${className ?? ""}`}
         style={scene}
       >
-        <Iphone
-          src={image}
-          alt={`${project.name} screen`}
-          priority={priority}
-          fit="contain"
-          screenColor="#ffffff"
-          className="h-[92%] w-auto"
-        />
+        <div className="flex h-full items-center justify-center">
+          <Iphone
+            src={image}
+            alt={`${project.name} screen`}
+            priority={priority}
+            fit="contain"
+            screenColor="#ffffff"
+            className="h-[92%] w-auto"
+          />
+        </div>
       </div>
     );
   }
