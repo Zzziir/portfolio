@@ -21,7 +21,7 @@ export const site = {
   heroKicker: "solutions designer · product engineer",
   // Rule 02 - hero line includes a business result, not a personality trait.
   heroLine:
-    "I design and ship the whole product, from the fuzzy problem to the running software. My builds run in production at a tech company.",
+    "I design and ship the whole product, from the fuzzy problem to the running software. That's solutions engineering: I own the business problem and the code in production that solves it.",
   location: "Manila, PH - working remote",
   since: 2024, // "designing & shipping since"
   email: "lancecandelaria2@gmail.com",
