@@ -21,13 +21,13 @@ export const site = {
   heroKicker: "solutions designer · product engineer",
   // Rule 02 - hero line includes a business result, not a personality trait.
   heroLine:
-    "I design and ship the whole product - from the fuzzy problem to the running software. Last build went 0 → 12,000 users in 5 months.", // TODO: real result
+    "I design and ship the whole product, from the fuzzy problem to the running software. My builds run in production at a tech company.",
   location: "Manila, PH - working remote",
-  since: 2019, // "designing & shipping since"
+  since: 2024, // "designing & shipping since"
   email: "lancecandelaria2@gmail.com",
   url: "https://portfolio.lanceamiel.site",
   metaDescription:
-    "Lance Candelaria - Solutions Designer & Product Engineer. I design and ship products end to end. 3 SaaS products shipped, one from 0 → 12k users in 5 months.", // TODO
+    "Lance Candelaria - Solutions Designer & Product Engineer. I design and ship products end to end, interface and API, with three shipped to production.",
   availability: "Available for 1 project - Q3 2026", // TODO
   resumeUrl: "/lance-candelaria-resume.pdf", // TODO: drop the real file in /public
   socials: [
@@ -45,21 +45,23 @@ export type ProofStat = {
   prefix?: string;
   suffix?: string;
   decimals?: number;
+  /** thousands separators; off for years so 2024 doesn't render as 2,024 */
+  grouping?: boolean;
   label: string;
 };
 
 export const proof: ProofStat[] = [
-  { prefix: "0→", value: 12, suffix: "k", label: "users on the last launch" }, // TODO
-  { value: 3, label: "SaaS products shipped" }, // TODO
-  { prefix: "<", value: 1.0, decimals: 1, suffix: "s", label: "median load, every build" }, // TODO
-  { value: 6, suffix: " yrs", label: "designing + shipping" }, // TODO
+  { value: 3, label: "products shipped to production" },
+  { value: 3, label: "platforms shipped: iOS, Android, web" },
+  { value: 100, suffix: "-pt", label: "live lead-scoring rubric" },
+  { prefix: "since ", value: 2024, grouping: false, label: "designing + shipping" },
 ];
 
 export const about = {
   greeting: "Hey!",
   // short, decision-forward bio (Rule 05: judgment, not process)
   lead: `I'm ${site.firstName} - a solutions designer and product engineer based in the Philippines. I take the messy middle between "we have a problem" and "it's live," and own all of it.`,
-  body: "Design, build, ship. I've shipped three SaaS products used by teams across four time zones - writing the interface and the API behind it. I optimize for the decision that moves the number, not the deck that explains it.", // TODO
+  body: "Design, build, ship. I've put three products into production, writing the interface and the API behind each one. I optimize for the decision that moves the number, not the deck that explains it.",
   cta: { label: "Read the work", href: "#work" },
 };
 
