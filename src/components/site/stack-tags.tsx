@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { iconFor } from "@/lib/tech-stack";
 
 /** "Claude / Gemini" reads as two tools, so it becomes two chips. */
@@ -29,13 +30,14 @@ export function StackTags({
         return (
           <li
             key={label}
-            className={`inline-flex items-center gap-1.5 rounded-full border border-white/10 ${pad} font-mono ${text} text-muted-foreground`}
+            style={{ "--c": tech?.color ?? "#ffffff" } as CSSProperties}
+            className={`group inline-flex items-center gap-1.5 rounded-full border border-white/10 ${pad} font-mono ${text} text-muted-foreground transition-[transform,border-color,color] duration-200 ease-out hover:-translate-y-0.5 hover:text-foreground hover:[border-color:color-mix(in_oklab,var(--c)_50%,transparent)] motion-reduce:transition-[border-color,color] motion-reduce:hover:translate-y-0`}
           >
             {tech?.path && (
               <svg
                 viewBox="0 0 24 24"
                 aria-hidden
-                className={`${icon} shrink-0`}
+                className={`${icon} shrink-0 transition-transform delay-[30ms] duration-300 [transition-timing-function:cubic-bezier(0.34,1.56,0.64,1)] group-hover:-rotate-6 group-hover:scale-110 motion-reduce:transition-none motion-reduce:group-hover:rotate-0 motion-reduce:group-hover:scale-100`}
                 style={{ fill: tech.color }}
               >
                 <path d={tech.path} />
