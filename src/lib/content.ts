@@ -41,10 +41,7 @@ export const site = {
 /** Rule 04 - a proof strip near the top: numbers, no scrolling to find impact.
  * Structured so the numeric part can animate with <NumberTicker>. */
 export type ProofStat = {
-  /** the big figure; omit when using `text` for a word-based stat */
-  value?: number;
-  /** a word-based headline instead of a ticking number (e.g. "end-to-end") */
-  text?: string;
+  value: number;
   prefix?: string;
   suffix?: string;
   decimals?: number;
@@ -55,8 +52,8 @@ export type ProofStat = {
 
 export const proof: ProofStat[] = [
   { value: 3, label: "products shipped to production" },
-  { text: "iOS · Android · web", label: "one product, all three" },
-  { text: "end-to-end", label: "interface + API" },
+  { value: 3, label: "platforms: iOS, Android, web" },
+  { value: 1, label: "backend powering 3 clients" },
   { prefix: "since ", value: 2024, grouping: false, label: "designing + shipping" },
 ];
 
