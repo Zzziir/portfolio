@@ -55,3 +55,6 @@ next-env.d.ts
 # source repos + raw screenshot drops (reference only, not part of the site)
 /ProjectRepos/
 /ProjectScreenshots/
+
+# graphify knowledge graph (prebuilt context artifact, regenerate with /graphify)
+/graphify-out/
