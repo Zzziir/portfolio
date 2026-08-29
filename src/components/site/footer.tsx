@@ -1,4 +1,5 @@
 import { footer, site } from "@/lib/content";
+import { InteractiveHoverButton } from "@/components/magicui/interactive-hover-button";
 
 export function Footer() {
   return (
@@ -20,12 +21,9 @@ export function Footer() {
             <ul className="flex flex-wrap gap-2.5">
               {footer.quickLinks.map((link) => (
                 <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="inline-block rounded-xl bg-foreground px-4 py-2 text-sm font-medium text-background transition-opacity hover:opacity-85"
-                  >
+                  <InteractiveHoverButton href={link.href}>
                     {link.label}
-                  </a>
+                  </InteractiveHoverButton>
                 </li>
               ))}
             </ul>
