@@ -1,5 +1,6 @@
 import { footer, site } from "@/lib/content";
 import { InteractiveHoverButton } from "@/components/magicui/interactive-hover-button";
+import Text3DFlip from "@/components/magicui/text-3d-flip";
 
 export function Footer() {
   return (
@@ -34,12 +35,18 @@ export function Footer() {
             <p className="mb-5 font-mono text-sm text-muted-foreground">
               /Contact
             </p>
-            <a
+            <Text3DFlip
+              as="a"
               href={`mailto:${site.email}`}
-              className="text-base underline-offset-4 hover:underline"
+              className="w-fit border-b border-foreground/50 pb-1 text-base"
+              textClassName="bg-[#080807] text-foreground"
+              flipTextClassName="bg-[#080807] text-foreground"
+              rotateDirection="top"
+              staggerDuration={0.025}
+              staggerFrom="center"
             >
               {site.email}
-            </a>
+            </Text3DFlip>
             <p className="mt-4 text-sm text-muted-foreground">
               {site.availability}
             </p>
