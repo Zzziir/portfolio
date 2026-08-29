@@ -1,5 +1,6 @@
 import { services } from "@/lib/content";
 import { Reveal } from "@/components/reveal";
+import { KineticText } from "@/components/magicui/kinetic-text";
 import { ArrowUpRight } from "@/components/icons";
 
 export function Services() {
@@ -7,9 +8,11 @@ export function Services() {
     <section id="services" className="px-5 py-24 sm:px-8 sm:py-28">
       <div className="mx-auto max-w-6xl">
         <Reveal>
-          <h2 className="text-5xl font-black tracking-tight sm:text-6xl">
-            Services
-          </h2>
+          <KineticText
+            as="h2"
+            text="Services"
+            className="text-5xl font-black tracking-tight sm:text-6xl"
+          />
         </Reveal>
 
         <ul className="mt-14 border-t border-white/10">

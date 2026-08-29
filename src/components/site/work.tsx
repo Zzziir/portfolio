@@ -1,5 +1,6 @@
 import { featuredProjects, secondaryProjects } from "@/lib/content";
 import { Reveal } from "@/components/reveal";
+import { KineticText } from "@/components/magicui/kinetic-text";
 import { ProjectCard } from "@/components/site/project-card";
 import { ArrowUpRight } from "@/components/icons";
 
@@ -12,11 +13,11 @@ export function Work() {
       <div className="mx-auto max-w-6xl">
         <div className="flex items-end justify-between gap-6">
           <Reveal>
-            <h2 className="text-5xl font-black leading-[0.95] tracking-tight sm:text-6xl">
-              Featured
-              <br />
-              Work
-            </h2>
+            <KineticText
+              as="h2"
+              text={"Featured\nWork"}
+              className="text-5xl font-black leading-[0.95] tracking-tight sm:text-6xl"
+            />
           </Reveal>
           <Reveal delay={0.1}>
             <a

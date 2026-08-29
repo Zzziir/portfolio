@@ -1,5 +1,6 @@
 import { posts } from "@/lib/content";
 import { Reveal } from "@/components/reveal";
+import { KineticText } from "@/components/magicui/kinetic-text";
 import { ImagePlaceholder } from "@/components/site/placeholder";
 import { ArrowUpRight } from "@/components/icons";
 
@@ -8,9 +9,11 @@ export function Thoughts() {
     <section className="px-5 py-24 sm:px-8 sm:py-28">
       <div className="mx-auto max-w-6xl">
         <Reveal>
-          <h2 className="text-5xl font-black tracking-tight sm:text-6xl">
-            Thoughts
-          </h2>
+          <KineticText
+            as="h2"
+            text="Thoughts"
+            className="text-5xl font-black tracking-tight sm:text-6xl"
+          />
         </Reveal>
 
         <div className="mt-14 grid gap-4 md:grid-cols-3">
