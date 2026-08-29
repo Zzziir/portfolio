@@ -14,17 +14,32 @@ export function Proof() {
             delay={i * 0.08}
             className="px-4 text-center sm:border-l sm:border-white/10 sm:first:border-l-0"
           >
-            <div className="flex items-baseline justify-center text-4xl font-semibold tracking-tight sm:text-5xl">
-              {item.prefix && <span>{item.prefix}</span>}
-              <NumberTicker
-                value={item.value}
-                decimalPlaces={item.decimals ?? 0}
-                useGrouping={item.grouping ?? true}
-                delay={0.15 + i * 0.08}
-                className="text-foreground"
-              />
-              {item.suffix && (
-                <span className="whitespace-pre">{item.suffix}</span>
+            {/* headline row with a shared min height so number and word stats
+                keep their labels on the same line; fixed on desktop, growing on
+                mobile so a wrapped phrase isn't clipped */}
+            <div className="flex min-h-14 items-center justify-center sm:h-14">
+              {item.text ? (
+                // sized down from the numbers so a phrase like
+                // "iOS · Android · web" stays tidy in a narrow cell
+                <span className="text-balance text-xl font-semibold tracking-tight text-foreground sm:text-[1.75rem]">
+                  {item.text}
+                </span>
+              ) : (
+                <span className="flex items-baseline text-4xl font-semibold tracking-tight sm:text-5xl">
+                  {item.prefix && (
+                    <span className="whitespace-pre">{item.prefix}</span>
+                  )}
+                  <NumberTicker
+                    value={item.value ?? 0}
+                    decimalPlaces={item.decimals ?? 0}
+                    useGrouping={item.grouping ?? true}
+                    delay={0.15 + i * 0.08}
+                    className="text-foreground"
+                  />
+                  {item.suffix && (
+                    <span className="whitespace-pre">{item.suffix}</span>
+                  )}
+                </span>
               )}
             </div>
             <div className="mt-2 text-sm text-muted-foreground">{item.label}</div>
