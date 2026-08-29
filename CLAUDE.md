@@ -19,6 +19,29 @@ Guidance for every session in this repo. These instructions are binding.
 
 ---
 
+## 0.5. Context gathering - query the knowledge graph first
+
+Before grepping or reading files wholesale to answer a question about this
+codebase (architecture, what-connects-to-what, where-something-lives, data
+flow), **check `graphify-out/` first** - a prebuilt knowledge graph of the repo
+lives there. It is the cheap path: query it before fanning out reads.
+
+- **`graphify-out/graph.json`** - the graph (278 nodes, 428 edges, 21
+  communities): every code symbol via AST, plus docs and project screenshots.
+- **`graphify-out/GRAPH_REPORT.md`** - god nodes, community labels, bridges.
+- Ask it directly: `graphify query "<natural-language question>"` (also
+  `graphify path "A" "B"` and `graphify explain "<node>"`). If a question is
+  answerable from the graph, use it instead of a broad Grep/Read sweep.
+
+**Keep it fresh.** The graph is a snapshot, not live. After non-trivial
+structural changes (new components, moved files, rewired data), rebuild with
+`/graphify . --update` so it does not drift. Known blind spot: filename-string
+couplings (e.g. `content.ts` image paths, `@/*` tsconfig aliases) are invisible
+to AST extraction - a targeted deep pass wired those in, but new ones will not
+appear until re-linked.
+
+---
+
 ## 1. Commit strategy - atomic + conventional
 
 **Atomic commits.** One logical change per commit. A commit should build, pass
