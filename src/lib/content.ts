@@ -45,16 +45,14 @@ export type ProofStat = {
   prefix?: string;
   suffix?: string;
   decimals?: number;
-  /** thousands separators; off for years so 2024 doesn't render as 2,024 */
-  grouping?: boolean;
   label: string;
 };
 
 export const proof: ProofStat[] = [
   { value: 3, label: "products shipped to production" },
   { value: 3, label: "platforms: iOS, Android, web" },
-  { value: 1, label: "backend powering 3 clients" },
-  { prefix: "since ", value: 2024, grouping: false, label: "designing + shipping" },
+  { value: 2, label: "disciplines: design + engineering" },
+  { value: 2, suffix: "+", label: "years shipping products" },
 ];
 
 export const about = {
