@@ -11,8 +11,6 @@ interface NumberTickerProps extends ComponentPropsWithoutRef<"span"> {
   direction?: "up" | "down";
   delay?: number;
   decimalPlaces?: number;
-  /** thousands separators; turn off for years (2024, not 2,024) */
-  useGrouping?: boolean;
 }
 
 export function NumberTicker({
@@ -22,7 +20,6 @@ export function NumberTicker({
   delay = 0,
   className,
   decimalPlaces = 0,
-  useGrouping = true,
   ...props
 }: NumberTickerProps) {
   const ref = useRef<HTMLSpanElement>(null);
@@ -49,11 +46,10 @@ export function NumberTicker({
         ref.current.textContent = Intl.NumberFormat("en-US", {
           minimumFractionDigits: decimalPlaces,
           maximumFractionDigits: decimalPlaces,
-          useGrouping,
         }).format(Number(latest.toFixed(decimalPlaces)));
       }
     });
-  }, [springValue, decimalPlaces, useGrouping]);
+  }, [springValue, decimalPlaces]);
 
   return (
     <span
