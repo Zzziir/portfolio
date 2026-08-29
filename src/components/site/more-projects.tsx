@@ -1,5 +1,6 @@
 import { projects } from "@/lib/content";
 import { Reveal } from "@/components/reveal";
+import { KineticText } from "@/components/magicui/kinetic-text";
 import { ProjectCard } from "@/components/site/project-card";
 
 /** Grid of the other projects, shown at the bottom of a detail page. */
@@ -11,9 +12,11 @@ export function MoreProjects({ currentSlug }: { currentSlug: string }) {
     <section className="border-t border-white/10 px-5 py-24 sm:px-8 sm:py-28">
       <div className="mx-auto max-w-6xl">
         <Reveal>
-          <h2 className="text-5xl font-black tracking-tight sm:text-6xl">
-            More Projects
-          </h2>
+          <KineticText
+            as="h2"
+            text="More Projects"
+            className="text-5xl font-black tracking-tight sm:text-6xl"
+          />
         </Reveal>
 
         <div className="mt-14 grid gap-x-6 gap-y-12 sm:grid-cols-2">

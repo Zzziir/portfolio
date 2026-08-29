@@ -1,14 +1,17 @@
 import { testimonials } from "@/lib/content";
 import { Reveal } from "@/components/reveal";
+import { KineticText } from "@/components/magicui/kinetic-text";
 
 export function Testimonials() {
   return (
     <section className="px-5 py-24 sm:px-8 sm:py-28">
       <div className="mx-auto max-w-6xl">
         <Reveal>
-          <h2 className="text-5xl font-black tracking-tight sm:text-6xl">
-            Testimonials
-          </h2>
+          <KineticText
+            as="h2"
+            text="Testimonials"
+            className="text-5xl font-black tracking-tight sm:text-6xl"
+          />
         </Reveal>
 
         <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

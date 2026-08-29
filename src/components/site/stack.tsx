@@ -5,6 +5,7 @@ import { motion } from "motion/react";
 import { riseVariants, staggerContainer } from "@/lib/motion";
 import { stackGroups, type Tech } from "@/lib/tech-stack";
 import { Reveal } from "@/components/reveal";
+import { KineticText } from "@/components/magicui/kinetic-text";
 
 /**
  * The tech stack as hairline grids of real brand marks, split into a couple of
@@ -19,9 +20,11 @@ export function Stack() {
     <section id="stack" className="px-5 py-24 sm:px-8 sm:py-28">
       <div className="mx-auto max-w-6xl">
         <Reveal>
-          <h2 className="text-5xl font-black tracking-tight sm:text-6xl">
-            The stack
-          </h2>
+          <KineticText
+            as="h2"
+            text="The stack"
+            className="text-5xl font-black tracking-tight sm:text-6xl"
+          />
         </Reveal>
         <Reveal delay={0.08}>
           <p className="mt-5 max-w-xl text-pretty text-base leading-relaxed text-muted-foreground">

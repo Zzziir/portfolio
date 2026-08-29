@@ -14,6 +14,7 @@ import { EASE_OUT } from "@/lib/motion";
 import { FloatingObjects } from "@/components/site/floating-objects";
 import { HeroGrid } from "@/components/site/hero-grid";
 import { ArrowUpRight } from "@/components/icons";
+import { KineticText } from "@/components/magicui/kinetic-text";
 
 /** One side of the flip card: a full-bleed 3D portrait with an editorial tag. */
 function PortraitFace({
@@ -159,9 +160,11 @@ export function HeroAbout() {
       >
         <div className="mx-auto grid w-full max-w-6xl items-center gap-10 md:grid-cols-12 md:gap-8">
           <div className="relative z-20 flex flex-col justify-between md:col-span-4 md:h-[420px]">
-            <h2 className="text-6xl font-black tracking-tight sm:text-7xl">
-              {about.greeting}
-            </h2>
+            <KineticText
+              as="h2"
+              text={about.greeting}
+              className="text-6xl font-black tracking-tight sm:text-7xl"
+            />
             <p className="mt-8 max-w-xs text-pretty text-lg font-medium leading-snug md:mt-0">
               {about.lead}
             </p>

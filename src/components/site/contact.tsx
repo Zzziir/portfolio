@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from "react";
 import { site } from "@/lib/content";
 import { Reveal } from "@/components/reveal";
+import { KineticText } from "@/components/magicui/kinetic-text";
 import { SocialIcon, ArrowUpRight } from "@/components/icons";
 
 export function Contact() {
@@ -30,9 +31,11 @@ export function Contact() {
         <div className="flex flex-col justify-between gap-10">
           <div>
             <Reveal>
-              <h2 className="text-6xl font-black tracking-tight sm:text-7xl">
-                Let’s talk.
-              </h2>
+              <KineticText
+                as="h2"
+                text="Let’s talk."
+                className="text-6xl font-black tracking-tight sm:text-7xl"
+              />
             </Reveal>
             <Reveal delay={0.1}>
               <p className="mt-6 max-w-md text-pretty text-base leading-relaxed text-muted-foreground">
