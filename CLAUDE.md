@@ -12,6 +12,10 @@ Guidance for every session in this repo. These instructions are binding.
 - **Stack:** Next.js 16 (App Router) + Tailwind v4 + shadcn/ui + `motion`
   (Framer Motion), self-hosted Geist font, deployed on Vercel.
 - **Repo:** https://github.com/Zzziir/portfolio.git (`origin`).
+- **MCP:** **Portfolio-Supabase** (`mcp__Portfolio-Supabase__*`) is this
+  project's Supabase MCP server. Scoped **local** to this repo only (config in
+  `~/.claude.json`, token kept out of version control). Use it for any Supabase
+  work here; other Supabase MCP servers in the session belong to other projects.
 - **Design reference:** the Framer "Majd" template
   (warm editorial brutalist grotesk) - **adapted to dark mode**. Match its
   layout and its animations (scroll-linked word fill, portrait mask reveal,

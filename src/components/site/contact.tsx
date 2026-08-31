@@ -6,18 +6,43 @@ import { Reveal } from "@/components/reveal";
 import { KineticText } from "@/components/magicui/kinetic-text";
 import { SocialIcon, ArrowUpRight } from "@/components/icons";
 
-export function Contact() {
-  const [values, setValues] = useState({ name: "", email: "", project: "" });
+type Status = "idle" | "submitting" | "success" | "error";
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+export function Contact() {
+  const [values, setValues] = useState({
+    name: "",
+    email: "",
+    project: "",
+    website: "", // honeypot, stays empty for humans
+  });
+  const [status, setStatus] = useState<Status>("idle");
+  const [error, setError] = useState<string | null>(null);
+
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const subject = encodeURIComponent(
-      `Project inquiry from ${values.name || "a visitor"}`,
-    );
-    const body = encodeURIComponent(
-      `${values.project}\n\n- ${values.name}\n${values.email}`,
-    );
-    window.location.href = `mailto:${site.email}?subject=${subject}&body=${body}`;
+    setStatus("submitting");
+    setError(null);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+      const data = (await res.json().catch(() => null)) as
+        | { ok: boolean; error?: string }
+        | null;
+
+      if (res.ok && data?.ok) {
+        setStatus("success");
+        return;
+      }
+      setStatus("error");
+      setError(data?.error ?? "Something went wrong. Please try again.");
+    } catch {
+      setStatus("error");
+      setError("Couldn't reach the server. Please try again.");
+    }
   }
 
   const set = (key: keyof typeof values) => (
@@ -74,55 +99,115 @@ export function Contact() {
 
         {/* Right: form */}
         <Reveal delay={0.1}>
-          <form
-            onSubmit={handleSubmit}
-            className="rounded-3xl border border-white/10 bg-card p-6 sm:p-8"
-          >
-            <Field label="Name" htmlFor="name">
-              <input
-                id="name"
-                name="name"
-                required
-                value={values.name}
-                onChange={set("name")}
-                placeholder="Enter your name"
-                className={inputClass}
-              />
-            </Field>
-            <Field label="Email" htmlFor="email">
-              <input
-                id="email"
-                name="email"
-                type="email"
-                required
-                value={values.email}
-                onChange={set("email")}
-                placeholder="Enter your email"
-                className={inputClass}
-              />
-            </Field>
-            <Field label="Your project" htmlFor="project">
-              <textarea
-                id="project"
-                name="project"
-                required
-                rows={4}
-                value={values.project}
-                onChange={set("project")}
-                placeholder="Tell me about your project"
-                className={`${inputClass} resize-none`}
-              />
-            </Field>
-            <button
-              type="submit"
-              className="mt-2 w-full rounded-xl bg-foreground py-3.5 text-[15px] font-medium text-background transition-transform hover:opacity-95 active:scale-[0.99]"
+          {status === "success" ? (
+            <SuccessPanel name={values.name} />
+          ) : (
+            <form
+              onSubmit={handleSubmit}
+              className="rounded-3xl border border-white/10 bg-card p-6 sm:p-8"
             >
-              Submit
-            </button>
-          </form>
+              <Field label="Name" htmlFor="name">
+                <input
+                  id="name"
+                  name="name"
+                  required
+                  maxLength={100}
+                  value={values.name}
+                  onChange={set("name")}
+                  placeholder="Enter your name"
+                  className={inputClass}
+                />
+              </Field>
+              <Field label="Email" htmlFor="email">
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  maxLength={254}
+                  value={values.email}
+                  onChange={set("email")}
+                  placeholder="Enter your email"
+                  className={inputClass}
+                />
+              </Field>
+              <Field label="Your project" htmlFor="project">
+                <textarea
+                  id="project"
+                  name="project"
+                  required
+                  rows={4}
+                  maxLength={2000}
+                  value={values.project}
+                  onChange={set("project")}
+                  placeholder="Tell me about your project"
+                  className={`${inputClass} resize-none`}
+                />
+              </Field>
+
+              {/* Honeypot: hidden from humans, catnip for bots. */}
+              <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
+                <label htmlFor="website">Website</label>
+                <input
+                  id="website"
+                  name="website"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={values.website}
+                  onChange={set("website")}
+                />
+              </div>
+
+              {error && (
+                <p role="alert" className="mb-4 text-sm text-[color:var(--brand-soft)]">
+                  {error}
+                </p>
+              )}
+
+              <button
+                type="submit"
+                disabled={status === "submitting"}
+                className="mt-2 w-full rounded-xl bg-foreground py-3.5 text-[15px] font-medium text-background transition-transform hover:opacity-95 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70"
+              >
+                {status === "submitting" ? "Sending…" : "Submit"}
+              </button>
+            </form>
+          )}
         </Reveal>
       </div>
     </section>
+  );
+}
+
+function SuccessPanel({ name }: { name: string }) {
+  const firstName = name.trim().split(" ")[0] || "there";
+  return (
+    <div className="flex h-full min-h-[320px] flex-col justify-center rounded-3xl border border-white/10 bg-card p-8 sm:p-10">
+      <div className="grid size-11 place-items-center rounded-full border border-white/10 bg-background/50">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          className="size-5 text-foreground"
+          aria-hidden="true"
+        >
+          <path
+            d="m5 13 4 4L19 7"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </div>
+      <h3 className="mt-5 text-2xl font-bold tracking-tight">
+        Message sent, {firstName}.
+      </h3>
+      <p className="mt-3 max-w-sm text-pretty text-base leading-relaxed text-muted-foreground">
+        It landed in my inbox and a confirmation is on its way to you. I reply
+        within 24 hours.
+      </p>
+    </div>
   );
 }
 
