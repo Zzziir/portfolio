@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import type { ContactSubmission } from "@/lib/contact";
+import type { Testimonial } from "@/lib/testimonials";
 import { SubmissionsList } from "./submissions-list";
+import { TestimonialsList } from "./testimonials-list";
 import { logout } from "./actions";
 
 export const dynamic = "force-dynamic";
@@ -13,14 +15,26 @@ export const metadata: Metadata = {
 
 export default async function DashboardPage() {
   const supabase = getSupabaseAdmin();
-  const { data } = await supabase
-    .from("contact_submissions")
-    .select("*")
-    .eq("is_spam", false)
-    .order("created_at", { ascending: false });
+  const [{ data }, { data: testimonialData }] = await Promise.all([
+    supabase
+      .from("contact_submissions")
+      .select("*")
+      .eq("is_spam", false)
+      .order("created_at", { ascending: false }),
+    supabase
+      .from("testimonials")
+      .select("*")
+      .eq("is_spam", false)
+      .order("created_at", { ascending: false }),
+  ]);
 
   const submissions = (data ?? []) as ContactSubmission[];
   const newCount = submissions.filter((s) => s.status === "new").length;
+
+  const testimonials = (testimonialData ?? []) as Testimonial[];
+  const pendingTestimonials = testimonials.filter(
+    (t) => t.status === "pending",
+  ).length;
 
   return (
     <main className="mx-auto min-h-dvh max-w-3xl px-5 py-14 sm:px-8">
@@ -53,6 +67,26 @@ export default async function DashboardPage() {
       <div className="mt-10">
         <SubmissionsList submissions={submissions} />
       </div>
+
+      <section className="mt-16 border-t border-white/10 pt-12">
+        <div className="flex items-baseline gap-3">
+          <h2 className="text-xl font-bold tracking-tight text-foreground">
+            Testimonials
+          </h2>
+          {pendingTestimonials > 0 && (
+            <span className="text-sm font-medium text-[color:var(--brand-soft)]">
+              {pendingTestimonials} pending
+            </span>
+          )}
+        </div>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Set a note to approved to show it on the homepage.
+        </p>
+
+        <div className="mt-8">
+          <TestimonialsList items={testimonials} />
+        </div>
+      </section>
     </main>
   );
 }

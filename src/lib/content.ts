@@ -229,7 +229,7 @@ export const projects: Project[] = [
     tags: ["Next.js 16", "Supabase Realtime", "Gemini", "Tailwind v4"],
     year: "2026",
     accent: "#d97706",
-    featured: true,
+    featured: false,
     platform: "web",
     image: "/assets/projects/craffe-order-ahead/hero.png",
     image2: "/assets/projects/craffe-order-ahead/menu.png",
@@ -336,38 +336,170 @@ export const projects: Project[] = [
       },
     ],
   },
+  {
+    slug: "palo-scorer",
+    name: "Palo!",
+    result: "Live badminton scorer across 3 platforms, one backend",
+    context: "Badminton scoring + analytics platform · Palo!",
+    decision:
+      "Made the web app the single source of truth, then ported it to Flutter test-first (712 passing tests) and replayed the Elo ratings byte-for-byte against 156 real matches, so mobile never drifts from web.",
+    tags: ["Next.js", "Flutter", "Supabase", "Realtime"],
+    year: "2026",
+    accent: "#a8e04a",
+    featured: true,
+    platform: "mobile",
+    image: "/assets/projects/palo-scorer/home.png",
+    image2: "/assets/projects/palo-scorer/scorer.png",
+    card: {
+      src: "/assets/projects/palo-scorer/logo.png",
+      fit: "logo",
+      bg: "#0b0f0e",
+    },
+    category: "Sports platform",
+    liveLink: "https://palo.lanceamiel.site",
+    summary:
+      "A badminton match scorer for groups and open-play nights: live rally-by-rally scoring that works offline, Elo ratings, achievements, queues, and full tournaments. One Next.js web app, a Flutter iOS and Android port, and an admin CRM, all on a single Supabase backend. Live at palo.lanceamiel.site.",
+    sections: [
+      {
+        heading: "The decision",
+        body: [
+          "The web app on main is the single source of truth for behavior. The Flutter app replicates it feature for feature against the same Supabase project, ported test-first so the two never diverge: 712 tests passing through the replay phase, with Elo ratings replayed byte-for-byte against 156 real matches and roughly 8,100 rallies.",
+        ],
+      },
+      {
+        heading: "What it does",
+        body: [
+          "Players score a match rally by rally with undo, voice score calls, and haptics, and it all works with zero network, syncing when back online. Groups get Elo-based standings across singles, doubles, and mixed, 46 achievement badges, momentum graphs, real-time open-play queues, and tournaments with live brackets.",
+        ],
+      },
+      {
+        heading: "Shipped",
+        body: [
+          "Live in production on Vercel at palo.lanceamiel.site, with a separate admin CRM for running groups and an animated match replay that exports to MP4 (a 3-second clip renders in 2.3s on an iPhone 16). Mobile is through its replay phase, heading for store release.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "zoomy-pos",
+    name: "ZoomyPOS",
+    result: "Offline-first POS that tracks 326 stores and ₱382M in sales",
+    context: "Point-of-sale + retail observability · ZoomyPOS / Coop",
+    decision:
+      "Wrote every sale to on-device SQLite with a client UUID so a bazaar cashier keeps selling through a dead signal and a retry never double-counts, then synced to a Supabase archive a Next.js dashboard reads for live inventory and forecasts.",
+    tags: ["Expo / React Native", "Next.js", "Supabase", "Claude"],
+    year: "2026",
+    accent: "#e11d63",
+    featured: false,
+    platform: "web",
+    image: "/assets/projects/zoomy-pos/cover.jpg",
+    category: "POS + analytics",
+    liveLink: "https://zoomy-pos-staging.vercel.app",
+    summary:
+      "An offline-first point-of-sale app for pop-up bazaars that grew into a retail observability backend. Cashiers sell with no signal; sales sync to a Supabase archive that a Next.js dashboard (Coop) turns into live revenue, inventory, and event-aware stock forecasts. The same backend now runs an enterprise cosmetics client across hundreds of stores.",
+    sections: [
+      {
+        heading: "The decision",
+        body: [
+          "The POS is built offline-first: every sale is written to on-device SQLite with a client UUID, so a cashier keeps selling through a dead signal and a retry never double-counts. Writes reconcile to a Supabase archive through a single RPC, and the Coop dashboard reads only from that archive, so the till and the analytics can never disagree.",
+        ],
+      },
+      {
+        heading: "From bazaar to enterprise",
+        body: [
+          "What started as a pet-treat stall POS became the backend for a cosmetics brand's retail operation: 326 stores, 315 SKUs, and 472,604 sales rows across twelve months, ₱382M in encrypted revenue. Coop reconciles handwritten store inventory forms against POS data with Claude vision OCR, flags bad counts, and recommends restocks.",
+        ],
+      },
+      {
+        heading: "Shipped",
+        body: [
+          "Live POS on Vercel with the Coop dashboard reading revenue, orders, and units in real time, low-stock email alerts on an hourly and daily cadence, and event-aware forecasts that project stockouts for bazaar weekends. Backed by around 395 passing tests across the forecast, inventory, and email paths.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "taska",
+    name: "Taska",
+    result: "AI meeting-to-tasks inbox that cut manual re-typing to zero",
+    context: "AI task backlog · Taska",
+    decision:
+      "Made nothing an AI proposes reach the board until a lead approves it: Claude reads each meeting's notes or transcript and suggests tasks, owners, and status changes with quoted evidence into a review inbox, instead of auto-writing the backlog.",
+    tags: ["Next.js 16", "Supabase", "Claude", "AssemblyAI"],
+    year: "2026",
+    accent: "#2f6bff",
+    featured: true,
+    platform: "web",
+    image: "/assets/projects/taska/cover.jpg",
+    card: {
+      src: "/assets/projects/taska/logo.png",
+      fit: "logo",
+      bg: "#0e1a33",
+    },
+    category: "AI productivity",
+    liveLink: "https://taska.lanceamiel.site",
+    summary:
+      "A team backlog that turns Gemini meeting notes and recorded audio into suggested tasks for a lead to review before anything reaches the board. Built to replace a hand-kept Google Sheet: real members with aliases, fixed statuses, auto-filled dates, and a self-building weekly summary for the CEO update.",
+    sections: [
+      {
+        heading: "The problem",
+        body: [
+          "Every meeting, someone re-typed tasks, owners, and priorities into a shared sheet by hand, missing items and maintaining the overview and activity log manually. Taska reads the notes Gemini already takes and proposes the work instead.",
+        ],
+      },
+      {
+        heading: "The decision",
+        body: [
+          "Suggestions never auto-write the board. Claude extracts tasks, status changes, and assignees with confidence scores and quoted evidence into a review inbox, and a lead approves, edits, or rejects in bulk. Audio recorded in the app or uploaded is transcribed with AssemblyAI (speaker labels, Taglish) before the same review step.",
+        ],
+      },
+      {
+        heading: "What it replaced",
+        body: [
+          "Free-text owners became real members with aliases that auto-match 'Dave / Vince'; blank statuses became fixed ones with auto-filled start and completion dates; and the manual overview and activity log became a self-building audit trail with a one-click weekly summary. Built on Next.js 16 and Supabase with row-level security on every table.",
+        ],
+      },
+    ],
+  },
 ];
 
-export type Testimonial = {
-  quote: string;
+/** Testimonials are visitor-submitted now and moderated in the dashboard; see
+ * `src/lib/testimonials.ts` and the `testimonials` Postgres table. */
+
+export type Certification = {
   name: string;
-  title: string;
+  issuer: string;
+  /** When it was earned, e.g. "2026". */
+  issued: string;
+  /** Short credential code shown as a chip, e.g. "SAA-C03". */
+  code?: string;
+  /** Public verification link (Credly etc.). */
+  credentialUrl?: string;
+  /** Badge art. Drop the file in /public/assets/certifications/. */
+  image: string;
+  accent: string;
 };
 
-export const testimonials: Testimonial[] = [
+export const certifications: Certification[] = [
   {
-    quote:
-      "Lance owned the problem end to end. He designed the flow, built it, and the numbers moved the week we shipped.", // TODO
-    name: "Yakoub K.",
-    title: "Head of Product, Ledgerly",
+    name: "AWS Certified Solutions Architect - Associate",
+    issuer: "Amazon Web Services",
+    issued: "2026",
+    code: "SAA-C03",
+    credentialUrl:
+      "https://www.credly.com/badges/e1e6de94-b67d-48d3-b295-664c1d3cdd4d/public_url",
+    image: "/assets/certifications/aws-saa-c03.png",
+    accent: "#3b82f6",
   },
   {
-    quote:
-      "Rare to find someone who can sit in a discovery call and then ship the API that afternoon. Everything felt intentional.", // TODO
-    name: "Daniel R.",
-    title: "Founder, Runway",
-  },
-  {
-    quote:
-      "He deleted half our roadmap and we shipped faster. The judgment is the value - clean structure, real decisions.", // TODO
-    name: "Mark M.",
-    title: "CTO, Meridian",
-  },
-  {
-    quote:
-      "The work looks premium and holds up under load. Design that ships, not design that presents.", // TODO
-    name: "Omar H.",
-    title: "Eng Lead, Northwind",
+    name: "Professional Scrum Developer I",
+    issuer: "Scrum.org",
+    issued: "2026",
+    code: "PSD I",
+    credentialUrl:
+      "https://www.credly.com/badges/17c3c8ae-487b-44fd-85ca-28a41ea5ec26/public_url",
+    image: "/assets/certifications/professional-scrum-developer.png",
+    accent: "#d9552f",
   },
 ];
 
