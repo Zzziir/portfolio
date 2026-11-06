@@ -461,36 +461,32 @@ export const projects: Project[] = [
   },
 ];
 
-export type Testimonial = {
-  quote: string;
+/** Testimonials are visitor-submitted now and moderated in the dashboard; see
+ * `src/lib/testimonials.ts` and the `testimonials` Postgres table. */
+
+export type Certification = {
   name: string;
-  title: string;
+  issuer: string;
+  /** When it was earned, e.g. "2026". */
+  issued: string;
+  /** Short credential code shown as a chip, e.g. "SAA-C03". */
+  code?: string;
+  /** Public verification link (Credly etc.). */
+  credentialUrl?: string;
+  /** Badge art. Drop the file in /public/assets/certifications/. */
+  image: string;
+  accent: string;
 };
 
-export const testimonials: Testimonial[] = [
+export const certifications: Certification[] = [
   {
-    quote:
-      "Lance owned the problem end to end. He designed the flow, built it, and the numbers moved the week we shipped.", // TODO
-    name: "Yakoub K.",
-    title: "Head of Product, Ledgerly",
-  },
-  {
-    quote:
-      "Rare to find someone who can sit in a discovery call and then ship the API that afternoon. Everything felt intentional.", // TODO
-    name: "Daniel R.",
-    title: "Founder, Runway",
-  },
-  {
-    quote:
-      "He deleted half our roadmap and we shipped faster. The judgment is the value - clean structure, real decisions.", // TODO
-    name: "Mark M.",
-    title: "CTO, Meridian",
-  },
-  {
-    quote:
-      "The work looks premium and holds up under load. Design that ships, not design that presents.", // TODO
-    name: "Omar H.",
-    title: "Eng Lead, Northwind",
+    name: "AWS Certified Solutions Architect - Associate",
+    issuer: "Amazon Web Services",
+    issued: "2026",
+    code: "SAA-C03",
+    // credentialUrl: "", // TODO: add the Credly verify link
+    image: "/assets/certifications/aws-saa-c03.svg", // TODO: swap for the real badge
+    accent: "#f59e0b",
   },
 ];
 
