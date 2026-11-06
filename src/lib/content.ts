@@ -383,7 +383,7 @@ export const projects: Project[] = [
   {
     slug: "zoomy-pos",
     name: "ZoomyPOS",
-    result: "Offline-first POS that tracks 326 stores and ₱382M in sales",
+    result: "Offline-first POS that never drops a sale on dead signal",
     context: "Point-of-sale + retail observability · ZoomyPOS / Coop",
     decision:
       "Wrote every sale to on-device SQLite with a client UUID so a bazaar cashier keeps selling through a dead signal and a retry never double-counts, then synced to a Supabase archive a Next.js dashboard reads for live inventory and forecasts.",
@@ -396,7 +396,7 @@ export const projects: Project[] = [
     category: "POS + analytics",
     liveLink: "https://zoomy-pos-staging.vercel.app",
     summary:
-      "An offline-first point-of-sale app for pop-up bazaars that grew into a retail observability backend. Cashiers sell with no signal; sales sync to a Supabase archive that a Next.js dashboard (Coop) turns into live revenue, inventory, and event-aware stock forecasts. The same backend now runs an enterprise cosmetics client across hundreds of stores.",
+      "An offline-first point-of-sale app for pop-up bazaars, paired with Coop, a Next.js ops dashboard. Cashiers sell with no signal; every sale syncs to a Supabase archive that Coop turns into live revenue, inventory, and event-aware stock forecasts for the next bazaar weekend.",
     sections: [
       {
         heading: "The decision",
@@ -405,15 +405,56 @@ export const projects: Project[] = [
         ],
       },
       {
-        heading: "From bazaar to enterprise",
+        heading: "The Coop dashboard",
         body: [
-          "What started as a pet-treat stall POS became the backend for a cosmetics brand's retail operation: 326 stores, 315 SKUs, and 472,604 sales rows across twelve months, ₱382M in encrypted revenue. Coop reconciles handwritten store inventory forms against POS data with Claude vision OCR, flags bad counts, and recommends restocks.",
+          "Coop reads only the synced archive and turns it into the numbers the brand runs on: revenue, orders, and units in real time, low-stock email alerts on an hourly and daily cadence, and event-aware forecasts that project stockouts for Friday-to-Sunday bazaar weekends.",
         ],
       },
       {
         heading: "Shipped",
         body: [
-          "Live POS on Vercel with the Coop dashboard reading revenue, orders, and units in real time, low-stock email alerts on an hourly and daily cadence, and event-aware forecasts that project stockouts for bazaar weekends. Backed by around 395 passing tests across the forecast, inventory, and email paths.",
+          "Live POS on Vercel, with durable sync verified end to end and around 395 passing tests across the forecast, inventory, and email paths. The same Coop backend also powers a separate enterprise retail deployment (see Nichido).",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "nichido-retail",
+    name: "Nichido",
+    result: "AI reads handwritten store forms across 326 retail stores",
+    context: "Retail inventory + demand forecasting · Goldline / Coop",
+    decision:
+      "Instead of digitizing 326 stores by hand, the beauty assistants photograph the paper inventory forms they already fill in, Claude vision reads each page into counts, reconciles them against Watsons POS data, and flags only the pages that do not add up.",
+    tags: ["Next.js", "Supabase", "Claude Vision", "Recharts"],
+    year: "2026",
+    accent: "#3f7d5e",
+    featured: false,
+    platform: "web",
+    card: {
+      src: "/assets/projects/nichido/logo.png",
+      fit: "logo",
+      bg: "#1f3a2e",
+    },
+    category: "Retail ops + AI",
+    summary:
+      "The retail operations layer on the Coop backend for a cosmetics brand sold through Watsons: handwritten store inventory forms read by AI, reconciled against POS sales, and turned into demand forecasts, restock purchase orders, and per-assistant scorecards. Shipped to production with a year of real sales loaded.",
+    sections: [
+      {
+        heading: "The decision",
+        body: [
+          "Stores still track stock on paper. Rather than force 326 of them onto a new app, the beauty assistants photograph the forms they already fill in, and Claude vision reads each page into structured counts. Every count is reconciled against Watsons POS sales, and only the pages that disagree surface in a flag queue, so review time goes to the handful that are wrong instead of all of them.",
+        ],
+      },
+      {
+        heading: "The scale",
+        body: [
+          "The production go-live carries 326 stores, 315 Watsons SKUs, and 263 Nichido items (144 linked to a Watsons SKU), over 472,604 sales rows across twelve months and ₱382M in encrypted revenue. It went from kickoff to a production go-live in about a week, with all twelve months of sales loaded.",
+        ],
+      },
+      {
+        heading: "What it produces",
+        body: [
+          "From last-year demand plus a safety-stock buffer, Coop computes a restock plan: 861,286 units to deliver for the November to January peak, down to the top line item at 68,751 units of a single SKU. It also generates purchase orders with per-line approval, Clear / At Risk / Delinquent scorecards per assistant, and a SKU-linking workflow mapping Watsons codes to Nichido items.",
         ],
       },
     ],
