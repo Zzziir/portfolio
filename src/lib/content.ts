@@ -229,7 +229,7 @@ export const projects: Project[] = [
     tags: ["Next.js 16", "Supabase Realtime", "Gemini", "Tailwind v4"],
     year: "2026",
     accent: "#d97706",
-    featured: true,
+    featured: false,
     platform: "web",
     image: "/assets/projects/craffe-order-ahead/hero.png",
     image2: "/assets/projects/craffe-order-ahead/menu.png",
@@ -346,7 +346,7 @@ export const projects: Project[] = [
     tags: ["Next.js", "Flutter", "Supabase", "Realtime"],
     year: "2026",
     accent: "#a8e04a",
-    featured: false,
+    featured: true,
     platform: "web",
     card: {
       src: "/assets/projects/palo-scorer/logo.png",
@@ -426,7 +426,7 @@ export const projects: Project[] = [
     tags: ["Next.js 16", "Supabase", "Claude", "AssemblyAI"],
     year: "2026",
     accent: "#2f6bff",
-    featured: false,
+    featured: true,
     platform: "web",
     image: "/assets/projects/taska/cover.jpg",
     card: {
