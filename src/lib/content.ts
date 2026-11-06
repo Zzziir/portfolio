@@ -486,9 +486,20 @@ export const certifications: Certification[] = [
     issuer: "Amazon Web Services",
     issued: "2026",
     code: "SAA-C03",
-    // credentialUrl: "", // TODO: add the Credly verify link
-    image: "/assets/certifications/aws-saa-c03.svg", // TODO: swap for the real badge
-    accent: "#f59e0b",
+    credentialUrl:
+      "https://www.credly.com/badges/e1e6de94-b67d-48d3-b295-664c1d3cdd4d/public_url",
+    image: "/assets/certifications/aws-saa-c03.png",
+    accent: "#3b82f6",
+  },
+  {
+    name: "Professional Scrum Developer I",
+    issuer: "Scrum.org",
+    issued: "2026",
+    code: "PSD I",
+    credentialUrl:
+      "https://www.credly.com/badges/17c3c8ae-487b-44fd-85ca-28a41ea5ec26/public_url",
+    image: "/assets/certifications/professional-scrum-developer.png",
+    accent: "#d9552f",
   },
 ];
 
