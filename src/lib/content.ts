@@ -347,7 +347,9 @@ export const projects: Project[] = [
     year: "2026",
     accent: "#a8e04a",
     featured: true,
-    platform: "web",
+    platform: "mobile",
+    image: "/assets/projects/palo-scorer/home.png",
+    image2: "/assets/projects/palo-scorer/scorer.png",
     card: {
       src: "/assets/projects/palo-scorer/logo.png",
       fit: "logo",
