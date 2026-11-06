@@ -394,7 +394,6 @@ export const projects: Project[] = [
     platform: "web",
     image: "/assets/projects/zoomy-pos/cover.jpg",
     category: "POS + analytics",
-    liveLink: "https://zoomy-pos-staging.vercel.app",
     summary:
       "An offline-first point-of-sale app for pop-up bazaars, paired with Coop, a Next.js ops dashboard. Cashiers sell with no signal; every sale syncs to a Supabase archive that Coop turns into live revenue, inventory, and event-aware stock forecasts for the next bazaar weekend.",
     sections: [
