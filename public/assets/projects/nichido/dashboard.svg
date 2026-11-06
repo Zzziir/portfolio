@@ -1,0 +1,150 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Coop · Nichido restock forecast dashboard (representative mockup)">
+  <defs>
+    <linearGradient id="n-page" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#17150f"/>
+      <stop offset="1" stop-color="#121009"/>
+    </linearGradient>
+    <linearGradient id="n-bar" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#3f7d5e"/>
+      <stop offset="1" stop-color="#6fc098"/>
+    </linearGradient>
+    <style>
+      .s{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+      .m{font-family:ui-monospace,"SF Mono",Menlo,monospace}
+      .ink{fill:#f3eee4}.mut{fill:#9c9586}.faint{fill:#6f685b}
+    </style>
+  </defs>
+
+  <!-- window -->
+  <rect x="1" y="1" width="1598" height="898" rx="22" fill="url(#n-page)" stroke="#ffffff" stroke-opacity="0.08"/>
+  <!-- chrome bar -->
+  <path d="M1 23 a22 22 0 0 1 22 -22 h1554 a22 22 0 0 1 22 22 v33 h-1598 z" fill="#1d1a15"/>
+  <circle cx="34" cy="28" r="6" fill="#e0584a"/><circle cx="56" cy="28" r="6" fill="#d9a441"/><circle cx="78" cy="28" r="6" fill="#3f9d63"/>
+  <rect x="150" y="16" width="420" height="24" rx="12" fill="#272319"/>
+  <text x="172" y="33" class="m faint" font-size="13">coop.app/nichido/forecast</text>
+
+  <!-- left nav -->
+  <rect x="24" y="80" width="214" height="796" rx="16" fill="#1b1812"/>
+  <rect x="44" y="104" width="34" height="34" rx="9" fill="#2f5c47"/>
+  <text x="54" y="129" class="s" font-size="20" font-weight="700" fill="#6fc098">c</text>
+  <text x="92" y="127" class="s ink" font-size="17" font-weight="700">Coop</text>
+  <g class="s" font-size="14">
+    <rect x="40" y="176" width="182" height="40" rx="10" fill="#26372d"/>
+    <text x="60" y="201" fill="#9fe0bd">Forecast</text>
+    <text x="60" y="257" class="mut">Inventory forms</text>
+    <text x="60" y="305" class="mut">SKU linking</text>
+    <text x="60" y="353" class="mut">Purchase orders</text>
+    <text x="60" y="401" class="mut">Scorecards</text>
+    <text x="60" y="449" class="mut">Stores</text>
+  </g>
+  <text x="60" y="840" class="s faint" font-size="12">v1.17.0 · prod</text>
+
+  <!-- header -->
+  <text x="268" y="128" class="s ink" font-size="30" font-weight="700">Restock forecast</text>
+  <text x="270" y="158" class="s mut" font-size="15">Nov to Jan 2027 · 326 stores · 315 Watsons SKUs</text>
+  <rect x="1392" y="104" width="160" height="34" rx="17" fill="#15241c" stroke="#3f7d5e" stroke-opacity="0.5"/>
+  <circle cx="1416" cy="121" r="5" fill="#5fcf97"/>
+  <text x="1430" y="126" class="s" font-size="13" fill="#9fe0bd">Nichido · live</text>
+
+  <!-- KPI tiles -->
+  <g>
+    <rect x="268" y="188" width="305" height="112" rx="16" fill="#1f1c15" stroke="#ffffff" stroke-opacity="0.06"/>
+    <rect x="596" y="188" width="305" height="112" rx="16" fill="#1f1c15" stroke="#ffffff" stroke-opacity="0.06"/>
+    <rect x="924" y="188" width="305" height="112" rx="16" fill="#1f1c15" stroke="#ffffff" stroke-opacity="0.06"/>
+    <rect x="1252" y="188" width="300" height="112" rx="16" fill="#1f1c15" stroke="#ffffff" stroke-opacity="0.06"/>
+
+    <text x="292" y="226" class="m faint" font-size="12" letter-spacing="1.5">STORES</text>
+    <text x="292" y="272" class="s ink" font-size="34" font-weight="700">326</text>
+
+    <text x="620" y="226" class="m faint" font-size="12" letter-spacing="1.5">SALES · 12 MO</text>
+    <text x="620" y="272" class="s ink" font-size="34" font-weight="700">₱382M</text>
+
+    <text x="948" y="226" class="m faint" font-size="12" letter-spacing="1.5">TO DELIVER</text>
+    <text x="948" y="272" class="s" font-size="34" font-weight="700" fill="#6fc098">861,286</text>
+
+    <text x="1276" y="226" class="m faint" font-size="12" letter-spacing="1.5">SAFETY STOCK</text>
+    <text x="1276" y="272" class="s ink" font-size="34" font-weight="700">188,365</text>
+  </g>
+
+  <!-- bar chart panel -->
+  <rect x="268" y="324" width="560" height="320" rx="16" fill="#1f1c15" stroke="#ffffff" stroke-opacity="0.06"/>
+  <text x="292" y="362" class="s ink" font-size="16" font-weight="600">Monthly demand · last year</text>
+  <text x="292" y="384" class="s mut" font-size="12.5">units sold, drives the restock plan</text>
+  <g>
+    <!-- baseline -->
+    <rect x="292" y="604" width="512" height="1" fill="#ffffff" fill-opacity="0.08"/>
+    <!-- bars (12) -->
+    <rect x="300" y="520" width="28" height="84" rx="5" fill="url(#n-bar)"/>
+    <rect x="342" y="486" width="28" height="118" rx="5" fill="url(#n-bar)"/>
+    <rect x="384" y="500" width="28" height="104" rx="5" fill="url(#n-bar)"/>
+    <rect x="426" y="452" width="28" height="152" rx="5" fill="url(#n-bar)"/>
+    <rect x="468" y="470" width="28" height="134" rx="5" fill="url(#n-bar)"/>
+    <rect x="510" y="438" width="28" height="166" rx="5" fill="url(#n-bar)"/>
+    <rect x="552" y="494" width="28" height="110" rx="5" fill="url(#n-bar)"/>
+    <rect x="594" y="476" width="28" height="128" rx="5" fill="url(#n-bar)"/>
+    <rect x="636" y="430" width="28" height="174" rx="5" fill="url(#n-bar)"/>
+    <rect x="678" y="398" width="28" height="206" rx="5" fill="#d99f57"/>
+    <rect x="720" y="418" width="28" height="186" rx="5" fill="#d99f57"/>
+    <rect x="762" y="446" width="28" height="158" rx="5" fill="#d99f57"/>
+    <text x="300" y="624" class="m faint" font-size="11">Oct</text>
+    <text x="636" y="624" class="m faint" font-size="11">Jul</text>
+    <text x="762" y="624" class="m faint" font-size="11">Sep</text>
+  </g>
+
+  <!-- table panel -->
+  <rect x="852" y="324" width="700" height="320" rx="16" fill="#1f1c15" stroke="#ffffff" stroke-opacity="0.06"/>
+  <text x="876" y="362" class="s ink" font-size="16" font-weight="600">Top SKUs to deliver</text>
+  <g class="m faint" font-size="11" letter-spacing="1">
+    <text x="876" y="398">SKU</text>
+    <text x="1250" y="398">STATUS</text>
+    <text x="1440" y="398" text-anchor="end">UNITS</text>
+  </g>
+  <rect x="876" y="410" width="652" height="1" fill="#ffffff" fill-opacity="0.08"/>
+
+  <!-- rows -->
+  <g class="s" font-size="14.5">
+    <text x="876" y="446" class="ink">Eyebrow Shaver Korea</text>
+    <rect x="1250" y="430" width="66" height="22" rx="11" fill="#3a2e13"/><text x="1262" y="445" font-size="12" fill="#e6b85c">Low</text>
+    <text x="1440" y="446" class="m ink" text-anchor="end">68,751</text>
+
+    <text x="876" y="490" class="ink">Pressed Powder 02</text>
+    <rect x="1250" y="474" width="86" height="22" rx="11" fill="#13301f"/><text x="1262" y="489" font-size="12" fill="#6fcf97">Healthy</text>
+    <text x="1440" y="490" class="m ink" text-anchor="end">41,220</text>
+
+    <text x="876" y="534" class="ink">Lip Tint 03</text>
+    <rect x="1250" y="518" width="60" height="22" rx="11" fill="#2a1f3a"/><text x="1262" y="533" font-size="12" fill="#b79cea">Out</text>
+    <text x="1440" y="534" class="m ink" text-anchor="end">33,980</text>
+
+    <text x="876" y="578" class="ink">Two-Way Cake 01</text>
+    <rect x="1250" y="562" width="86" height="22" rx="11" fill="#13301f"/><text x="1262" y="577" font-size="12" fill="#6fcf97">Healthy</text>
+    <text x="1440" y="578" class="m ink" text-anchor="end">28,440</text>
+
+    <text x="876" y="622" class="ink">Brow Pencil Dark</text>
+    <rect x="1250" y="606" width="66" height="22" rx="11" fill="#3a2e13"/><text x="1262" y="621" font-size="12" fill="#e6b85c">Low</text>
+    <text x="1440" y="622" class="m ink" text-anchor="end">22,110</text>
+  </g>
+  <rect x="876" y="462" width="652" height="1" fill="#ffffff" fill-opacity="0.05"/>
+  <rect x="876" y="506" width="652" height="1" fill="#ffffff" fill-opacity="0.05"/>
+  <rect x="876" y="550" width="652" height="1" fill="#ffffff" fill-opacity="0.05"/>
+  <rect x="876" y="594" width="652" height="1" fill="#ffffff" fill-opacity="0.05"/>
+
+  <!-- reconciliation strip -->
+  <rect x="268" y="668" width="1284" height="188" rx="16" fill="#1b1812" stroke="#ffffff" stroke-opacity="0.06"/>
+  <text x="292" y="708" class="s ink" font-size="16" font-weight="600">Inventory forms · AI reconciliation</text>
+  <text x="292" y="730" class="s mut" font-size="12.5">Claude vision reads each page, reconciles against Watsons POS, flags only what disagrees</text>
+
+  <g>
+    <text x="292" y="788" class="m faint" font-size="12" letter-spacing="1.5">PAGES READ</text>
+    <text x="292" y="826" class="s ink" font-size="28" font-weight="700">1,284</text>
+
+    <text x="520" y="788" class="m faint" font-size="12" letter-spacing="1.5">AUTO-RECONCILED</text>
+    <text x="520" y="826" class="s" font-size="28" font-weight="700" fill="#6fc098">97%</text>
+
+    <text x="800" y="788" class="m faint" font-size="12" letter-spacing="1.5">FLAGGED</text>
+    <text x="800" y="826" class="s" font-size="28" font-weight="700" fill="#e6b85c">38</text>
+  </g>
+  <!-- progress -->
+  <rect x="1010" y="792" width="518" height="12" rx="6" fill="#2a2620"/>
+  <rect x="1010" y="792" width="502" height="12" rx="6" fill="#3f7d5e"/>
+  <text x="1010" y="836" class="s faint" font-size="12">SKU linking · 210 linked · 42 to check · 58 to choose</text>
+</svg>

@@ -430,11 +430,7 @@ export const projects: Project[] = [
     accent: "#3f7d5e",
     featured: false,
     platform: "web",
-    card: {
-      src: "/assets/projects/nichido/logo.png",
-      fit: "logo",
-      bg: "#1f3a2e",
-    },
+    image: "/assets/projects/nichido/dashboard.svg",
     category: "Retail ops + AI",
     summary:
       "The retail operations layer on the Coop backend for a cosmetics brand sold through Watsons: handwritten store inventory forms read by AI, reconciled against POS sales, and turned into demand forecasts, restock purchase orders, and per-assistant scorecards. Shipped to production with a year of real sales loaded.",
