@@ -27,7 +27,7 @@ export const site = {
   email: "lancecandelaria2@gmail.com",
   url: "https://portfolio.lanceamiel.site",
   metaDescription:
-    "Lance Candelaria - Solutions Designer & Product Engineer. I design and ship products end to end, interface and API, with three shipped to production.",
+    "Lance Candelaria - Solutions Designer & Product Engineer. I design and ship products end to end, interface and API, with seven shipped to production.",
   availability: "Available for 1 project - Q3 2026", // TODO
   resumeUrl: "/lance-candelaria-resume.pdf", // TODO: drop the real file in /public
   socials: [
@@ -49,7 +49,7 @@ export type ProofStat = {
 };
 
 export const proof: ProofStat[] = [
-  { value: 3, label: "products shipped to production" },
+  { value: 7, label: "products shipped to production" },
   { value: 3, label: "platforms: iOS, Android, web" },
   { value: 2, label: "disciplines: design + engineering" },
   { value: 2, suffix: "+", label: "years shipping products" },
@@ -59,7 +59,7 @@ export const about = {
   greeting: "Hey!",
   // short, decision-forward bio (Rule 05: judgment, not process)
   lead: `I'm ${site.firstName} - a solutions designer and product engineer based in the Philippines. I take the messy middle between "we have a problem" and "it's live," and own all of it.`,
-  body: "Design, build, ship. I've put three products into production, writing the interface and the API behind each one. I optimize for the decision that moves the number, not the deck that explains it.",
+  body: "Design, build, ship. I've put seven products into production, writing the interface and the API behind each one. I optimize for the decision that moves the number, not the deck that explains it.",
   cta: { label: "Read the work", href: "#work" },
 };
 
@@ -430,11 +430,8 @@ export const projects: Project[] = [
     accent: "#3f7d5e",
     featured: false,
     platform: "web",
-    card: {
-      src: "/assets/projects/nichido/logo.png",
-      fit: "logo",
-      bg: "#1f3a2e",
-    },
+    image: "/assets/projects/nichido/overview.png",
+    image2: "/assets/projects/nichido/uploads.png",
     category: "Retail ops + AI",
     summary:
       "The retail operations layer on the Coop backend for a cosmetics brand sold through Watsons: handwritten store inventory forms read by AI, reconciled against POS sales, and turned into demand forecasts, restock purchase orders, and per-assistant scorecards. Shipped to production with a year of real sales loaded.",
