@@ -1,11 +1,13 @@
-import { projects } from "@/lib/content";
+import { getListedProjects } from "@/lib/projects-data";
 import { Reveal } from "@/components/reveal";
 import { KineticText } from "@/components/magicui/kinetic-text";
 import { ProjectCard } from "@/components/site/project-card";
 
 /** Grid of the other projects, shown at the bottom of a detail page. */
-export function MoreProjects({ currentSlug }: { currentSlug: string }) {
-  const others = projects.filter((p) => p.slug !== currentSlug);
+export async function MoreProjects({ currentSlug }: { currentSlug: string }) {
+  const others = (await getListedProjects()).filter(
+    (p) => p.slug !== currentSlug,
+  );
   if (others.length === 0) return null;
 
   return (

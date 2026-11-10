@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { projectHref, type Project } from "@/lib/content";
+import { projectHref, type Project } from "@/lib/projects";
 import { ProjectMedia } from "@/components/site/project-media";
 import { StackTags } from "@/components/site/stack-tags";
 

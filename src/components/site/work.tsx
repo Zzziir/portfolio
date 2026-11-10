@@ -1,12 +1,13 @@
-import { featuredProjects, secondaryProjects } from "@/lib/content";
+import { getListedProjects } from "@/lib/projects-data";
 import { Reveal } from "@/components/reveal";
 import { KineticText } from "@/components/magicui/kinetic-text";
 import { ProjectCard } from "@/components/site/project-card";
 import { ArrowUpRight } from "@/components/icons";
 
-export function Work() {
-  const featured = featuredProjects();
-  const secondary = secondaryProjects();
+export async function Work() {
+  const listed = await getListedProjects();
+  const featured = listed.filter((p) => p.placement === "featured");
+  const secondary = listed.filter((p) => p.placement === "more");
 
   return (
     <section id="work" className="px-5 py-24 sm:px-8 sm:py-28">
