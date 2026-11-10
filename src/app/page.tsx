@@ -6,7 +6,7 @@ import { Work } from "@/components/site/work";
 import { Stack } from "@/components/site/stack";
 import { Certifications } from "@/components/site/certifications";
 import { Testimonials } from "@/components/site/testimonials";
-import { Thoughts } from "@/components/site/thoughts";
+// import { Thoughts } from "@/components/site/thoughts";
 import { Contact } from "@/components/site/contact";
 import { Footer } from "@/components/site/footer";
 import { FloatingCta } from "@/components/site/floating-cta";
@@ -27,7 +27,7 @@ export default function Home() {
         <Stack />
         <Certifications />
         <Testimonials />
-        <Thoughts />
+        {/* <Thoughts /> */}
         <Contact />
       </main>
       <Footer />
