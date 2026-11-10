@@ -1,10 +1,11 @@
 "use client";
 
-import { useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import Image from "next/image";
 import {
   motion,
   useReducedMotion,
+  useMotionValue,
   useScroll,
   useSpring,
   useTransform,
@@ -37,12 +38,18 @@ function PortraitFace({
         alt={alt}
         fill
         priority={priority}
-        sizes="(max-width: 640px) 80vw, 380px"
+        sizes="(max-width: 767px) 270px, 330px"
         className="object-cover"
       />
     </div>
   );
 }
+
+/** Hero-state card width: 32% of min(80vw, 380px), the size it has always had. */
+const heroCardWidth = (viewportWidth: number) =>
+  0.32 * Math.min(viewportWidth * 0.8, 380);
+
+const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
 
 /**
  * Hero + About as one region sharing a SINGLE portrait card.
@@ -52,7 +59,39 @@ function PortraitFace({
  */
 export function HeroAbout() {
   const wrap = useRef<HTMLDivElement>(null);
+  const stage = useRef<HTMLDivElement>(null);
+  const card = useRef<HTMLDivElement>(null);
+  const aboutSection = useRef<HTMLElement>(null);
+  const slot = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
+
+  // The card renders at its landed size and scales down for the hero, so it
+  // ends crisp at scale 1. `landY` is how far the slot's centre sits from the
+  // viewport centre once the region is fully scrolled, so the card lands in
+  // its slot whatever the about layout (centred columns on desktop, a stacked
+  // one-screen layout on mobile).
+  const startScale = useMotionValue(0.376);
+  const landY = useMotionValue(0);
+
+  useLayoutEffect(() => {
+    const measure = () => {
+      if (!stage.current || !card.current || !aboutSection.current || !slot.current)
+        return;
+      const section = aboutSection.current.getBoundingClientRect();
+      const target = slot.current.getBoundingClientRect();
+      const slotCentre = target.top - section.top + target.height / 2;
+      const sectionTopWhenLanded = window.innerHeight - section.height;
+      landY.set(
+        sectionTopWhenLanded + slotCentre - stage.current.clientHeight / 2,
+      );
+      startScale.set(heroCardWidth(window.innerWidth) / card.current.offsetWidth);
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(aboutSection.current!);
+    observer.observe(stage.current!);
+    return () => observer.disconnect();
+  }, [landY, startScale]);
 
   const { scrollYProgress } = useScroll({
     target: wrap,
@@ -68,18 +107,27 @@ export function HeroAbout() {
   // the headline leaves, and only lands flat/red/centred once "Hey!" is in view.
   const rotateY = useTransform(p, [0.2, 0.85], [0, 180]);
   const cardY = useTransform(p, [0, 1], ["37vh", "0vh"]);
-  const cardScale = useTransform(p, [0, 1], [0.32, 0.85]);
+  const cardLandY = useTransform(() => clamp01(p.get()) * landY.get());
+  const cardScale = useTransform(
+    () => startScale.get() + (1 - startScale.get()) * clamp01(p.get()),
+  );
 
   return (
     <div ref={wrap} id="top" className="relative">
       {/* ── Shared pinned flip card ─────────────────────────────── */}
       <div className="pointer-events-none absolute inset-0 z-10">
-        <div className="sticky top-0 flex h-[100svh] items-center justify-center">
+        <div
+          ref={stage}
+          className="sticky top-0 flex h-[100svh] items-center justify-center"
+        >
           <motion.div
+            ref={card}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, ease: EASE_OUT, delay: 0.35 }}
-            className="w-[min(80vw,380px)] [perspective:1400px]"
+            style={{ y: reduce ? 0 : cardLandY }}
+            // mobile width must match the about section's card slot below
+            className="w-[min(68vw,30svh,max(120px,calc((100svh_-_575px)*0.8)))] [perspective:1400px] md:w-[min(68vw,323px)]"
           >
             <motion.div
               className="relative aspect-[4/5] w-full"
@@ -87,7 +135,7 @@ export function HeroAbout() {
                 transformStyle: "preserve-3d",
                 rotateY: reduce ? 0 : rotateY,
                 y: reduce ? "37vh" : cardY,
-                scale: reduce ? 0.32 : cardScale,
+                scale: reduce ? startScale : cardScale,
               }}
             >
               <div
@@ -154,36 +202,43 @@ export function HeroAbout() {
       </section>
 
       {/* ── About copy (card lands in the empty centre column) ──── */}
+      {/* Mobile: one screen, copy / card / copy stacked, the card sized to the
+          height left over. Desktop: three columns, card in the middle. */}
       <section
+        ref={aboutSection}
         id="about"
-        className="relative flex min-h-[100svh] items-center px-5 py-24 sm:px-8"
+        className="relative flex min-h-[100svh] flex-col justify-center px-5 pb-5 pt-20 sm:px-8 md:flex-row md:items-center md:py-24"
       >
-        <div className="mx-auto grid w-full max-w-6xl items-center gap-10 md:grid-cols-12 md:gap-8">
-          <div className="relative z-20 flex flex-col justify-between md:col-span-4 md:h-[420px]">
+        <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 md:grid md:grid-cols-12 md:items-center md:gap-8">
+          <div className="relative z-20 flex flex-col justify-end md:col-span-4 md:h-[420px] md:justify-between">
             <KineticText
               as="h2"
               text={about.greeting}
-              className="text-6xl font-black tracking-tight sm:text-7xl"
+              className="text-5xl font-black tracking-tight sm:text-7xl"
             />
-            <p className="mt-8 max-w-xs text-pretty text-lg font-medium leading-snug md:mt-0">
+            <p className="mt-3 max-w-sm text-pretty text-base font-medium leading-snug md:mt-0 md:max-w-xs md:text-lg">
               {about.lead}
             </p>
           </div>
 
-          {/* reserved space for the shared card */}
-          <div className="min-h-[52vh] md:col-span-4 md:min-h-0" aria-hidden />
+          {/* reserved slot for the shared card (mobile size matches the card) */}
+          <div
+            ref={slot}
+            className="mx-auto aspect-[4/5] shrink-0 w-[min(68vw,30svh,max(120px,calc((100svh_-_575px)*0.8)))] md:col-span-4 md:aspect-auto md:w-auto"
+            aria-hidden
+          />
 
           <div className="relative z-20 md:col-span-4">
             {/* the hero result line lives here now */}
-            <p className="text-pretty text-base font-medium leading-relaxed">
+            <p className="text-pretty text-sm font-medium leading-relaxed md:text-base">
               {site.heroLine}
             </p>
-            <p className="mt-4 text-pretty text-base leading-relaxed text-muted-foreground">
+            <p className="mt-3 text-pretty text-sm leading-relaxed text-muted-foreground md:mt-4 md:text-base">
               {about.body}
             </p>
             <a
               href={about.cta.href}
-              className="group mt-8 inline-flex items-center gap-2 text-base font-medium"
+              className="group mt-4 inline-flex items-center gap-2 text-base font-medium md:mt-8"
             >
               {about.cta.label}
               <span className="grid size-8 place-items-center rounded-lg border border-white/15 transition-colors group-hover:bg-foreground group-hover:text-background">
