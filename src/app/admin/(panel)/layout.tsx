@@ -43,7 +43,7 @@ export default async function AdminLayout({
   return (
     <div className="min-h-dvh">
       <header className="sticky top-0 z-30 border-b border-white/10 bg-background/85 backdrop-blur">
-        <div className="mx-auto flex max-w-4xl items-center justify-between gap-4 px-5 pt-4 sm:px-8">
+        <div className="mx-auto w-full max-w-[1680px] px-5 sm:px-8 lg:px-12 flex items-center justify-between gap-4 pt-4">
           <p className="text-sm font-bold tracking-tight text-foreground">
             Lance<span className="text-muted-foreground">.</span>{" "}
             <span className="font-medium text-muted-foreground">admin</span>
@@ -62,12 +62,12 @@ export default async function AdminLayout({
             </form>
           </div>
         </div>
-        <div className="mx-auto max-w-4xl px-5 sm:px-8">
+        <div className="mx-auto w-full max-w-[1680px] px-5 sm:px-8 lg:px-12">
           <AdminNav counts={counts} />
         </div>
       </header>
 
-      <main className="mx-auto max-w-4xl px-5 py-10 sm:px-8">{children}</main>
+      <main className="mx-auto w-full max-w-[1680px] px-5 sm:px-8 lg:px-12 py-8 sm:py-10">{children}</main>
     </div>
   );
 }

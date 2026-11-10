@@ -57,7 +57,7 @@ export function SubmissionsList({
           No messages here yet.
         </p>
       ) : (
-        <ul className="mt-6 space-y-4">
+        <ul className="mt-6 grid items-start gap-4 lg:grid-cols-2 2xl:grid-cols-3">
           {visible.map((s) => (
             <SubmissionCard key={s.id} submission={s} />
           ))}

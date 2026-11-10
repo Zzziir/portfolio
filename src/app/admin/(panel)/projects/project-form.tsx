@@ -74,7 +74,11 @@ function initialState(project?: Project): FormState {
     summary: project?.summary ?? "",
     sections: (
       project?.sections ?? [{ heading: "The decision", body: [] }]
-    ).map((s) => ({ key: newKey(), heading: s.heading, body: s.body.join("\n\n") })),
+    ).map((s) => ({
+      key: newKey(),
+      heading: s.heading,
+      body: s.body.join("\n\n"),
+    })),
   };
 }
 
@@ -132,7 +136,11 @@ export function ProjectForm({ project }: { project?: Project }) {
     setState((s) => ({ ...s, [key]: value }));
 
   function setName(name: string) {
-    setState((s) => ({ ...s, name, slug: slugTouched ? s.slug : slugify(name) }));
+    setState((s) => ({
+      ...s,
+      name,
+      slug: slugTouched ? s.slug : slugify(name),
+    }));
   }
 
   function updateSection(key: string, patch: Partial<SectionDraft>) {
@@ -187,313 +195,328 @@ export function ProjectForm({ project }: { project?: Project }) {
       }}
       className="pb-28"
     >
-      <Fieldset
-        title="Card"
-        hint="What shows on the homepage. The result line is the headline: give it a number or an outcome."
-      >
-        <Field label="Name">
-          {(id) => (
-            <input
-              id={id}
-              required
-              value={state.name}
-              onChange={(e) => setName(e.target.value)}
-              className={inputClass}
-            />
-          )}
-        </Field>
-        <Field label="Result headline" hint="e.g. “Order-ahead coffee app live across 2 branches”">
-          {(id) => (
-            <input
-              id={id}
-              required
-              value={state.result}
-              onChange={(e) => set("result", e.target.value)}
-              className={inputClass}
-            />
-          )}
-        </Field>
-        <Field label="Context" hint="What it is · who it was for">
-          {(id) => (
-            <input
-              id={id}
-              required
-              value={state.context}
-              onChange={(e) => set("context", e.target.value)}
-              className={inputClass}
-            />
-          )}
-        </Field>
-        <Field label="Decision" hint="Lead with the call you made and why.">
-          {(id) => (
-            <textarea
-              id={id}
-              required
-              rows={3}
-              value={state.decision}
-              onChange={(e) => set("decision", e.target.value)}
-              className={textareaClass}
-            />
-          )}
-        </Field>
-        <div className="grid gap-5 sm:grid-cols-2">
-          <Field label="Tags" hint="Comma-separated">
-            {(id) => (
-              <input
-                id={id}
-                value={state.tags}
-                onChange={(e) => set("tags", e.target.value)}
-                className={inputClass}
-              />
-            )}
-          </Field>
-          <Field label="Year">
+      <div className="grid xl:grid-cols-2 xl:gap-12">
+        <Fieldset
+          title="Card"
+          hint="What shows on the homepage. The result line is the headline: give it a number or an outcome."
+        >
+          <Field label="Name">
             {(id) => (
               <input
                 id={id}
                 required
-                value={state.year}
-                onChange={(e) => set("year", e.target.value)}
+                value={state.name}
+                onChange={(e) => setName(e.target.value)}
                 className={inputClass}
               />
             )}
           </Field>
-        </div>
-
-        <Choice
-          label="Group"
-          value={state.placement}
-          onChange={(v) => set("placement", v)}
-          options={[
-            { value: "featured", label: "Featured" },
-            { value: "more", label: "More builds" },
-          ]}
-        />
-
-        <div className="space-y-4 rounded-xl border border-white/10 p-4">
-          <label className="flex items-center gap-2.5 text-sm text-foreground">
-            <input
-              type="checkbox"
-              checked={state.useCard}
-              onChange={(e) => set("useCard", e.target.checked)}
-              className="size-4 accent-[color:var(--brand)]"
-            />
-            Use a logo or contained image on the card instead of the cover
-          </label>
-          {state.useCard && (
-            <>
-              <ImageField
-                label="Card image"
-                value={state.cardSrc}
-                onChange={(v) => set("cardSrc", v)}
-                slug={state.slug}
-                contain
+          <Field
+            label="Result headline"
+            hint="e.g. “Order-ahead coffee app live across 2 branches”"
+          >
+            {(id) => (
+              <input
+                id={id}
+                required
+                value={state.result}
+                onChange={(e) => set("result", e.target.value)}
+                className={inputClass}
               />
-              <div className="grid gap-5 sm:grid-cols-2">
-                <Choice
-                  label="Fit"
-                  value={state.cardFit}
-                  onChange={(v) => set("cardFit", v)}
-                  options={[
-                    { value: "logo", label: "Logo" },
-                    { value: "contain", label: "Contained UI" },
-                  ]}
+            )}
+          </Field>
+          <Field label="Context" hint="What it is · who it was for">
+            {(id) => (
+              <input
+                id={id}
+                required
+                value={state.context}
+                onChange={(e) => set("context", e.target.value)}
+                className={inputClass}
+              />
+            )}
+          </Field>
+          <Field label="Decision" hint="Lead with the call you made and why.">
+            {(id) => (
+              <textarea
+                id={id}
+                required
+                rows={3}
+                value={state.decision}
+                onChange={(e) => set("decision", e.target.value)}
+                className={textareaClass}
+              />
+            )}
+          </Field>
+          <div className="grid gap-5 sm:grid-cols-2">
+            <Field label="Tags" hint="Comma-separated">
+              {(id) => (
+                <input
+                  id={id}
+                  value={state.tags}
+                  onChange={(e) => set("tags", e.target.value)}
+                  className={inputClass}
                 />
-                <Field label="Tile background" hint="Match the logo's own background, or leave empty">
-                  {(id) => (
+              )}
+            </Field>
+            <Field label="Year">
+              {(id) => (
+                <input
+                  id={id}
+                  required
+                  value={state.year}
+                  onChange={(e) => set("year", e.target.value)}
+                  className={inputClass}
+                />
+              )}
+            </Field>
+          </div>
+
+          <Choice
+            label="Group"
+            value={state.placement}
+            onChange={(v) => set("placement", v)}
+            options={[
+              { value: "featured", label: "Featured" },
+              { value: "more", label: "More builds" },
+            ]}
+          />
+
+          <div className="space-y-4 rounded-xl border border-white/10 p-4">
+            <label className="flex items-center gap-2.5 text-sm text-foreground">
+              <input
+                type="checkbox"
+                checked={state.useCard}
+                onChange={(e) => set("useCard", e.target.checked)}
+                className="size-4 accent-[color:var(--brand)]"
+              />
+              Use a logo or contained image on the card instead of the cover
+            </label>
+            {state.useCard && (
+              <>
+                <ImageField
+                  label="Card image"
+                  value={state.cardSrc}
+                  onChange={(v) => set("cardSrc", v)}
+                  slug={state.slug}
+                  contain
+                />
+                <div className="grid gap-5 sm:grid-cols-2">
+                  <Choice
+                    label="Fit"
+                    value={state.cardFit}
+                    onChange={(v) => set("cardFit", v)}
+                    options={[
+                      { value: "logo", label: "Logo" },
+                      { value: "contain", label: "Contained UI" },
+                    ]}
+                  />
+                  <Field
+                    label="Tile background"
+                    hint="Match the logo's own background, or leave empty"
+                  >
+                    {(id) => (
+                      <input
+                        id={id}
+                        value={state.cardBg}
+                        placeholder="#ffffff"
+                        onChange={(e) => set("cardBg", e.target.value)}
+                        className={inputClass}
+                      />
+                    )}
+                  </Field>
+                </div>
+              </>
+            )}
+          </div>
+        </Fieldset>
+
+        <Fieldset
+          className="xl:border-t-0 xl:pt-0"
+          title="Detail page"
+          hint="The case study at /work/<slug>. Keep it under a 3-minute read."
+        >
+          <div className="grid gap-5 sm:grid-cols-2">
+            <Field label="Slug" hint={`/work/${state.slug || "…"}`}>
+              {(id) => (
+                <input
+                  id={id}
+                  required
+                  value={state.slug}
+                  onChange={(e) => {
+                    setSlugTouched(true);
+                    set("slug", slugify(e.target.value));
+                  }}
+                  className={inputClass}
+                />
+              )}
+            </Field>
+            <Field label="Category">
+              {(id) => (
+                <input
+                  id={id}
+                  required
+                  value={state.category}
+                  onChange={(e) => set("category", e.target.value)}
+                  className={inputClass}
+                />
+              )}
+            </Field>
+          </div>
+          <Field label="Summary">
+            {(id) => (
+              <textarea
+                id={id}
+                required
+                rows={3}
+                value={state.summary}
+                onChange={(e) => set("summary", e.target.value)}
+                className={textareaClass}
+              />
+            )}
+          </Field>
+          <div className="grid gap-5 sm:grid-cols-[1fr_auto]">
+            <Field label="Live link" hint="Optional">
+              {(id) => (
+                <input
+                  id={id}
+                  type="url"
+                  value={state.liveLink}
+                  placeholder="https://"
+                  onChange={(e) => set("liveLink", e.target.value)}
+                  className={inputClass}
+                />
+              )}
+            </Field>
+            <Field label="Accent">
+              {(id) => (
+                <input
+                  id={id}
+                  type="color"
+                  value={state.accent}
+                  onChange={(e) => set("accent", e.target.value)}
+                  className="h-10 w-16 cursor-pointer rounded-lg border border-white/10 bg-transparent p-1"
+                />
+              )}
+            </Field>
+          </div>
+
+          <Choice
+            label="Screenshots are"
+            value={state.platform}
+            onChange={(v) => set("platform", v)}
+            options={[
+              { value: "web", label: "Web (fill the frame)" },
+              { value: "mobile", label: "Mobile (iPhone mock)" },
+            ]}
+          />
+          <ImageField
+            label="Cover image"
+            hint="Card and detail hero"
+            value={state.image}
+            onChange={(v) => set("image", v)}
+            slug={state.slug}
+          />
+          <ImageField
+            label="Second image"
+            hint="Optional, shown on the detail page"
+            value={state.image2}
+            onChange={(v) => set("image2", v)}
+            slug={state.slug}
+          />
+          {state.platform === "web" && state.image2 && (
+            <label className="flex items-center gap-2.5 text-sm text-foreground">
+              <input
+                type="checkbox"
+                checked={state.image2Phone}
+                onChange={(e) => set("image2Phone", e.target.checked)}
+                className="size-4 accent-[color:var(--brand)]"
+              />
+              Frame the second image in an iPhone
+            </label>
+          )}
+
+          <div>
+            <p className="text-sm font-medium text-foreground">Sections</p>
+            <p className="text-xs text-muted-foreground">
+              Separate paragraphs with a blank line.
+            </p>
+            <ol className="mt-3 space-y-4">
+              {state.sections.map((section, index) => (
+                <li
+                  key={section.key}
+                  className="space-y-3 rounded-xl border border-white/10 p-4"
+                >
+                  <div className="flex items-center gap-2">
                     <input
-                      id={id}
-                      value={state.cardBg}
-                      placeholder="#ffffff"
-                      onChange={(e) => set("cardBg", e.target.value)}
+                      aria-label={`Section ${index + 1} heading`}
+                      value={section.heading}
+                      placeholder="Heading"
+                      onChange={(e) =>
+                        updateSection(section.key, { heading: e.target.value })
+                      }
                       className={inputClass}
                     />
-                  )}
-                </Field>
-              </div>
-            </>
-          )}
-        </div>
-      </Fieldset>
-
-      <Fieldset title="Detail page" hint="The case study at /work/<slug>. Keep it under a 3-minute read.">
-        <div className="grid gap-5 sm:grid-cols-2">
-          <Field label="Slug" hint={`/work/${state.slug || "…"}`}>
-            {(id) => (
-              <input
-                id={id}
-                required
-                value={state.slug}
-                onChange={(e) => {
-                  setSlugTouched(true);
-                  set("slug", slugify(e.target.value));
-                }}
-                className={inputClass}
-              />
-            )}
-          </Field>
-          <Field label="Category">
-            {(id) => (
-              <input
-                id={id}
-                required
-                value={state.category}
-                onChange={(e) => set("category", e.target.value)}
-                className={inputClass}
-              />
-            )}
-          </Field>
-        </div>
-        <Field label="Summary">
-          {(id) => (
-            <textarea
-              id={id}
-              required
-              rows={3}
-              value={state.summary}
-              onChange={(e) => set("summary", e.target.value)}
-              className={textareaClass}
-            />
-          )}
-        </Field>
-        <div className="grid gap-5 sm:grid-cols-[1fr_auto]">
-          <Field label="Live link" hint="Optional">
-            {(id) => (
-              <input
-                id={id}
-                type="url"
-                value={state.liveLink}
-                placeholder="https://"
-                onChange={(e) => set("liveLink", e.target.value)}
-                className={inputClass}
-              />
-            )}
-          </Field>
-          <Field label="Accent">
-            {(id) => (
-              <input
-                id={id}
-                type="color"
-                value={state.accent}
-                onChange={(e) => set("accent", e.target.value)}
-                className="h-10 w-16 cursor-pointer rounded-lg border border-white/10 bg-transparent p-1"
-              />
-            )}
-          </Field>
-        </div>
-
-        <Choice
-          label="Screenshots are"
-          value={state.platform}
-          onChange={(v) => set("platform", v)}
-          options={[
-            { value: "web", label: "Web (fill the frame)" },
-            { value: "mobile", label: "Mobile (iPhone mock)" },
-          ]}
-        />
-        <ImageField
-          label="Cover image"
-          hint="Card and detail hero"
-          value={state.image}
-          onChange={(v) => set("image", v)}
-          slug={state.slug}
-        />
-        <ImageField
-          label="Second image"
-          hint="Optional, shown on the detail page"
-          value={state.image2}
-          onChange={(v) => set("image2", v)}
-          slug={state.slug}
-        />
-        {state.platform === "web" && state.image2 && (
-          <label className="flex items-center gap-2.5 text-sm text-foreground">
-            <input
-              type="checkbox"
-              checked={state.image2Phone}
-              onChange={(e) => set("image2Phone", e.target.checked)}
-              className="size-4 accent-[color:var(--brand)]"
-            />
-            Frame the second image in an iPhone
-          </label>
-        )}
-
-        <div>
-          <p className="text-sm font-medium text-foreground">Sections</p>
-          <p className="text-xs text-muted-foreground">
-            Separate paragraphs with a blank line.
-          </p>
-          <ol className="mt-3 space-y-4">
-            {state.sections.map((section, index) => (
-              <li
-                key={section.key}
-                className="space-y-3 rounded-xl border border-white/10 p-4"
-              >
-                <div className="flex items-center gap-2">
-                  <input
-                    aria-label={`Section ${index + 1} heading`}
-                    value={section.heading}
-                    placeholder="Heading"
+                    <SmallIconButton
+                      label={`Move section ${index + 1} up`}
+                      disabled={index === 0}
+                      onClick={() => moveSection(index, -1)}
+                    >
+                      <ArrowUp className="size-4" aria-hidden />
+                    </SmallIconButton>
+                    <SmallIconButton
+                      label={`Move section ${index + 1} down`}
+                      disabled={index === state.sections.length - 1}
+                      onClick={() => moveSection(index, 1)}
+                    >
+                      <ArrowDown className="size-4" aria-hidden />
+                    </SmallIconButton>
+                    <SmallIconButton
+                      label={`Remove section ${index + 1}`}
+                      onClick={() =>
+                        set(
+                          "sections",
+                          state.sections.filter((s) => s.key !== section.key),
+                        )
+                      }
+                    >
+                      <Trash2 className="size-4" aria-hidden />
+                    </SmallIconButton>
+                  </div>
+                  <textarea
+                    aria-label={`Section ${index + 1} body`}
+                    rows={5}
+                    value={section.body}
                     onChange={(e) =>
-                      updateSection(section.key, { heading: e.target.value })
+                      updateSection(section.key, { body: e.target.value })
                     }
-                    className={inputClass}
+                    className={textareaClass}
                   />
-                  <SmallIconButton
-                    label={`Move section ${index + 1} up`}
-                    disabled={index === 0}
-                    onClick={() => moveSection(index, -1)}
-                  >
-                    <ArrowUp className="size-4" aria-hidden />
-                  </SmallIconButton>
-                  <SmallIconButton
-                    label={`Move section ${index + 1} down`}
-                    disabled={index === state.sections.length - 1}
-                    onClick={() => moveSection(index, 1)}
-                  >
-                    <ArrowDown className="size-4" aria-hidden />
-                  </SmallIconButton>
-                  <SmallIconButton
-                    label={`Remove section ${index + 1}`}
-                    onClick={() =>
-                      set(
-                        "sections",
-                        state.sections.filter((s) => s.key !== section.key),
-                      )
-                    }
-                  >
-                    <Trash2 className="size-4" aria-hidden />
-                  </SmallIconButton>
-                </div>
-                <textarea
-                  aria-label={`Section ${index + 1} body`}
-                  rows={5}
-                  value={section.body}
-                  onChange={(e) =>
-                    updateSection(section.key, { body: e.target.value })
-                  }
-                  className={textareaClass}
-                />
-              </li>
-            ))}
-          </ol>
-          <button
-            type="button"
-            onClick={() =>
-              set("sections", [
-                ...state.sections,
-                { key: newKey(), heading: "", body: "" },
-              ])
-            }
-            className="mt-3 inline-flex items-center gap-1.5 rounded-lg border border-dashed border-white/15 px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-white/[0.04] hover:text-foreground"
-          >
-            <Plus className="size-4" aria-hidden />
-            Add section
-          </button>
-        </div>
-      </Fieldset>
+                </li>
+              ))}
+            </ol>
+            <button
+              type="button"
+              onClick={() =>
+                set("sections", [
+                  ...state.sections,
+                  { key: newKey(), heading: "", body: "" },
+                ])
+              }
+              className="mt-3 inline-flex items-center gap-1.5 rounded-lg border border-dashed border-white/15 px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-white/[0.04] hover:text-foreground"
+            >
+              <Plus className="size-4" aria-hidden />
+              Add section
+            </button>
+          </div>
+        </Fieldset>
+      </div>
 
       {project && (
-        <Fieldset title="Delete" hint="Removes the project and its page for good.">
+        <Fieldset
+          title="Delete"
+          hint="Removes the project and its page for good."
+        >
           {confirmDelete ? (
             <div className="flex flex-wrap items-center gap-2">
               <span className="text-sm text-foreground">
@@ -529,7 +552,7 @@ export function ProjectForm({ project }: { project?: Project }) {
       )}
 
       <div className="fixed inset-x-0 bottom-0 z-30 border-t border-white/10 bg-background/90 backdrop-blur">
-        <div className="mx-auto flex max-w-4xl items-center justify-between gap-3 px-5 py-3 sm:px-8">
+        <div className="mx-auto w-full max-w-[1680px] px-5 sm:px-8 lg:px-12 flex items-center justify-between gap-3 py-3">
           <p
             role="status"
             aria-live="polite"
@@ -572,21 +595,28 @@ export function ProjectForm({ project }: { project?: Project }) {
 }
 
 const textareaClass =
-  "w-full rounded-lg border border-white/10 bg-background/50 px-3 py-2.5 text-sm leading-relaxed text-foreground outline-none transition-colors placeholder:text-muted-foreground/60 focus-visible:border-white/30 focus-visible:ring-2 focus-visible:ring-white/10";
+  "w-full rounded-lg border border-white/10 bg-background/50 px-3 py-2.5 text-sm [field-sizing:content] min-h-20 max-h-[60vh] leading-relaxed text-foreground outline-none transition-colors placeholder:text-muted-foreground/60 focus-visible:border-white/30 focus-visible:ring-2 focus-visible:ring-white/10";
 
 function Fieldset({
   title,
   hint,
+  className,
   children,
 }: {
   title: string;
   hint: string;
+  className?: string;
   children: ReactNode;
 }) {
   return (
-    <fieldset className="border-t border-white/10 py-8 first:border-t-0 first:pt-0">
+    <fieldset
+      className={`min-w-0 border-t border-white/10 py-8 first:border-t-0 first:pt-0 ${className ?? ""}`}
+    >
       <legend className="sr-only">{title}</legend>
-      <h2 className="text-lg font-semibold tracking-tight text-foreground" aria-hidden>
+      <h2
+        className="text-lg font-semibold tracking-tight text-foreground"
+        aria-hidden
+      >
         {title}
       </h2>
       <p className="text-sm text-muted-foreground">{hint}</p>
