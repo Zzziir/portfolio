@@ -59,13 +59,13 @@ export function ImageField({
       {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
 
       <div className="mt-2 flex items-start gap-3">
-        <div className="relative aspect-[16/10] w-28 shrink-0 overflow-hidden rounded-lg bg-white/[0.03] ring-1 ring-white/10">
+        <div className="relative aspect-[16/10] w-20 sm:w-28 shrink-0 overflow-hidden rounded-lg bg-white/[0.03] ring-1 ring-white/10">
           {previewable && (
             <Image
               src={value}
               alt=""
               fill
-              sizes="112px"
+              sizes="(max-width: 640px) 80px, 112px"
               className={contain ? "object-contain p-2" : "object-cover"}
             />
           )}

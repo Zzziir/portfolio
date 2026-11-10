@@ -95,7 +95,7 @@ export function ProjectsBoard({ projects }: { projects: Project[] }) {
         {error}
       </p>
 
-      <div className="mt-2 space-y-12">
+      <div className="mt-2 grid gap-12 xl:grid-cols-2 xl:items-start xl:gap-10">
         {GROUPS.map(({ placement, title, hint }) => {
           const items = groups[placement];
           return (
@@ -210,7 +210,7 @@ function ProjectRow({
       dragListener={false}
       dragControls={controls}
       onDragEnd={onDragEnd}
-      className="relative flex items-center gap-3 bg-background py-3"
+      className="relative flex flex-wrap items-center gap-x-3 gap-y-2 bg-background py-3 sm:flex-nowrap"
     >
       <button
         type="button"
@@ -245,11 +245,14 @@ function ProjectRow({
             </span>
           )}
         </p>
-        <p className="truncate text-sm text-muted-foreground">{project.result}</p>
+        <p className="line-clamp-2 text-sm text-muted-foreground">
+          {project.result}
+        </p>
       </div>
 
-      <div className="flex shrink-0 items-center">
-        <div className="hidden sm:flex">
+      {/* Mobile: a full-width action bar under the text. sm+: inline. */}
+      <div className="flex w-full items-center justify-end border-t border-white/[0.04] pt-2 sm:w-auto sm:shrink-0 sm:border-0 sm:pt-0">
+        <div className="mr-auto flex sm:mr-0">
           <button
             type="button"
             aria-label={`Move ${project.name} up`}
@@ -299,7 +302,7 @@ function ProjectRow({
               : undefined
           }
           onClick={onMove}
-          className="ml-1 hidden rounded-lg border border-white/10 px-2.5 py-1 text-xs font-medium text-muted-foreground transition-[color,background-color,transform] duration-150 hover:bg-white/[0.04] hover:text-foreground active:scale-[0.97] disabled:pointer-events-none disabled:opacity-30 sm:block"
+          className="ml-1 whitespace-nowrap rounded-lg border border-white/10 px-2.5 py-1 text-xs font-medium text-muted-foreground transition-[color,background-color,transform] duration-150 hover:bg-white/[0.04] hover:text-foreground active:scale-[0.97] disabled:pointer-events-none disabled:opacity-30"
         >
           {featured ? "To More" : "To Featured"}
         </button>
