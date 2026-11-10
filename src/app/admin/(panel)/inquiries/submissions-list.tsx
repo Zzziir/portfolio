@@ -6,7 +6,7 @@ import {
   type ContactSubmission,
   type SubmissionStatus,
 } from "@/lib/contact";
-import { updateStatus } from "./actions";
+import { updateStatus } from "../actions";
 
 type Filter = "all" | SubmissionStatus;
 

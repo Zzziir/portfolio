@@ -11,6 +11,8 @@ export function NavPill() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const isHome = pathname === "/";
+  // The admin area has its own header.
+  if (pathname.startsWith("/admin")) return null;
   // On subpages, prefix section anchors with "/" so they navigate home first.
   const to = (hash: string) => (isHome ? hash : `/${hash}`);
 
