@@ -16,6 +16,9 @@ Guidance for every session in this repo. These instructions are binding.
   project's Supabase MCP server. Scoped **local** to this repo only (config in
   `~/.claude.json`, token kept out of version control). Use it for any Supabase
   work here; other Supabase MCP servers in the session belong to other projects.
+- **Content:** projects and testimonials live in Supabase and are managed at
+  `/admin` (Google sign-in, locked to `ADMIN_EMAIL`). `src/lib/content.ts` still
+  holds the rest of the site copy.
 - **Design reference:** the Framer "Majd" template
   (warm editorial brutalist grotesk) - **adapted to dark mode**. Match its
   layout and its animations (scroll-linked word fill, portrait mask reveal,
@@ -130,7 +133,8 @@ max). Every case study reads in **under 3 minutes** - depth, not documentation.
 (a) my role, (b) one result I've delivered, (c) what to do next (see work /
 contact).
 
-**07 - three case studies, max.** Show **3 or fewer**. Each earns its place:
+**07 - four case studies, max.** Feature **4 or fewer** (enforced in /admin and
+by a DB trigger). Each earns its place:
 right role, right industry, real outcome. **Strongest case study first** - not
 chronological, not sentimental.
 
