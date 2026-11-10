@@ -1,6 +1,6 @@
 import Image from "next/image";
 import type { CSSProperties } from "react";
-import type { Project } from "@/lib/content";
+import type { Project } from "@/lib/projects";
 import { ImagePlaceholder } from "@/components/site/placeholder";
 import { Iphone } from "@/components/magicui/iphone";
 

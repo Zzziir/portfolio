@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "motion/react";
-import type { Project } from "@/lib/content";
+import type { Project } from "@/lib/projects";
 import { EASE_OUT } from "@/lib/motion";
 import { Reveal } from "@/components/reveal";
 import { ProjectMedia } from "@/components/site/project-media";

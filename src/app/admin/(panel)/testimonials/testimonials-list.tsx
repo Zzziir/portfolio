@@ -1,19 +1,21 @@
 "use client";
 
 import { useMemo, useState, useTransition } from "react";
-import {
-  TESTIMONIAL_STATUSES,
-  type Testimonial,
-  type TestimonialStatus,
-} from "@/lib/testimonials";
-import { updateTestimonialStatus } from "./actions";
+import type { Testimonial, TestimonialStatus } from "@/lib/testimonials";
+import { updateTestimonialStatus } from "../actions";
 
 type Filter = "all" | TestimonialStatus;
 
-const FILTERS: Filter[] = ["all", "pending", "approved", "hidden"];
+/** "Rejected" is the `hidden` status: off the site, recoverable. */
+const FILTERS: { value: Filter; label: string }[] = [
+  { value: "pending", label: "Pending" },
+  { value: "approved", label: "Approved" },
+  { value: "hidden", label: "Rejected" },
+  { value: "all", label: "All" },
+];
 
 export function TestimonialsList({ items }: { items: Testimonial[] }) {
-  const [filter, setFilter] = useState<Filter>("all");
+  const [filter, setFilter] = useState<Filter>("pending");
 
   const visible = useMemo(
     () =>
@@ -24,13 +26,15 @@ export function TestimonialsList({ items }: { items: Testimonial[] }) {
   return (
     <div>
       <div className="flex flex-wrap gap-2">
-        {FILTERS.map((f) => {
+        {FILTERS.map(({ value: f, label }) => {
           const count =
             f === "all" ? items.length : items.filter((t) => t.status === f).length;
           const active = filter === f;
           return (
             <button
               key={f}
+              type="button"
+              aria-pressed={active}
               onClick={() => setFilter(f)}
               className={`rounded-full border px-3 py-1.5 text-sm capitalize transition-colors ${
                 active
@@ -38,7 +42,7 @@ export function TestimonialsList({ items }: { items: Testimonial[] }) {
                   : "border-white/10 text-muted-foreground hover:bg-white/[0.04] hover:text-foreground"
               }`}
             >
-              {f} <span className="opacity-60">{count}</span>
+              {label} <span className="opacity-60">{count}</span>
             </button>
           );
         })}
@@ -91,20 +95,32 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
         {testimonial.quote}
       </blockquote>
 
-      <div className="mt-4 flex items-center gap-2">
-        <span className="text-xs text-muted-foreground">Status</span>
-        <select
-          value={testimonial.status}
-          disabled={pending}
-          onChange={(e) => onChangeStatus(e.target.value as TestimonialStatus)}
-          className="rounded-lg border border-white/10 bg-background/50 px-2.5 py-1.5 text-sm capitalize text-foreground outline-none transition-colors focus:border-white/25"
-        >
-          {TESTIMONIAL_STATUSES.map((status) => (
-            <option key={status} value={status} className="bg-card">
-              {status}
-            </option>
-          ))}
-        </select>
+      <div className="mt-4 flex flex-wrap items-center gap-2">
+        {testimonial.status !== "approved" && (
+          <button
+            type="button"
+            disabled={pending}
+            onClick={() => onChangeStatus("approved")}
+            className="rounded-lg bg-foreground px-3 py-1.5 text-sm font-medium text-background transition-[opacity,transform] duration-150 hover:opacity-90 active:scale-[0.97] disabled:opacity-60"
+          >
+            Approve
+          </button>
+        )}
+        {testimonial.status !== "hidden" && (
+          <button
+            type="button"
+            disabled={pending}
+            onClick={() => onChangeStatus("hidden")}
+            className="rounded-lg border border-white/10 px-3 py-1.5 text-sm text-muted-foreground transition-[color,background-color,transform] duration-150 hover:bg-white/[0.04] hover:text-foreground active:scale-[0.97] disabled:opacity-60"
+          >
+            {testimonial.status === "approved" ? "Unpublish" : "Reject"}
+          </button>
+        )}
+        {testimonial.status !== "pending" && (
+          <span className="ml-auto text-xs text-muted-foreground">
+            {testimonial.status === "approved" ? "On the homepage" : "Rejected"}
+          </span>
+        )}
       </div>
     </li>
   );
