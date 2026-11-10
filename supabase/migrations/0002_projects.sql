@@ -1,0 +1,542 @@
+-- Projects: the case studies on the homepage and /work/<slug>, managed from
+-- /admin. Same access model as `testimonials`: RLS on with ZERO policies, so
+-- only the service-role server client reads or writes. Admin writes are gated
+-- in the app by the signed-in Supabase Auth user's email.
+--
+-- `placement` picks the homepage group (featured case studies vs "more
+-- builds"), `sort_order` orders within it, and `visible = false` makes a
+-- project unlisted: off every list, but /work/<slug> still renders.
+
+do $$ begin
+  create type public.project_placement as enum ('featured', 'more');
+exception
+  when duplicate_object then null;
+end $$;
+
+do $$ begin
+  create type public.project_platform as enum ('mobile', 'web');
+exception
+  when duplicate_object then null;
+end $$;
+
+create table if not exists public.projects (
+  id            uuid primary key default gen_random_uuid(),
+  created_at    timestamptz not null default now(),
+  updated_at    timestamptz not null default now(),
+  slug          text not null unique
+                check (slug ~ '^[a-z0-9]+(-[a-z0-9]+)*$'),
+  name          text not null,
+  result        text not null,
+  context       text not null,
+  decision      text not null,
+  tags          text[] not null default '{}',
+  year          text not null,
+  accent        text not null default '#888888',
+  placement     public.project_placement not null default 'more',
+  visible       boolean not null default true,
+  sort_order    integer not null default 0,
+  platform      public.project_platform not null default 'web',
+  image         text,
+  image2        text,
+  image2_frame  text check (image2_frame in ('phone')),
+  -- card thumbnail override: { src, fit: 'logo' | 'contain', bg? }
+  card          jsonb,
+  category      text not null,
+  live_link     text,
+  summary       text not null,
+  -- detail page body: [{ heading, body: [paragraph, ...] }, ...]
+  sections      jsonb not null default '[]'::jsonb
+);
+
+create index if not exists projects_listing_idx
+  on public.projects (placement, sort_order);
+
+create or replace function public.projects_touch_updated_at()
+returns trigger language plpgsql set search_path = '' as $$
+begin
+  new.updated_at := now();
+  return new;
+end $$;
+
+drop trigger if exists projects_touch_updated_at on public.projects;
+create trigger projects_touch_updated_at
+  before update on public.projects
+  for each row execute function public.projects_touch_updated_at();
+
+-- Rule 07 (adjusted): at most 4 visible featured case studies.
+create or replace function public.projects_enforce_featured_cap()
+returns trigger language plpgsql set search_path = '' as $$
+begin
+  if new.placement = 'featured' and new.visible and (
+    select count(*) from public.projects
+    where placement = 'featured' and visible and id <> new.id
+  ) >= 4 then
+    raise exception 'featured_limit: at most 4 visible featured projects'
+      using errcode = 'check_violation';
+  end if;
+  return new;
+end $$;
+
+drop trigger if exists projects_enforce_featured_cap on public.projects;
+create trigger projects_enforce_featured_cap
+  before insert or update of placement, visible on public.projects
+  for each row execute function public.projects_enforce_featured_cap();
+
+alter table public.projects enable row level security;
+-- Intentionally no policies: all access goes through the service-role client.
+
+-- Public bucket for uploaded screenshots and logos. Reads are public URLs;
+-- uploads go through server-issued signed upload URLs (no storage policies).
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+values (
+  'project-media', 'project-media', true, 10485760,
+  array['image/png', 'image/jpeg', 'image/webp', 'image/avif']
+)
+on conflict (id) do nothing;
+
+-- Seed: the projects previously hardcoded in src/lib/content.ts.
+insert into public.projects (
+  slug, name, result, context, decision, tags, year, accent, placement,
+  visible, sort_order, platform, image, image2, image2_frame, card, category,
+  live_link, summary, sections
+)
+select
+  p->>'slug', p->>'name', p->>'result', p->>'context', p->>'decision',
+  array(select jsonb_array_elements_text(p->'tags')), p->>'year', p->>'accent',
+  (p->>'placement')::public.project_placement, (p->>'visible')::boolean,
+  (p->>'sort_order')::integer, (p->>'platform')::public.project_platform,
+  p->>'image', p->>'image2', p->>'image2_frame', nullif(p->'card', 'null'::jsonb),
+  p->>'category', p->>'live_link', p->>'summary', p->'sections'
+from jsonb_array_elements($seed$
+[
+  {
+    "slug": "stratty-chatbot",
+    "name": "Stratty",
+    "result": "Scores site visitors into sales-ready leads, live in production",
+    "context": "Pre-sales AI chatbot · Stratpoint Technologies",
+    "decision": "Handed booking to a Google Calendar link and deleted the whole scheduling engine, so the bot does one job well: qualify leads through conversation and score them on a weighted 100-point rubric.",
+    "tags": [
+      "Node.js",
+      "Supabase",
+      "Claude / Gemini",
+      "Next.js"
+    ],
+    "year": "2026",
+    "accent": "#14b8a6",
+    "placement": "featured",
+    "visible": true,
+    "sort_order": 0,
+    "platform": "web",
+    "image": "/assets/projects/stratty-chatbot/dashboard.png",
+    "image2": "/assets/projects/stratty-chatbot/chat.png",
+    "image2_frame": "phone",
+    "card": {
+      "src": "/assets/projects/stratty-chatbot/logo.png",
+      "fit": "logo"
+    },
+    "category": "Conversational AI",
+    "live_link": null,
+    "summary": "A pre-sales chatbot on the Stratpoint site that qualifies visitors through conversation, scores each one into a sales-ready lead, and hands Sales a scored record with a downloadable transcript. Live in production since August 2026.",
+    "sections": [
+      {
+        "heading": "The decision",
+        "body": [
+          "Stratpoint needed pre-sales qualification to run without a human on every chat. The build separates two concerns hard: one engine decides what is still missing about a lead (budget, authority, need, timeline, company), a second decides when to ask for it, so the conversation stays natural instead of interrogating.",
+          "Booking was handed entirely to a Google Calendar appointment link, which removed a whole scheduling engine, its OAuth, and its failure modes in one sprint."
+        ]
+      },
+      {
+        "heading": "How it qualifies",
+        "body": [
+          "Every visitor is scored on a weighted 100-point rubric across eight dimensions, with budgets normalized to one currency (a daily edge function looks up any exchange rate it does not already have). When a visitor states a need, the bot surfaces matching Stratpoint case studies as tappable cards, then hands Sales a scored, ready-to-read lead."
+        ]
+      },
+      {
+        "heading": "Shipped",
+        "body": [
+          "Live in production since August 2026 on Vercel serverless and Supabase, with a pluggable LLM layer (Claude by default, Gemini selectable). A companion Next.js dashboard gives Sales the lead table, assignment, capacity alerts, and downloadable chat transcripts."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "wookie-workspace",
+    "name": "Wookie",
+    "result": "Runs seat booking and return-to-office for an entire company",
+    "context": "Workspace + RTO platform · Stratpoint Technologies",
+    "decision": "Split the product in two: a Flutter app employees book from and a Refine admin panel HR runs on, both over one Supabase Postgres, so mobile booking and compliance dashboards never drift.",
+    "tags": [
+      "Flutter",
+      "Refine",
+      "Supabase",
+      "Next.js"
+    ],
+    "year": "2023 - now",
+    "accent": "#5b6cff",
+    "placement": "featured",
+    "visible": true,
+    "sort_order": 1,
+    "platform": "mobile",
+    "image": "/assets/projects/wookie-workspace/home.png",
+    "image2": "/assets/projects/wookie-workspace/book-a-visit.png",
+    "image2_frame": null,
+    "card": {
+      "src": "/assets/projects/wookie-workspace/logo.webp",
+      "fit": "logo"
+    },
+    "category": "Product platform",
+    "live_link": null,
+    "summary": "The workspace platform Stratpoint runs its return-to-office on: a Flutter app for booking a desk and seeing who is in, plus a Refine admin panel for HR's compliance dashboards, on one shared Supabase backend. Shipped to iOS, Android, and web.",
+    "sections": [
+      {
+        "heading": "The decision",
+        "body": [
+          "The return-to-office policy needed both a way for employees to book a desk and a way for HR to prove compliance. Rather than one compromised app, it is two: a Flutter app for employees and a Refine + Ant Design admin panel for HR, sharing one Supabase Postgres so the numbers on both sides always agree."
+        ]
+      },
+      {
+        "heading": "What employees get",
+        "body": [
+          "Book a visit, pick a seat, see who is already in the office, RSVP to events, check in by QR, and get business-continuity alerts when a site is affected. It ships from one codebase to iOS, Android, and web, across development, staging, UAT, and production flavors."
+        ]
+      },
+      {
+        "heading": "What HR gets",
+        "body": [
+          "Office distribution charts by day, week, and month, an RTO compliance module, user administration, and CSV import/export, all behind Google sign-in locked to the company domain."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "craffe-order-ahead",
+    "name": "Craffé",
+    "result": "Order-ahead coffee app live across 2 branches",
+    "context": "Order-ahead app · Craffé Coffee",
+    "decision": "Kept one shared menu with per-branch rules in a single config, so scanning the QR at either branch drops the order straight onto that branch's live queue and never the other's.",
+    "tags": [
+      "Next.js 16",
+      "Supabase Realtime",
+      "Gemini",
+      "Tailwind v4"
+    ],
+    "year": "2026",
+    "accent": "#d97706",
+    "placement": "more",
+    "visible": true,
+    "sort_order": 0,
+    "platform": "web",
+    "image": "/assets/projects/craffe-order-ahead/hero.png",
+    "image2": "/assets/projects/craffe-order-ahead/menu.png",
+    "image2_frame": null,
+    "card": {
+      "src": "/assets/projects/craffe-order-ahead/logo.png",
+      "fit": "logo",
+      "bg": "#2b2a28"
+    },
+    "category": "Order-ahead app",
+    "live_link": null,
+    "summary": "A mobile-first order-ahead app for Craffé Coffee across two branches: scan the table QR, build a drink, pay ahead, and track a live pickup status that chimes when it is ready. Baristas work a real-time queue scoped to their own branch. Built for a live owner pitch.",
+    "sections": [
+      {
+        "heading": "The decision",
+        "body": [
+          "Two branches, one menu, one set of prices, but different hours, payment methods, and pickup codes. Every per-branch rule lives in a single config file, and a QR scan carries the branch in its URL, so an order placed at the Marilao branch lands on that queue and never East Rembo's."
+        ]
+      },
+      {
+        "heading": "The customer flow",
+        "body": [
+          "Scan the table QR, build a drink and watch the price update as you add oat milk or an extra shot, pay ahead (simulated for the pitch), and land on a live pickup screen that chimes the moment your order is marked ready."
+        ]
+      },
+      {
+        "heading": "Behind the counter",
+        "body": [
+          "Baristas work a real-time order board scoped to their branch by row-level security. There is a Gemini barista chatbot that knows the whole menu in warm Taglish, a buy-9-get-1 loyalty card, and printable QR table tents per branch. Built on Next.js 16 on foundations that can go live after sign-off with no rewrite."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "image-forgery-detection",
+    "name": "Forgery Detector",
+    "result": "Flags and localizes tampered regions in a photo",
+    "context": "Undergraduate thesis · Flutter + computer vision",
+    "decision": "Ran Error Level Analysis through a trained classifier so the app returns a heat overlay of the edited regions, not just a yes/no verdict.",
+    "tags": [
+      "Flutter",
+      "Computer Vision",
+      "ELA",
+      "Firebase"
+    ],
+    "year": "2024",
+    "accent": "#ea3a28",
+    "placement": "more",
+    "visible": true,
+    "sort_order": 1,
+    "platform": "web",
+    "image": "/assets/projects/image-forgery-detection/detect.png",
+    "image2": "/assets/projects/image-forgery-detection/home.png",
+    "image2_frame": null,
+    "card": {
+      "src": "/assets/projects/image-forgery-detection/predicted.png",
+      "fit": "contain"
+    },
+    "category": "Mobile app",
+    "live_link": null,
+    "summary": "A Flutter thesis app that checks a photo from your phone, decides whether it has been edited, and highlights the tampered regions with an Error Level Analysis overlay, or confirms the image is authentic.",
+    "sections": [
+      {
+        "heading": "The problem",
+        "body": [
+          "Edited images spread faster than anyone can fact-check them, and the tampering is often invisible to the eye. This undergraduate thesis app lets anyone check a photo from their phone and see where it was altered."
+        ]
+      },
+      {
+        "heading": "How it works",
+        "body": [
+          "The photo is sent to a classifier that runs Error Level Analysis, and the app returns a verdict plus an ELA overlay marking the regions most likely edited, or confirms the image is authentic. Built in Flutter with Firebase auth and storage."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "aws-saa-reviewer",
+    "name": "SAA-C03 Reviewer",
+    "result": "AWS SAA-C03 Exam Reviewer",
+    "context": "Personal study tool · Next.js + Supabase",
+    "decision": "Scored weak topics from answer history and auto-built a weighted practice set (~65% weak, 20% developing, 15% maintain) instead of serving random questions.",
+    "tags": [
+      "Next.js 16",
+      "Supabase",
+      "Zustand",
+      "Recharts"
+    ],
+    "year": "2026",
+    "accent": "#f59e0b",
+    "placement": "more",
+    "visible": true,
+    "sort_order": 2,
+    "platform": "web",
+    "image": "/assets/projects/aws-saa-reviewer/home.png",
+    "image2": "/assets/projects/aws-saa-reviewer/insights.png",
+    "image2_frame": null,
+    "card": {
+      "src": "/assets/projects/aws-saa-reviewer/logo.png",
+      "fit": "logo",
+      "bg": "#131922"
+    },
+    "category": "Study tool",
+    "live_link": "https://aws-saa-c03-reviewer.vercel.app",
+    "summary": "A practice and review tool for the AWS Solutions Architect Associate (SAA-C03) exam: 571 questions across the four domains, topic-level strengths and weaknesses, and a weighted set that targets your weak spots. Deployed on Vercel.",
+    "sections": [
+      {
+        "heading": "The decision",
+        "body": [
+          "Random practice questions waste time on topics you already know. The reviewer scores your history per topic and builds a weighted set that spends about 65% on weak areas, 20% on developing ones, and 15% keeping strengths warm."
+        ]
+      },
+      {
+        "heading": "What's inside",
+        "body": [
+          "571 questions across the four SAA-C03 domains, a reviewer mode with instant feedback and an exam mode that scores only at the end, topic-level strengths and weaknesses, a bionic reading aid, and a cross-user streak leaderboard. Progress persists per user through Supabase auth."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "palo-scorer",
+    "name": "Palo!",
+    "result": "Live badminton scorer across 3 platforms, one backend",
+    "context": "Badminton scoring + analytics platform · Palo!",
+    "decision": "Made the web app the single source of truth, then ported it to Flutter test-first (712 passing tests) and replayed the Elo ratings byte-for-byte against 156 real matches, so mobile never drifts from web.",
+    "tags": [
+      "Next.js",
+      "Flutter",
+      "Supabase",
+      "Realtime"
+    ],
+    "year": "2026",
+    "accent": "#a8e04a",
+    "placement": "featured",
+    "visible": true,
+    "sort_order": 2,
+    "platform": "mobile",
+    "image": "/assets/projects/palo-scorer/home.png",
+    "image2": "/assets/projects/palo-scorer/scorer.png",
+    "image2_frame": null,
+    "card": {
+      "src": "/assets/projects/palo-scorer/logo.png",
+      "fit": "logo",
+      "bg": "#0b0f0e"
+    },
+    "category": "Sports platform",
+    "live_link": "https://palo.lanceamiel.site",
+    "summary": "A badminton match scorer for groups and open-play nights: live rally-by-rally scoring that works offline, Elo ratings, achievements, queues, and full tournaments. One Next.js web app, a Flutter iOS and Android port, and an admin CRM, all on a single Supabase backend. Live at palo.lanceamiel.site.",
+    "sections": [
+      {
+        "heading": "The decision",
+        "body": [
+          "The web app on main is the single source of truth for behavior. The Flutter app replicates it feature for feature against the same Supabase project, ported test-first so the two never diverge: 712 tests passing through the replay phase, with Elo ratings replayed byte-for-byte against 156 real matches and roughly 8,100 rallies."
+        ]
+      },
+      {
+        "heading": "What it does",
+        "body": [
+          "Players score a match rally by rally with undo, voice score calls, and haptics, and it all works with zero network, syncing when back online. Groups get Elo-based standings across singles, doubles, and mixed, 46 achievement badges, momentum graphs, real-time open-play queues, and tournaments with live brackets."
+        ]
+      },
+      {
+        "heading": "Shipped",
+        "body": [
+          "Live in production on Vercel at palo.lanceamiel.site, with a separate admin CRM for running groups and an animated match replay that exports to MP4 (a 3-second clip renders in 2.3s on an iPhone 16). Mobile is through its replay phase, heading for store release."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "zoomy-pos",
+    "name": "ZoomyPOS",
+    "result": "Offline-first POS that never drops a sale on dead signal",
+    "context": "Point-of-sale + retail observability · ZoomyPOS / Coop",
+    "decision": "Wrote every sale to on-device SQLite with a client UUID so a bazaar cashier keeps selling through a dead signal and a retry never double-counts, then synced to a Supabase archive a Next.js dashboard reads for live inventory and forecasts.",
+    "tags": [
+      "Expo / React Native",
+      "Next.js",
+      "Supabase",
+      "Claude"
+    ],
+    "year": "2026",
+    "accent": "#e11d63",
+    "placement": "more",
+    "visible": true,
+    "sort_order": 3,
+    "platform": "web",
+    "image": "/assets/projects/zoomy-pos/cover.jpg",
+    "image2": null,
+    "image2_frame": null,
+    "card": null,
+    "category": "POS + analytics",
+    "live_link": null,
+    "summary": "An offline-first point-of-sale app for pop-up bazaars, paired with Coop, a Next.js ops dashboard. Cashiers sell with no signal; every sale syncs to a Supabase archive that Coop turns into live revenue, inventory, and event-aware stock forecasts for the next bazaar weekend.",
+    "sections": [
+      {
+        "heading": "The decision",
+        "body": [
+          "The POS is built offline-first: every sale is written to on-device SQLite with a client UUID, so a cashier keeps selling through a dead signal and a retry never double-counts. Writes reconcile to a Supabase archive through a single RPC, and the Coop dashboard reads only from that archive, so the till and the analytics can never disagree."
+        ]
+      },
+      {
+        "heading": "The Coop dashboard",
+        "body": [
+          "Coop reads only the synced archive and turns it into the numbers the brand runs on: revenue, orders, and units in real time, low-stock email alerts on an hourly and daily cadence, and event-aware forecasts that project stockouts for Friday-to-Sunday bazaar weekends."
+        ]
+      },
+      {
+        "heading": "Shipped",
+        "body": [
+          "Live POS on Vercel, with durable sync verified end to end and around 395 passing tests across the forecast, inventory, and email paths. The same Coop backend also powers a separate enterprise retail deployment (see Nichido)."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "nichido-retail",
+    "name": "Nichido",
+    "result": "AI reads handwritten store forms across 326 retail stores",
+    "context": "Retail inventory + demand forecasting · Goldline / Coop",
+    "decision": "Instead of digitizing 326 stores by hand, the beauty assistants photograph the paper inventory forms they already fill in, Claude vision reads each page into counts, reconciles them against Watsons POS data, and flags only the pages that do not add up.",
+    "tags": [
+      "Next.js",
+      "Supabase",
+      "Claude Vision",
+      "Recharts"
+    ],
+    "year": "2026",
+    "accent": "#3f7d5e",
+    "placement": "more",
+    "visible": true,
+    "sort_order": 4,
+    "platform": "web",
+    "image": "/assets/projects/nichido/overview.png",
+    "image2": "/assets/projects/nichido/uploads.png",
+    "image2_frame": null,
+    "card": null,
+    "category": "Retail ops + AI",
+    "live_link": null,
+    "summary": "The retail operations layer on the Coop backend for a cosmetics brand sold through Watsons: handwritten store inventory forms read by AI, reconciled against POS sales, and turned into demand forecasts, restock purchase orders, and per-assistant scorecards. Shipped to production with a year of real sales loaded.",
+    "sections": [
+      {
+        "heading": "The decision",
+        "body": [
+          "Stores still track stock on paper. Rather than force 326 of them onto a new app, the beauty assistants photograph the forms they already fill in, and Claude vision reads each page into structured counts. Every count is reconciled against Watsons POS sales, and only the pages that disagree surface in a flag queue, so review time goes to the handful that are wrong instead of all of them."
+        ]
+      },
+      {
+        "heading": "The scale",
+        "body": [
+          "The production go-live carries 326 stores, 315 Watsons SKUs, and 263 Nichido items (144 linked to a Watsons SKU), over 472,604 sales rows across twelve months and ₱382M in encrypted revenue. It went from kickoff to a production go-live in about a week, with all twelve months of sales loaded."
+        ]
+      },
+      {
+        "heading": "What it produces",
+        "body": [
+          "From last-year demand plus a safety-stock buffer, Coop computes a restock plan: 861,286 units to deliver for the November to January peak, down to the top line item at 68,751 units of a single SKU. It also generates purchase orders with per-line approval, Clear / At Risk / Delinquent scorecards per assistant, and a SKU-linking workflow mapping Watsons codes to Nichido items."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "taska",
+    "name": "Taska",
+    "result": "AI meeting-to-tasks inbox that cut manual re-typing to zero",
+    "context": "AI task backlog · Taska",
+    "decision": "Made nothing an AI proposes reach the board until a lead approves it: Claude reads each meeting's notes or transcript and suggests tasks, owners, and status changes with quoted evidence into a review inbox, instead of auto-writing the backlog.",
+    "tags": [
+      "Next.js 16",
+      "Supabase",
+      "Claude",
+      "AssemblyAI"
+    ],
+    "year": "2026",
+    "accent": "#2f6bff",
+    "placement": "featured",
+    "visible": true,
+    "sort_order": 3,
+    "platform": "web",
+    "image": "/assets/projects/taska/cover.jpg",
+    "image2": null,
+    "image2_frame": null,
+    "card": {
+      "src": "/assets/projects/taska/logo.png",
+      "fit": "logo",
+      "bg": "#0e1a33"
+    },
+    "category": "AI productivity",
+    "live_link": "https://taska.lanceamiel.site",
+    "summary": "A team backlog that turns Gemini meeting notes and recorded audio into suggested tasks for a lead to review before anything reaches the board. Built to replace a hand-kept Google Sheet: real members with aliases, fixed statuses, auto-filled dates, and a self-building weekly summary for the CEO update.",
+    "sections": [
+      {
+        "heading": "The problem",
+        "body": [
+          "Every meeting, someone re-typed tasks, owners, and priorities into a shared sheet by hand, missing items and maintaining the overview and activity log manually. Taska reads the notes Gemini already takes and proposes the work instead."
+        ]
+      },
+      {
+        "heading": "The decision",
+        "body": [
+          "Suggestions never auto-write the board. Claude extracts tasks, status changes, and assignees with confidence scores and quoted evidence into a review inbox, and a lead approves, edits, or rejects in bulk. Audio recorded in the app or uploaded is transcribed with AssemblyAI (speaker labels, Taglish) before the same review step."
+        ]
+      },
+      {
+        "heading": "What it replaced",
+        "body": [
+          "Free-text owners became real members with aliases that auto-match 'Dave / Vince'; blank statuses became fixed ones with auto-filled start and completion dates; and the manual overview and activity log became a self-building audit trail with a one-click weekly summary. Built on Next.js 16 and Supabase with row-level security on every table."
+        ]
+      }
+    ]
+  }
+]
+$seed$::jsonb) as p
+on conflict (slug) do nothing;
