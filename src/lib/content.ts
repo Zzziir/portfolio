@@ -55,6 +55,21 @@ export const proof: ProofStat[] = [
   { value: 2, suffix: "+", label: "years shipping products" },
 ];
 
+/** Rule 04 - logos in the proof band. Each brand links to its case study.
+ * Add `logo` (a monochrome SVG/PNG in /public/assets/brands/) to swap the
+ * wordmark for the real mark. */
+export type Brand = {
+  name: string;
+  /** Case-study slug, linked from the wordmark. */
+  slug?: string;
+  logo?: string;
+};
+
+export const brands: Brand[] = [
+  { name: "Zoomy", slug: "zoomy-pos" },
+  { name: "Nichido", slug: "nichido-retail" },
+];
+
 export const about = {
   greeting: "Hey!",
   // short, decision-forward bio (Rule 05: judgment, not process)

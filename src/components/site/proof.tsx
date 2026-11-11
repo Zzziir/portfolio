@@ -1,4 +1,6 @@
-import { proof } from "@/lib/content";
+import Link from "next/link";
+import { brands, proof, type Brand } from "@/lib/content";
+import { projectHref } from "@/lib/projects";
 import { Reveal } from "@/components/reveal";
 import { NumberTicker } from "@/components/magicui/number-ticker";
 
@@ -32,6 +34,52 @@ export function Proof() {
           </Reveal>
         ))}
       </ul>
+
+      {brands.length > 0 && (
+        <Reveal
+          delay={0.3}
+          className="mx-auto mt-12 flex max-w-6xl flex-col items-center gap-4 border-t border-white/[0.06] pt-10 sm:mt-14 sm:flex-row sm:justify-center sm:gap-10"
+        >
+          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+            shipped for
+          </p>
+          <ul className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
+            {brands.map((brand) => (
+              <li key={brand.name}>
+                <BrandMark brand={brand} />
+              </li>
+            ))}
+          </ul>
+        </Reveal>
+      )}
     </section>
+  );
+}
+
+function BrandMark({ brand }: { brand: Brand }) {
+  const mark = brand.logo ? (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={brand.logo}
+      alt={brand.name}
+      height={28}
+      className="h-7 w-auto opacity-60 grayscale transition-opacity duration-200 group-hover:opacity-100"
+    />
+  ) : (
+    <span className="text-2xl font-semibold tracking-tight text-muted-foreground transition-colors duration-200 group-hover:text-foreground sm:text-3xl">
+      {brand.name}
+    </span>
+  );
+
+  if (!brand.slug) return mark;
+
+  return (
+    <Link
+      href={projectHref(brand.slug)}
+      aria-label={`${brand.name} case study`}
+      className="group block rounded-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground"
+    >
+      {mark}
+    </Link>
   );
 }
